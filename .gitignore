@@ -48,3 +48,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+# android build files
+ android/app/build
+ android/sdk/build
+ android/.gradle
+
+
