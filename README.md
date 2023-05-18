@@ -1,45 +1,87 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# <p align="center">Jitsi Meet</p>
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+Jitsi Meet is a set of Open Source projects which empower users to use and deploy
+video conferencing platforms with state-of-the-art video quality and features.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+<hr />
 
----
+<p align="center">
+<img src="https://raw.githubusercontent.com/jitsi/jitsi-meet/master/readme-img1.png" width="900" />
+</p>
 
-## Edit a file
+<hr />
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+Amongst others here are the main features Jitsi Meet offers:
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+* Support for all current browsers
+* Mobile applications
+* Web and native SDKs for integration
+* HD audio and video
+* Content sharing
+* Raise hand and reactions
+* Chat with private conversations
+* Polls
+* Virtual backgrounds
 
----
+And many more!
 
-## Create a file
+## Using Jitsi Meet
 
-Next, you’ll add a new file to this repository.
+Using Jitsi Meet is straightforward, as it's browser based. Head over to [meet.jit.si](https://meet.jit.si) and give it a try. It's anonymous, scalable and free to use. All browsers are supported! 
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+Using mobile? No problem, you can either use your mobile web browser or our fully-featured
+mobile apps:
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+| Android | Android (F-Droid) | iOS |
+|:-:|:-:|:-:|
+| [<img src="resources/img/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=org.jitsi.meet) | [<img src="resources/img/f-droid-badge.png" height="50">](https://f-droid.org/en/packages/org.jitsi.meet/) | [<img src="resources/img/appstore-badge.png" height="50">](https://itunes.apple.com/us/app/jitsi-meet/id1165103905) |
 
----
+If you are feeling adventurous and want to get an early scoop of the features as they are being
+developed you can also sign up for our open beta testing here:
 
-## Clone a repository
+* [Android](https://play.google.com/apps/testing/org.jitsi.meet)
+* [iOS](https://testflight.apple.com/join/isy6ja7S)
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+## Running your own instance
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+If you'd like to run your own Jitsi Meet installation head over to the [handbook](https://jitsi.github.io/handbook/docs/devops-guide/) to get started.
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+We provide Debian packages and a comprehensive Docker setup to make deployments as simple as possible.
+Advanced users also have the possibility of building all the components from source.
+
+You can check the latest releases [here](https://jitsi.github.io/handbook/docs/releases).
+
+## Jitsi as a Service
+
+If you like the branding capabilities of running your own instance but you'd like
+to avoid dealing with the complexity of monitoring, scaling and updates, JaaS might be
+for you.
+
+[8x8 Jitsi as a Service (JaaS)](https://jaas.8x8.vc) is an enterprise-ready video meeting platform that allows developers, organizations and businesses to easily build and deploy video solutions. With Jitsi as a Service we now give you all the power of Jitsi running on our global platform so you can focus on building secure and branded video experiences.
+
+## Documentation
+
+All the Jitsi Meet documentation is available in [the handbook](https://jitsi.github.io/handbook/).
+
+## Security
+
+For a comprehensive description of all Jitsi Meet's security aspects, please check [this link](https://jitsi.org/security).
+
+For a detailed description of Jitsi Meet's End-to-End Encryption (E2EE) implementation,
+please check [this link](https://jitsi.org/e2ee-whitepaper/).
+
+For information on reporting security vulnerabilities in Jitsi Meet, see [SECURITY.md](./SECURITY.md).
+
+## Contributing
+
+If you are looking to contribute to Jitsi Meet, first of all, thank you! Please
+see our [guidelines for contributing](CONTRIBUTING.md).
+
+<br />
+<br />
+
+<footer>
+<p align="center" style="font-size: smaller;">
+Built with ❤️ by the Jitsi team at <a href="https://8x8.com" target="_blank">8x8</a> and our community.
+</p>
+</footer>
