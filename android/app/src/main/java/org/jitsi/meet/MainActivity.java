@@ -24,6 +24,7 @@ import android.content.RestrictionEntry;
 import android.content.RestrictionsManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -150,13 +151,24 @@ public class MainActivity extends JitsiMeetActivity {
         // Set default options
         JitsiMeetConferenceOptions defaultOptions
             = new JitsiMeetConferenceOptions.Builder()
-            .setServerURL(buildURL(defaultURL))
-            .setFeatureFlag("welcomepage.enabled", true)
+            .setServerURL(buildURL("https://devmeet.melp.us/"))
+            .setFeatureFlag("welcomepage.enabled", false)
             .setFeatureFlag("call-integration.enabled", false)
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
+            .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJtZWxwX2NvbmYiLCJzdWIiOiJtZWV0Lm1lbHBhcHAuY29tIiwibW9kZXJhdG9yIjp0cnVlLCJpc3MiOiJtZWxwX2NvbmZfOCIsImNvbnRleHQiOnsiY2FsbGVlIjp7Im5hbWUiOiIiLCJpZCI6IjE1ODQzNjM4NTUiLCJhdmF0YXIiOiIiLCJlbWFpbCI6IiJ9LCJ1c2VyIjp7Im5hbWUiOiJKYXN3YW50IiwiaWQiOiIxNTg0MzYzODU1IiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG5tZWRpYS1mbS5tZWxwYXBwLmNvbS8tMjM3NDc1OTUzLzk3NjZAMTY2ODY2ODYwNzg0MC5qcGc_c2Vzc2lvbmlkPThmMXVuNHU1MGprMCZpc3RodW1iPTEiLCJlbWFpbCI6IjE1ODQzNjM4NTVAbWVscC5jb20ifSwiZ3JvdXAiOiJvbmV0b29uZSJ9LCJpYXQiOjE2ODQzODcwNDgsInJvb20iOiJkYmEyY2JiMTM5MzhlMjlhZWQ4NjAxZDQxMGQ0OTJiNCIsInJvb21OYW1lIjoiU3VyYWogUHJha2FzaCIsImV4cCI6MTY4NDQzMDI0OH0.SsrwEQfeRpIiYkgbj1q_4ORUHC3X4GeS7WtWqtmC8-U")
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                JitsiMeetConferenceOptions defaultOptions1
+                        = new JitsiMeetConferenceOptions.Builder()
+                        .setRoom("dba2cbb13938e29aed8601d410d492b4")
+                        .build();
+                join(defaultOptions1);
+            }
+        }, 0000);
     }
 
     private void resolveRestrictions() {

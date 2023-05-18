@@ -146,7 +146,7 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
             // @ts-ignore
             const { hidePrejoin } = options;
 
-            if (!hidePrejoin && isPrejoinPageEnabled(getState())) {
+            if (!hidePrejoin && isPrejoinPageEnabled(getState()) && false) { // added by jaswant
                 navigateRoot(screen.preJoin);
             } else {
                 dispatch(connect());
