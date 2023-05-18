@@ -136,20 +136,20 @@ class OverflowMenu extends PureComponent<Props, State> {
                 <OpenCarmodeButton { ...topButtonProps } />
                 <AudioOnlyButton { ...buttonProps } />
                 {!_reactionsEnabled && !toolbarButtons.has('raisehand') && <RaiseHandButton { ...buttonProps } />}
-                <Divider style = { styles.divider } />
-                <SecurityDialogButton { ...buttonProps } />
+                {/* <Divider style = { styles.divider } /> */}
+                {/* <SecurityDialogButton { ...buttonProps } /> */}
                 <RecordButton { ...buttonProps } />
                 <LiveStreamButton { ...buttonProps } />
-                <LinkToSalesforceButton { ...buttonProps } />
-                <Divider style = { styles.divider } />
+                {/* <LinkToSalesforceButton { ...buttonProps } /> */}
+                {/* <Divider style = { styles.divider } /> */}
                 <SharedVideoButton { ...buttonProps } />
                 {!toolbarButtons.has('screensharing') && <ScreenSharingButton { ...buttonProps } />}
-                {!_isSpeakerStatsDisabled && <SpeakerStatsButton { ...buttonProps } />}
+                {/* {!_isSpeakerStatsDisabled && <SpeakerStatsButton { ...buttonProps } />} */}
                 {!toolbarButtons.has('tileview') && <TileViewButton { ...buttonProps } />}
-                <Divider style = { styles.divider } />
-                <ClosedCaptionButton { ...buttonProps } />
+                {/* <Divider style = { styles.divider } /> */}
+                {/* <ClosedCaptionButton { ...buttonProps } /> */}
                 <SharedDocumentButton { ...buttonProps } />
-                <SettingsButton { ...buttonProps } />
+                {/* <SettingsButton { ...buttonProps } /> */}
             </BottomSheet>
         );
     }

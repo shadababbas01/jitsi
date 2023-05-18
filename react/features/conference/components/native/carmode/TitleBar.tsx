@@ -53,7 +53,7 @@ const TitleBar = (props: IProps): JSX.Element => {
                 pointerEvents = 'box-none'
                 style = { styles.roomNameWrapper as StyleProp<ViewStyle> }>
                 <View style = { styles.qualityLabelContainer as StyleProp<ViewStyle> }>
-                    <VideoQualityLabel />
+                    {/* <VideoQualityLabel /> */}
                 </View>
                 <ConnectionIndicator
                     // @ts-ignore
