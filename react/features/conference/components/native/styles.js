@@ -144,7 +144,7 @@ export default {
     },
 
     roomTimerView: {
-        backgroundColor: BaseTheme.palette.ui03,
+       // backgroundColor: BaseTheme.palette.ui03, // added by jaswant
         borderRadius: BaseTheme.shape.borderRadius,
         height: 32,
         justifyContent: 'center',

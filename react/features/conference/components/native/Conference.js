@@ -448,7 +448,7 @@ class Conference extends AbstractConference<Props, State> {
                         )
                     }
 
-                    <LonelyMeetingExperience />
+                    {/* <LonelyMeetingExperience /> added by jaswant */ } 
 
                     {
                         _shouldDisplayTileView
