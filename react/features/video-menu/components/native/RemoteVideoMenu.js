@@ -149,16 +149,16 @@ class RemoteVideoMenu extends PureComponent<Props> {
                 { !_disableRemoteMute && <MuteButton { ...buttonProps } /> }
                 <MuteEveryoneElseButton { ...buttonProps } />
                 { !_disableRemoteMute && <MuteVideoButton { ...buttonProps } /> }
-                <Divider style = { styles.divider } />
+                {/* <Divider style = { styles.divider } /> */}
                 { !_disableKick && <KickButton { ...buttonProps } /> }
                 { !_disableGrantModerator && <GrantModeratorButton { ...buttonProps } /> }
                 <PinButton { ...buttonProps } />
-                { !_disablePrivateChat && <PrivateMessageButton { ...buttonProps } /> }
+                {/* { !_disablePrivateChat && <PrivateMessageButton { ...buttonProps } /> }
                 <ConnectionStatusButton
                     { ...buttonProps }
-                    afterClick = { undefined } />
+                    afterClick = { undefined } /> */}
                 {_moderator && _rooms.length > 1 && <>
-                    <Divider style = { styles.divider } />
+                    {/* <Divider style = { styles.divider } /> */}
                     <View style = { styles.contextMenuItem }>
                         <Text style = { styles.contextMenuItemText }>
                             {t('breakoutRooms.actions.sendToBreakoutRoom')}
