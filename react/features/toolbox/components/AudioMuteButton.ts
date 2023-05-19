@@ -139,6 +139,14 @@ class AudioMuteButton extends AbstractAudioMuteButton<IProps> {
     _isDisabled() {
         return this.props._disabled;
     }
+    _getView(props) {
+        if (props.children) {
+            var isMuted = this._isAudioMuted();
+            return this.props.children(isMuted, this._onClick);
+        } else {
+            return super._getView(props);
+        }
+    }
 }
 
 /**

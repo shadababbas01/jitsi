@@ -139,12 +139,20 @@ export class App extends AbstractApp<IProps> {
         }
 
         dispatch?.(updateSettings(this.props.userInfo || {}));
+        dispatch?.(updateSettings(this.props.userInfo || {}));
+        dispatch?.(updateSettings(this.props.incomingCallInfo || {}));
+
 
         // Update settings with feature-flag.
         const callIntegrationEnabled = flags[CALL_INTEGRATION_ENABLED as keyof typeof flags];
 
         if (typeof callIntegrationEnabled !== 'undefined') {
             dispatch?.(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
+        }
+        if (this.props.url && this.props.url.config) {
+            dispatch(updateSettings({ isGroupCall: this.props.url.config.isGroupCall,
+                userPicUrl: this.props.url.config.userPicUrl,
+                teamName: this.props.url.config.teamName }));
         }
     }
 

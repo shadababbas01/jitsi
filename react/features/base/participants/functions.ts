@@ -377,6 +377,27 @@ export function getParticipantCountWithFake(stateful: IStateful) {
 
     return remote.size + (local ? 1 : 0) + (localScreenShare ? 1 : 0);
 }
+// added by jaswant
+export function getParticipants(stateful: Object | Function) {
+    return _getAllParticipants(stateful).remote;
+}
+
+/**
+ * Returns array of participants from Redux state.
+ *
+ * @param {(Function|Object|Participant[])} stateful - The redux state
+ * features/base/participants, the (whole) redux state, or redux's
+ * {@code getState} function to be used to retrieve the state
+ * features/base/participants.
+ * @private
+ * @returns {Participant[]}
+ */
+ function _getAllParticipants(stateful) {
+    return (
+        Array.isArray(stateful)
+            ? stateful
+            : toState(stateful)['features/base/participants'] || []);
+}
 
 /**
  * Returns participant's display name.

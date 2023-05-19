@@ -28,6 +28,8 @@ import android.os.Build;
 
 import androidx.annotation.StringRes;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 
 import org.jitsi.meet.sdk.log.JitsiMeetLogger;
 
@@ -97,11 +99,12 @@ class OngoingNotification {
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setWhen(startingTime)
-            .setUsesChronometer(true)
+         //   .setUsesChronometer(true)
             .setAutoCancel(false)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOnlyAlertOnce(true)
-            .setSmallIcon(context.getResources().getIdentifier("ic_notification", "drawable", context.getPackageName()));
+            .setColor(context.getColor(R.color.red))
+            .setSmallIcon(R.mipmap.melp_logo);
 
         NotificationCompat.Action hangupAction = createAction(context, JitsiMeetOngoingConferenceService.Action.HANGUP, R.string.ongoing_notification_action_hang_up);
 
@@ -125,7 +128,6 @@ class OngoingNotification {
         intent.setAction(action.getName());
         PendingIntent pendingIntent
             = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        String title = context.getString(titleId);
-        return new NotificationCompat.Action(0, title, pendingIntent);
+        return new NotificationCompat.Action(0, HtmlCompat.fromHtml("<font color=" + ContextCompat.getColor(context, R.color.red) + ">" + context.getString(titleId) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), pendingIntent);
     }
 }

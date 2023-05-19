@@ -496,7 +496,7 @@ function _getDisplayName(state: Object, name?: string): string {
     // @ts-ignore
     const config = state['features/base/config'];
 
-    return name ?? (config?.defaultRemoteDisplayName || 'Fellow Jitster');
+    return name ?? (config?.defaultRemoteDisplayName || '');
 }
 
 /**

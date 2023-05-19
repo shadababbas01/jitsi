@@ -1,0 +1,577 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.jitsi.meet"
+4    android:installLocation="auto"
+5    android:versionCode="13820025"
+6    android:versionName="99.0.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="23"
+9-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml
+10        android:targetSdkVersion="32" />
+10-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml
+11
+12    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- XXX ACCESS_NETWORK_STATE is required by WebRTC. -->
+12-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-78
+12-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-75
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:5-79
+13-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:22-76
+14    <uses-permission android:name="android.permission.BLUETOOTH" />
+14-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-68
+14-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:22-65
+15    <uses-permission android:name="android.permission.CAMERA" />
+15-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:5-65
+15-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:22-62
+16    <uses-permission android:name="android.permission.INTERNET" />
+16-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-67
+16-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:22-64
+17    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+17-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:5-75
+17-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:22-72
+18    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+18-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:5-80
+18-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:22-77
+19    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+19-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:5-71
+19-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:22-68
+20    <uses-permission android:name="android.permission.WAKE_LOCK" />
+20-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:5-68
+20-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:22-65
+21    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+21-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:5-76
+21-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:22-73
+22    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+22-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:5-77
+22-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:22-74
+23
+24    <uses-feature
+24-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:5-25:35
+25        android:glEsVersion="0x00020000"
+25-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:9-41
+26        android:required="true" />
+26-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:9-32
+27    <uses-feature
+27-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:26:5-28:36
+28        android:name="android.hardware.camera"
+28-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:27:9-47
+29        android:required="false" />
+29-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-33
+30    <uses-feature
+30-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:5-31:36
+31        android:name="android.hardware.camera.autofocus"
+31-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:9-57
+32        android:required="false" />
+32-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:31:9-33
+33
+34    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+34-->[:react-native-calendar-events] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-calendar-events/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-73
+34-->[:react-native-calendar-events] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-calendar-events/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-70
+35    <uses-permission android:name="android.permission.READ_CALENDAR" /> <!-- To store the heap dumps and leak analysis results. -->
+35-->[:react-native-calendar-events] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-calendar-events/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-72
+35-->[:react-native-calendar-events] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-calendar-events/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-69
+36    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+36-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:23:5-80
+36-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:23:22-77
+37    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+37-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:24:5-81
+37-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:24:22-78
+38    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+38-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:26:5-110
+38-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:26:22-107
+39
+40    <application
+40-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:5:3-44:17
+41        android:allowBackup="true"
+41-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:6:7-33
+42        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+42-->[androidx.core:core:1.8.0] /Users/jassu/.gradle/caches/transforms-3/1f7a8b2811f34bb90c192166fc4b1097/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+43        android:debuggable="true"
+44        android:extractNativeLibs="true"
+44-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:7:7-39
+45        android:icon="@mipmap/ic_launcher"
+45-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:8:7-41
+46        android:label="@string/app_name"
+46-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:9:7-39
+47        android:networkSecurityConfig="@xml/network_security_config"
+47-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:10:7-67
+48        android:supportsRtl="true"
+48-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:36:9-35
+49        android:theme="@style/AppTheme"
+49-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:11:7-38
+50        android:usesCleartextTraffic="true" >
+50-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:37:9-44
+51        <meta-data
+51-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:12:5-14:52
+52            android:name="android.content.APP_RESTRICTIONS"
+52-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:13:9-56
+53            android:resource="@xml/app_restrictions" />
+53-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:14:9-49
+54
+55        <activity
+55-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:15:5-43:16
+56            android:name="org.jitsi.meet.MainActivity"
+56-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:20:9-37
+57            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+57-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:16:9-118
+58            android:exported="true"
+58-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:17:9-32
+59            android:label="@string/app_name"
+59-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:18:9-41
+60            android:launchMode="singleTask"
+60-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:19:9-40
+61            android:resizeableActivity="true"
+61-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:21:9-42
+62            android:supportsPictureInPicture="true"
+62-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:22:9-48
+63            android:windowSoftInputMode="adjustResize" >
+63-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:23:9-51
+64            <meta-data
+64-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:24:7-97
+65                android:name="firebase_crashlytics_collection_enabled"
+65-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:24:18-72
+66                android:value="false" />
+66-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:24:73-94
+67
+68            <intent-filter>
+68-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:25:7-28:23
+69                <action android:name="android.intent.action.MAIN" />
+69-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:26:9-61
+69-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:26:17-58
+70
+71                <category android:name="android.intent.category.LAUNCHER" />
+71-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:27:9-69
+71-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:27:19-66
+72            </intent-filter>
+73            <intent-filter>
+73-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:29:7-36:23
+74                <action android:name="android.intent.action.VIEW" />
+74-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:30:9-61
+74-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:30:17-58
+75
+76                <category android:name="android.intent.category.BROWSABLE" />
+76-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:31:9-70
+76-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:31:19-67
+77                <category android:name="android.intent.category.DEFAULT" />
+77-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:32:9-68
+77-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:32:19-65
+78
+79                <data
+79-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:9-71
+80                    android:host="alpha.jitsi.net"
+80-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:15-45
+81                    android:scheme="https" />
+81-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:46-68
+82                <data
+82-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:9-71
+83                    android:host="beta.meet.jit.si"
+83-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:15-45
+84                    android:scheme="https" />
+84-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:46-68
+85                <data
+85-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:9-71
+86                    android:host="meet.jit.si"
+86-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:15-45
+87                    android:scheme="https" />
+87-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:46-68
+88            </intent-filter>
+89            <intent-filter>
+89-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:37:7-42:23
+90                <action android:name="android.intent.action.VIEW" />
+90-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:30:9-61
+90-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:30:17-58
+91
+92                <category android:name="android.intent.category.BROWSABLE" />
+92-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:31:9-70
+92-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:31:19-67
+93                <category android:name="android.intent.category.DEFAULT" />
+93-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:32:9-68
+93-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:32:19-65
+94
+95                <data android:scheme="org.jitsi.meet" />
+95-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:9-71
+95-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:33:46-68
+96            </intent-filter>
+97        </activity>
+98
+99        <service
+99-->[com.squareup.leakcanary:leakcanary-android:2.7] /Users/jassu/.gradle/caches/transforms-3/117d886766011a3454aaf63346150c36/transformed/jetified-leakcanary-android-2.7/AndroidManifest.xml:23:9-25:40
+100            android:name="leakcanary.internal.HeapAnalyzerService"
+100-->[com.squareup.leakcanary:leakcanary-android:2.7] /Users/jassu/.gradle/caches/transforms-3/117d886766011a3454aaf63346150c36/transformed/jetified-leakcanary-android-2.7/AndroidManifest.xml:24:13-67
+101            android:exported="false" />
+101-->[com.squareup.leakcanary:leakcanary-android:2.7] /Users/jassu/.gradle/caches/transforms-3/117d886766011a3454aaf63346150c36/transformed/jetified-leakcanary-android-2.7/AndroidManifest.xml:25:13-37
+102
+103        <activity
+103-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:38:9-40:40
+104            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+104-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:39:13-77
+105            android:exported="false" />
+105-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:40:13-37
+106        <activity
+106-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:41:9-48:58
+107            android:name="org.jitsi.meet.sdk.JitsiMeetActivity"
+107-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:42:13-64
+108            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+108-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:43:13-122
+109            android:launchMode="singleTask"
+109-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:44:13-44
+110            android:resizeableActivity="true"
+110-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:45:13-46
+111            android:supportsPictureInPicture="true"
+111-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:46:13-52
+112            android:theme="@style/JitsiMeetActivityStyle"
+112-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:47:13-58
+113            android:windowSoftInputMode="adjustResize" />
+113-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:48:13-55
+114
+115        <service
+115-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:50:9-57:19
+116            android:name="org.jitsi.meet.sdk.ConnectionService"
+116-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:51:13-64
+117            android:exported="true"
+117-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:52:13-36
+118            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE" >
+118-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:53:13-84
+119            <intent-filter>
+119-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:54:13-56:29
+120                <action android:name="android.telecom.ConnectionService" />
+120-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:55:17-76
+120-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:55:25-73
+121            </intent-filter>
+122        </service>
+123        <service
+123-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:58:9-60:63
+124            android:name="org.jitsi.meet.sdk.JitsiMeetOngoingConferenceService"
+124-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:59:13-80
+125            android:foregroundServiceType="mediaProjection" />
+125-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:60:13-60
+126
+127        <provider
+127-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:62:9-67:20
+128            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+128-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:63:13-83
+129            android:authorities="org.jitsi.meet.fileprovider"
+129-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:64:13-64
+130            android:enabled="false"
+130-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:65:13-36
+131            android:exported="false"
+131-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
+132            android:grantUriPermissions="true" >
+132-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
+133            <meta-data
+133-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-17:63
+134                android:name="android.support.FILE_PROVIDER_PATHS"
+134-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:17-67
+135                android:resource="@xml/file_provider_paths" />
+135-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-60
+136        </provider>
+137        <provider
+137-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:68:9-75:20
+138            android:name="androidx.startup.InitializationProvider"
+138-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:69:13-67
+139            android:authorities="org.jitsi.meet.androidx-startup"
+139-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:70:13-68
+140            android:exported="false" >
+140-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:71:13-37
+141            <meta-data
+141-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:72:13-74:52
+142                android:name="org.jitsi.meet.sdk.JitsiInitializer"
+142-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:73:17-67
+143                android:value="androidx.startup" />
+143-->[:sdk] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/build/intermediates/merged_manifest/debug/AndroidManifest.xml:74:17-49
+144            <meta-data
+144-->[androidx.emoji2:emoji2:1.2.0] /Users/jassu/.gradle/caches/transforms-3/5ab1cd49de338b4776c4ad006d1870cd/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+145                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+145-->[androidx.emoji2:emoji2:1.2.0] /Users/jassu/.gradle/caches/transforms-3/5ab1cd49de338b4776c4ad006d1870cd/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+146                android:value="androidx.startup" />
+146-->[androidx.emoji2:emoji2:1.2.0] /Users/jassu/.gradle/caches/transforms-3/5ab1cd49de338b4776c4ad006d1870cd/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+147            <meta-data
+147-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/jassu/.gradle/caches/transforms-3/9321fcca19b50792878715b81ec01813/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+148                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+148-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/jassu/.gradle/caches/transforms-3/9321fcca19b50792878715b81ec01813/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+149                android:value="androidx.startup" />
+149-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/jassu/.gradle/caches/transforms-3/9321fcca19b50792878715b81ec01813/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+150        </provider>
+151        <provider
+151-->[:react-native-performance] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-performance/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:39
+152            android:name="com.oblador.performance.StartTimeProvider"
+152-->[:react-native-performance] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-performance/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-69
+153            android:authorities="org.jitsi.meet.start.time.provider"
+153-->[:react-native-performance] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-performance/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-71
+154            android:exported="false"
+154-->[:react-native-performance] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-performance/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
+155            android:initOrder="200" />
+155-->[:react-native-performance] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-performance/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-36
+156
+157        <uses-library
+157-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:13:9-15:40
+158            android:name="android.test.runner"
+158-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:14:13-47
+159            android:required="false" />
+159-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:15:13-37
+160        <uses-library
+160-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:16:9-18:40
+161            android:name="android.test.base"
+161-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:17:13-45
+162            android:required="false" />
+162-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:18:13-37
+163        <uses-library
+163-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:19:9-21:40
+164            android:name="android.test.mock"
+164-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:20:13-45
+165            android:required="false" />
+165-->[com.giphy.sdk:ui:2.1.16] /Users/jassu/.gradle/caches/transforms-3/abd20bd926ae693339d37deccbfb9055/transformed/jetified-ui-2.1.16/AndroidManifest.xml:21:13-37
+166
+167        <activity
+167-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:23:9-27:75
+168            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+168-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:24:13-93
+169            android:excludeFromRecents="true"
+169-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:25:13-46
+170            android:exported="false"
+170-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:26:13-37
+171            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+171-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:27:13-72
+172        <!--
+173            Service handling Google Sign-In user revocation. For apps that do not integrate with
+174            Google Sign-In, this service will never be started.
+175        -->
+176        <service
+176-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:33:9-36:110
+177            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+177-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:34:13-89
+178            android:exported="true"
+178-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:35:13-36
+179            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" />
+179-->[com.google.android.gms:play-services-auth:16.0.1] /Users/jassu/.gradle/caches/transforms-3/685800613e0944a090e6d68ee34cfc7c/transformed/jetified-play-services-auth-16.0.1/AndroidManifest.xml:36:13-107
+180        <service
+180-->[com.google.firebase:firebase-crashlytics:17.2.1] /Users/jassu/.gradle/caches/transforms-3/d38c8cb6b9d5056b2c677585b7a90474/transformed/jetified-firebase-crashlytics-17.2.1/AndroidManifest.xml:13:9-19:19
+181            android:name="com.google.firebase.components.ComponentDiscoveryService"
+181-->[com.google.firebase:firebase-crashlytics:17.2.1] /Users/jassu/.gradle/caches/transforms-3/d38c8cb6b9d5056b2c677585b7a90474/transformed/jetified-firebase-crashlytics-17.2.1/AndroidManifest.xml:14:13-84
+182            android:directBootAware="true"
+182-->[com.google.firebase:firebase-common:19.3.1] /Users/jassu/.gradle/caches/transforms-3/2b5b4b72639064b6a3d43b60ad36eaa7/transformed/jetified-firebase-common-19.3.1/AndroidManifest.xml:35:13-43
+183            android:exported="false" >
+183-->[com.google.firebase:firebase-crashlytics:17.2.1] /Users/jassu/.gradle/caches/transforms-3/d38c8cb6b9d5056b2c677585b7a90474/transformed/jetified-firebase-crashlytics-17.2.1/AndroidManifest.xml:15:13-37
+184            <meta-data
+184-->[com.google.firebase:firebase-crashlytics:17.2.1] /Users/jassu/.gradle/caches/transforms-3/d38c8cb6b9d5056b2c677585b7a90474/transformed/jetified-firebase-crashlytics-17.2.1/AndroidManifest.xml:16:13-18:85
+185                android:name="com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar"
+185-->[com.google.firebase:firebase-crashlytics:17.2.1] /Users/jassu/.gradle/caches/transforms-3/d38c8cb6b9d5056b2c677585b7a90474/transformed/jetified-firebase-crashlytics-17.2.1/AndroidManifest.xml:17:17-115
+186                android:value="com.google.firebase.components.ComponentRegistrar" />
+186-->[com.google.firebase:firebase-crashlytics:17.2.1] /Users/jassu/.gradle/caches/transforms-3/d38c8cb6b9d5056b2c677585b7a90474/transformed/jetified-firebase-crashlytics-17.2.1/AndroidManifest.xml:18:17-82
+187            <meta-data
+187-->[com.google.firebase:firebase-dynamic-links:19.1.0] /Users/jassu/.gradle/caches/transforms-3/3780827dc45ce2bb313532981e8d3fad/transformed/jetified-firebase-dynamic-links-19.1.0/AndroidManifest.xml:9:13-11:85
+188                android:name="com.google.firebase.components:com.google.firebase.dynamiclinks.internal.FirebaseDynamicLinkRegistrar"
+188-->[com.google.firebase:firebase-dynamic-links:19.1.0] /Users/jassu/.gradle/caches/transforms-3/3780827dc45ce2bb313532981e8d3fad/transformed/jetified-firebase-dynamic-links-19.1.0/AndroidManifest.xml:10:17-133
+189                android:value="com.google.firebase.components.ComponentRegistrar" />
+189-->[com.google.firebase:firebase-dynamic-links:19.1.0] /Users/jassu/.gradle/caches/transforms-3/3780827dc45ce2bb313532981e8d3fad/transformed/jetified-firebase-dynamic-links-19.1.0/AndroidManifest.xml:11:17-82
+190            <meta-data
+190-->[com.google.android.gms:play-services-measurement-api:17.5.0] /Users/jassu/.gradle/caches/transforms-3/4b90d6a45bad2c390ace77599d88d193/transformed/jetified-play-services-measurement-api-17.5.0/AndroidManifest.xml:30:13-32:85
+191                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+191-->[com.google.android.gms:play-services-measurement-api:17.5.0] /Users/jassu/.gradle/caches/transforms-3/4b90d6a45bad2c390ace77599d88d193/transformed/jetified-play-services-measurement-api-17.5.0/AndroidManifest.xml:31:17-139
+192                android:value="com.google.firebase.components.ComponentRegistrar" />
+192-->[com.google.android.gms:play-services-measurement-api:17.5.0] /Users/jassu/.gradle/caches/transforms-3/4b90d6a45bad2c390ace77599d88d193/transformed/jetified-play-services-measurement-api-17.5.0/AndroidManifest.xml:32:17-82
+193            <meta-data
+193-->[com.google.firebase:firebase-installations:16.3.3] /Users/jassu/.gradle/caches/transforms-3/520a9bc9e3702bfb7d4599d2bd17556b/transformed/jetified-firebase-installations-16.3.3/AndroidManifest.xml:17:13-19:85
+194                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+194-->[com.google.firebase:firebase-installations:16.3.3] /Users/jassu/.gradle/caches/transforms-3/520a9bc9e3702bfb7d4599d2bd17556b/transformed/jetified-firebase-installations-16.3.3/AndroidManifest.xml:18:17-127
+195                android:value="com.google.firebase.components.ComponentRegistrar" />
+195-->[com.google.firebase:firebase-installations:16.3.3] /Users/jassu/.gradle/caches/transforms-3/520a9bc9e3702bfb7d4599d2bd17556b/transformed/jetified-firebase-installations-16.3.3/AndroidManifest.xml:19:17-82
+196        </service>
+197
+198        <provider
+198-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:29:9-37:20
+199            android:name="leakcanary.internal.LeakCanaryFileProvider"
+199-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:30:13-70
+200            android:authorities="com.squareup.leakcanary.fileprovider.org.jitsi.meet"
+200-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:31:13-88
+201            android:exported="false"
+201-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:32:13-37
+202            android:grantUriPermissions="true" >
+202-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:33:13-47
+203            <meta-data
+203-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-17:63
+204                android:name="android.support.FILE_PROVIDER_PATHS"
+204-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:17-67
+205                android:resource="@xml/leak_canary_file_paths" />
+205-->[:react-native-webview] /Users/jassu/AndroidJitsi_8615/androidjitsi_8615/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-60
+206        </provider>
+207
+208        <activity
+208-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:39:9-44:66
+209            android:name="leakcanary.internal.activity.LeakActivity"
+209-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:40:13-69
+210            android:icon="@mipmap/leak_canary_icon"
+210-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:41:13-52
+211            android:label="@string/leak_canary_display_activity_label"
+211-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:42:13-71
+212            android:taskAffinity="com.squareup.leakcanary.org.jitsi.meet"
+212-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:43:13-76
+213            android:theme="@style/leak_canary_LeakCanary.Base" />
+213-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:44:13-63
+214
+215        <activity-alias
+215-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:46:9-63:26
+216            android:name="leakcanary.internal.activity.LeakLauncherActivity"
+216-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:47:13-77
+217            android:banner="@drawable/leak_canary_tv_icon"
+217-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:48:13-59
+218            android:enabled="@bool/leak_canary_add_launcher_icon"
+218-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:49:13-66
+219            android:exported="true"
+219-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:50:13-36
+220            android:icon="@mipmap/leak_canary_icon"
+220-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:51:13-52
+221            android:label="@string/leak_canary_display_activity_label"
+221-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:52:13-71
+222            android:targetActivity="leakcanary.internal.activity.LeakActivity"
+222-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:53:13-79
+223            android:taskAffinity="com.squareup.leakcanary.org.jitsi.meet"
+223-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:54:13-76
+224            android:theme="@style/leak_canary_LeakCanary.Base" >
+224-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:55:13-63
+225            <intent-filter>
+225-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:56:13-62:29
+226                <action android:name="android.intent.action.MAIN" />
+226-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:26:9-61
+226-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:26:17-58
+227
+228                <category android:name="android.intent.category.LAUNCHER" />
+228-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:27:9-69
+228-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/app/src/main/AndroidManifest.xml:27:19-66
+229                <!-- Android TV launcher intent -->
+230                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+230-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:61:17-86
+230-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:61:27-83
+231            </intent-filter>
+232        </activity-alias>
+233
+234        <activity
+234-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:65:9-71:68
+235            android:name="leakcanary.internal.RequestStoragePermissionActivity"
+235-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:66:13-80
+236            android:excludeFromRecents="true"
+236-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:67:13-46
+237            android:icon="@mipmap/leak_canary_icon"
+237-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:68:13-52
+238            android:label="@string/leak_canary_storage_permission_activity_label"
+238-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:69:13-82
+239            android:taskAffinity="com.squareup.leakcanary.org.jitsi.meet"
+239-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:70:13-76
+240            android:theme="@style/leak_canary_Theme.Transparent" />
+240-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:71:13-65
+241
+242        <receiver android:name="leakcanary.internal.NotificationReceiver" />
+242-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:73:9-77
+242-->[com.squareup.leakcanary:leakcanary-android-core:2.7] /Users/jassu/.gradle/caches/transforms-3/a3d0f81b4dcf584d16cc4bd93ddf1db2/transformed/jetified-leakcanary-android-core-2.7/AndroidManifest.xml:73:19-74
+243
+244        <activity
+244-->[com.google.android.gms:play-services-base:17.0.0] /Users/jassu/.gradle/caches/transforms-3/54e3f27db4a02146844bbefc67549d49/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+245            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+245-->[com.google.android.gms:play-services-base:17.0.0] /Users/jassu/.gradle/caches/transforms-3/54e3f27db4a02146844bbefc67549d49/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+246            android:exported="false"
+246-->[com.google.android.gms:play-services-base:17.0.0] /Users/jassu/.gradle/caches/transforms-3/54e3f27db4a02146844bbefc67549d49/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+247            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+247-->[com.google.android.gms:play-services-base:17.0.0] /Users/jassu/.gradle/caches/transforms-3/54e3f27db4a02146844bbefc67549d49/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+248
+249        <receiver
+249-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:29:9-33:20
+250            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+250-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:30:13-85
+251            android:enabled="true"
+251-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:31:13-35
+252            android:exported="false" >
+252-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:32:13-37
+253        </receiver>
+254
+255        <service
+255-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:35:9-38:40
+256            android:name="com.google.android.gms.measurement.AppMeasurementService"
+256-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:36:13-84
+257            android:enabled="true"
+257-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:37:13-35
+258            android:exported="false" />
+258-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:38:13-37
+259        <service
+259-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:39:9-43:72
+260            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+260-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:40:13-87
+261            android:enabled="true"
+261-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:41:13-35
+262            android:exported="false"
+262-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:42:13-37
+263            android:permission="android.permission.BIND_JOB_SERVICE" />
+263-->[com.google.android.gms:play-services-measurement:17.5.0] /Users/jassu/.gradle/caches/transforms-3/51c0b060d22151571abef2ed42685756/transformed/jetified-play-services-measurement-17.5.0/AndroidManifest.xml:43:13-69
+264
+265        <provider
+265-->[com.google.firebase:firebase-common:19.3.1] /Users/jassu/.gradle/caches/transforms-3/2b5b4b72639064b6a3d43b60ad36eaa7/transformed/jetified-firebase-common-19.3.1/AndroidManifest.xml:26:9-31:39
+266            android:name="com.google.firebase.provider.FirebaseInitProvider"
+266-->[com.google.firebase:firebase-common:19.3.1] /Users/jassu/.gradle/caches/transforms-3/2b5b4b72639064b6a3d43b60ad36eaa7/transformed/jetified-firebase-common-19.3.1/AndroidManifest.xml:27:13-77
+267            android:authorities="org.jitsi.meet.firebaseinitprovider"
+267-->[com.google.firebase:firebase-common:19.3.1] /Users/jassu/.gradle/caches/transforms-3/2b5b4b72639064b6a3d43b60ad36eaa7/transformed/jetified-firebase-common-19.3.1/AndroidManifest.xml:28:13-72
+268            android:directBootAware="true"
+268-->[com.google.firebase:firebase-common:19.3.1] /Users/jassu/.gradle/caches/transforms-3/2b5b4b72639064b6a3d43b60ad36eaa7/transformed/jetified-firebase-common-19.3.1/AndroidManifest.xml:29:13-43
+269            android:exported="false"
+269-->[com.google.firebase:firebase-common:19.3.1] /Users/jassu/.gradle/caches/transforms-3/2b5b4b72639064b6a3d43b60ad36eaa7/transformed/jetified-firebase-common-19.3.1/AndroidManifest.xml:30:13-37
+270            android:initOrder="100" />
+270-->[com.google.firebase:firebase-common:19.3.1] /Users/jassu/.gradle/caches/transforms-3/2b5b4b72639064b6a3d43b60ad36eaa7/transformed/jetified-firebase-common-19.3.1/AndroidManifest.xml:31:13-36
+271
+272        <meta-data
+272-->[com.google.android.gms:play-services-basement:17.0.0] /Users/jassu/.gradle/caches/transforms-3/9f00b08df08dba35f9eca7c5b6af7ccc/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+273            android:name="com.google.android.gms.version"
+273-->[com.google.android.gms:play-services-basement:17.0.0] /Users/jassu/.gradle/caches/transforms-3/9f00b08df08dba35f9eca7c5b6af7ccc/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+274            android:value="@integer/google_play_services_version" />
+274-->[com.google.android.gms:play-services-basement:17.0.0] /Users/jassu/.gradle/caches/transforms-3/9f00b08df08dba35f9eca7c5b6af7ccc/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+275
+276        <provider
+276-->[com.squareup.leakcanary:leakcanary-object-watcher-android:2.7] /Users/jassu/.gradle/caches/transforms-3/a1929c2d845cd9cd470837125403503a/transformed/jetified-leakcanary-object-watcher-android-2.7/AndroidManifest.xml:8:9-12:40
+277            android:name="leakcanary.internal.AppWatcherInstaller$MainProcess"
+277-->[com.squareup.leakcanary:leakcanary-object-watcher-android:2.7] /Users/jassu/.gradle/caches/transforms-3/a1929c2d845cd9cd470837125403503a/transformed/jetified-leakcanary-object-watcher-android-2.7/AndroidManifest.xml:9:13-79
+278            android:authorities="org.jitsi.meet.leakcanary-installer"
+278-->[com.squareup.leakcanary:leakcanary-object-watcher-android:2.7] /Users/jassu/.gradle/caches/transforms-3/a1929c2d845cd9cd470837125403503a/transformed/jetified-leakcanary-object-watcher-android-2.7/AndroidManifest.xml:10:13-72
+279            android:enabled="@bool/leak_canary_watcher_auto_install"
+279-->[com.squareup.leakcanary:leakcanary-object-watcher-android:2.7] /Users/jassu/.gradle/caches/transforms-3/a1929c2d845cd9cd470837125403503a/transformed/jetified-leakcanary-object-watcher-android-2.7/AndroidManifest.xml:11:13-69
+280            android:exported="false" />
+280-->[com.squareup.leakcanary:leakcanary-object-watcher-android:2.7] /Users/jassu/.gradle/caches/transforms-3/a1929c2d845cd9cd470837125403503a/transformed/jetified-leakcanary-object-watcher-android-2.7/AndroidManifest.xml:12:13-37
+281        <provider
+281-->[com.squareup.leakcanary:plumber-android:2.7] /Users/jassu/.gradle/caches/transforms-3/baf5dfb2c65416d7358857fd6dd4872f/transformed/jetified-plumber-android-2.7/AndroidManifest.xml:8:9-12:40
+282            android:name="leakcanary.internal.PlumberInstaller"
+282-->[com.squareup.leakcanary:plumber-android:2.7] /Users/jassu/.gradle/caches/transforms-3/baf5dfb2c65416d7358857fd6dd4872f/transformed/jetified-plumber-android-2.7/AndroidManifest.xml:9:13-64
+283            android:authorities="org.jitsi.meet.plumber-installer"
+283-->[com.squareup.leakcanary:plumber-android:2.7] /Users/jassu/.gradle/caches/transforms-3/baf5dfb2c65416d7358857fd6dd4872f/transformed/jetified-plumber-android-2.7/AndroidManifest.xml:10:13-69
+284            android:enabled="@bool/leak_canary_plumber_auto_install"
+284-->[com.squareup.leakcanary:plumber-android:2.7] /Users/jassu/.gradle/caches/transforms-3/baf5dfb2c65416d7358857fd6dd4872f/transformed/jetified-plumber-android-2.7/AndroidManifest.xml:11:13-69
+285            android:exported="false" />
+285-->[com.squareup.leakcanary:plumber-android:2.7] /Users/jassu/.gradle/caches/transforms-3/baf5dfb2c65416d7358857fd6dd4872f/transformed/jetified-plumber-android-2.7/AndroidManifest.xml:12:13-37
+286
+287        <service
+287-->[com.google.android.datatransport:transport-backend-cct:2.3.1] /Users/jassu/.gradle/caches/transforms-3/02bb24cd1ea3212316f030e374cfd11e/transformed/jetified-transport-backend-cct-2.3.1/AndroidManifest.xml:29:9-35:19
+288            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+288-->[com.google.android.datatransport:transport-backend-cct:2.3.1] /Users/jassu/.gradle/caches/transforms-3/02bb24cd1ea3212316f030e374cfd11e/transformed/jetified-transport-backend-cct-2.3.1/AndroidManifest.xml:30:13-103
+289            android:exported="false" >
+289-->[com.google.android.datatransport:transport-backend-cct:2.3.1] /Users/jassu/.gradle/caches/transforms-3/02bb24cd1ea3212316f030e374cfd11e/transformed/jetified-transport-backend-cct-2.3.1/AndroidManifest.xml:31:13-37
+290            <meta-data
+290-->[com.google.android.datatransport:transport-backend-cct:2.3.1] /Users/jassu/.gradle/caches/transforms-3/02bb24cd1ea3212316f030e374cfd11e/transformed/jetified-transport-backend-cct-2.3.1/AndroidManifest.xml:32:13-34:39
+291                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+291-->[com.google.android.datatransport:transport-backend-cct:2.3.1] /Users/jassu/.gradle/caches/transforms-3/02bb24cd1ea3212316f030e374cfd11e/transformed/jetified-transport-backend-cct-2.3.1/AndroidManifest.xml:33:17-94
+292                android:value="cct" />
+292-->[com.google.android.datatransport:transport-backend-cct:2.3.1] /Users/jassu/.gradle/caches/transforms-3/02bb24cd1ea3212316f030e374cfd11e/transformed/jetified-transport-backend-cct-2.3.1/AndroidManifest.xml:34:17-36
+293        </service>
+294        <service
+294-->[com.google.android.datatransport:transport-runtime:2.2.4] /Users/jassu/.gradle/caches/transforms-3/6ffde6dc128aaeb755a2ca0e0b783df6/transformed/jetified-transport-runtime-2.2.4/AndroidManifest.xml:26:9-30:19
+295            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+295-->[com.google.android.datatransport:transport-runtime:2.2.4] /Users/jassu/.gradle/caches/transforms-3/6ffde6dc128aaeb755a2ca0e0b783df6/transformed/jetified-transport-runtime-2.2.4/AndroidManifest.xml:27:13-117
+296            android:exported="false"
+296-->[com.google.android.datatransport:transport-runtime:2.2.4] /Users/jassu/.gradle/caches/transforms-3/6ffde6dc128aaeb755a2ca0e0b783df6/transformed/jetified-transport-runtime-2.2.4/AndroidManifest.xml:28:13-37
+297            android:permission="android.permission.BIND_JOB_SERVICE" >
+297-->[com.google.android.datatransport:transport-runtime:2.2.4] /Users/jassu/.gradle/caches/transforms-3/6ffde6dc128aaeb755a2ca0e0b783df6/transformed/jetified-transport-runtime-2.2.4/AndroidManifest.xml:29:13-69
+298        </service>
+299
+300        <receiver
+300-->[com.google.android.datatransport:transport-runtime:2.2.4] /Users/jassu/.gradle/caches/transforms-3/6ffde6dc128aaeb755a2ca0e0b783df6/transformed/jetified-transport-runtime-2.2.4/AndroidManifest.xml:32:9-34:40
+301            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+301-->[com.google.android.datatransport:transport-runtime:2.2.4] /Users/jassu/.gradle/caches/transforms-3/6ffde6dc128aaeb755a2ca0e0b783df6/transformed/jetified-transport-runtime-2.2.4/AndroidManifest.xml:33:13-132
+302            android:exported="false" />
+302-->[com.google.android.datatransport:transport-runtime:2.2.4] /Users/jassu/.gradle/caches/transforms-3/6ffde6dc128aaeb755a2ca0e0b783df6/transformed/jetified-transport-runtime-2.2.4/AndroidManifest.xml:34:13-37
+303    </application>
+304
+305</manifest>

@@ -1,0 +1,17 @@
+R_DEF: Internal format may change without notice
+local
+color red
+drawable ic_notification
+id jitsiView
+id jitsi_layout
+layout activity_jitsi_meet
+mipmap melp_logo
+string app_name
+string dropbox_app_key
+string ongoing_notification_action_hang_up
+string ongoing_notification_action_mute
+string ongoing_notification_action_unmute
+string ongoing_notification_channel_name
+string ongoing_notification_text
+string ongoing_notification_title
+style JitsiMeetActivityStyle

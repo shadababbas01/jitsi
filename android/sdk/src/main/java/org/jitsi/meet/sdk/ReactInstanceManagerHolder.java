@@ -44,7 +44,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-class ReactInstanceManagerHolder {
+public class ReactInstanceManagerHolder {
     private static final String TAG = ReactInstanceManagerHolder.class.getSimpleName();
 
     /**
@@ -60,7 +60,7 @@ class ReactInstanceManagerHolder {
 
     private static List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> nativeModules
-            = new ArrayList<>(Arrays.<NativeModule>asList(
+                = new ArrayList<>(Arrays.<NativeModule>asList(
                 new AndroidSettingsModule(reactContext),
                 new AppInfoModule(reactContext),
                 new AudioModeModule(reactContext),
@@ -72,6 +72,8 @@ class ReactInstanceManagerHolder {
                 new SplashScreenModule(reactContext),
                 new PictureInPictureModule(reactContext),
                 new ProximityModule(reactContext),
+                new OpenMelpModule(reactContext),
+                new OpenMelpChatModule(reactContext),
                 new org.jitsi.meet.sdk.net.NAT64AddrInfoModule(reactContext)));
 
         if (AudioModeModule.useConnectionService()) {
@@ -87,40 +89,40 @@ class ReactInstanceManagerHolder {
 
     static List<ReactPackage> getReactNativePackages() {
         List<ReactPackage> packages
-            = new ArrayList<>(Arrays.asList(
-            new com.reactnativecommunity.asyncstorage.AsyncStoragePackage(),
-            new com.ocetnik.timer.BackgroundTimerPackage(),
-            new com.calendarevents.RNCalendarEventsPackage(),
-            new com.corbt.keepawake.KCKeepAwakePackage(),
-            new com.facebook.react.shell.MainReactPackage(),
-            new com.reactnativecommunity.clipboard.ClipboardPackage(),
-            new com.reactnativecommunity.netinfo.NetInfoPackage(),
-            new com.reactnativepagerview.PagerViewPackage(),
-            new com.oblador.performance.PerformancePackage(),
-            new com.reactnativecommunity.slider.ReactSliderPackage(),
-            new com.brentvatne.react.ReactVideoPackage(),
-            new com.reactnativecommunity.webview.RNCWebViewPackage(),
-            new com.kevinresol.react_native_default_preference.RNDefaultPreferencePackage(),
-            new com.learnium.RNDeviceInfo.RNDeviceInfo(),
-            new com.oney.WebRTCModule.WebRTCModulePackage(),
-            new com.swmansion.gesturehandler.RNGestureHandlerPackage(),
-            new org.linusu.RNGetRandomValuesPackage(),
-            new com.rnimmersive.RNImmersivePackage(),
-            new com.swmansion.rnscreens.RNScreensPackage(),
-            new com.zmxv.RNSound.RNSoundPackage(),
-            new com.th3rdwave.safeareacontext.SafeAreaContextPackage(),
-            new com.horcrux.svg.SvgPackage(),
-            new org.wonday.orientation.OrientationPackage(),
-            new ReactPackageAdapter() {
-                @Override
-                public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-                    return ReactInstanceManagerHolder.createNativeModules(reactContext);
-                }
-                @Override
-                public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-                    return ReactInstanceManagerHolder.createViewManagers(reactContext);
-                }
-            }));
+                = new ArrayList<>(Arrays.asList(
+                new com.reactnativecommunity.asyncstorage.AsyncStoragePackage(),
+                new com.ocetnik.timer.BackgroundTimerPackage(),
+                new com.calendarevents.RNCalendarEventsPackage(),
+                new com.corbt.keepawake.KCKeepAwakePackage(),
+                new com.facebook.react.shell.MainReactPackage(),
+                new com.reactnativecommunity.clipboard.ClipboardPackage(),
+                new com.reactnativecommunity.netinfo.NetInfoPackage(),
+                new com.reactnativepagerview.PagerViewPackage(),
+                new com.oblador.performance.PerformancePackage(),
+                new com.reactnativecommunity.slider.ReactSliderPackage(),
+                new com.brentvatne.react.ReactVideoPackage(),
+                new com.reactnativecommunity.webview.RNCWebViewPackage(),
+                new com.kevinresol.react_native_default_preference.RNDefaultPreferencePackage(),
+                new com.learnium.RNDeviceInfo.RNDeviceInfo(),
+                new com.oney.WebRTCModule.WebRTCModulePackage(),
+                new com.swmansion.gesturehandler.RNGestureHandlerPackage(),
+                new org.linusu.RNGetRandomValuesPackage(),
+                new com.rnimmersive.RNImmersivePackage(),
+                new com.swmansion.rnscreens.RNScreensPackage(),
+                new com.zmxv.RNSound.RNSoundPackage(),
+                new com.th3rdwave.safeareacontext.SafeAreaContextPackage(),
+                new com.horcrux.svg.SvgPackage(),
+                new org.wonday.orientation.OrientationPackage(),
+                new ReactPackageAdapter() {
+                    @Override
+                    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+                        return ReactInstanceManagerHolder.createNativeModules(reactContext);
+                    }
+                    @Override
+                    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+                        return ReactInstanceManagerHolder.createViewManagers(reactContext);
+                    }
+                }));
 
         // AmplitudeReactNativePackage
         try {
@@ -170,16 +172,16 @@ class ReactInstanceManagerHolder {
             String eventName,
             @Nullable Object data) {
         ReactInstanceManager reactInstanceManager
-            = ReactInstanceManagerHolder.getReactInstanceManager();
+                = ReactInstanceManagerHolder.getReactInstanceManager();
 
         if (reactInstanceManager != null) {
             ReactContext reactContext
-                = reactInstanceManager.getCurrentReactContext();
+                    = reactInstanceManager.getCurrentReactContext();
 
             if (reactContext != null) {
                 reactContext
-                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit(eventName, data);
+                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit(eventName, data);
             }
         }
     }
@@ -197,7 +199,7 @@ class ReactInstanceManagerHolder {
     static <T extends NativeModule> T getNativeModule(
             Class<T> nativeModuleClass) {
         ReactContext reactContext
-            = reactInstanceManager != null
+                = reactInstanceManager != null
                 ? reactInstanceManager.getCurrentReactContext() : null;
 
         return reactContext != null
@@ -211,8 +213,8 @@ class ReactInstanceManagerHolder {
      */
     static Activity getCurrentActivity() {
         ReactContext reactContext
-            = reactInstanceManager != null
-            ? reactInstanceManager.getCurrentReactContext() : null;
+                = reactInstanceManager != null
+                ? reactInstanceManager.getCurrentReactContext() : null;
         return reactContext != null ? reactContext.getCurrentActivity() : null;
     }
 
@@ -228,7 +230,7 @@ class ReactInstanceManagerHolder {
      *
      * @param activity {@code Activity} current running Activity.
      */
-    static void initReactInstanceManager(Activity activity) {
+    public static void initReactInstanceManager(Activity activity) {
         if (reactInstanceManager != null) {
             return;
         }
@@ -244,7 +246,7 @@ class ReactInstanceManagerHolder {
         Log.d(TAG, "initializing RN with Activity");
 
         reactInstanceManager
-            = ReactInstanceManager.builder()
+                = ReactInstanceManager.builder()
                 .setApplication(activity.getApplication())
                 .setCurrentActivity(activity)
                 .setBundleAssetName("index.android.bundle")

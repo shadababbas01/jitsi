@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Build;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -263,6 +264,7 @@ class AudioModeModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void setAudioDevice(final String device) {
+        Log.e("Join---->", device);
         runInAudioThread(new Runnable() {
             @Override
             public void run() {
@@ -357,8 +359,8 @@ class AudioModeModule extends ReactContextBaseJavaModule {
         }
 
         if (mode == DEFAULT) {
-            selectedDevice = null;
-            userSelectedDevice = null;
+           // selectedDevice = null;
+           // userSelectedDevice = null;
 
             notifyDevicesChanged();
             return true;
@@ -374,7 +376,7 @@ class AudioModeModule extends ReactContextBaseJavaModule {
         } else if (headsetAvailable) {
             audioDevice = DEVICE_HEADPHONES;
         } else {
-            audioDevice = DEVICE_SPEAKER;
+            audioDevice = DEVICE_EARPIECE;
         }
 
         // Consider the user's selection
@@ -395,6 +397,17 @@ class AudioModeModule extends ReactContextBaseJavaModule {
 
         notifyDevicesChanged();
         return true;
+    }
+
+    @ReactMethod
+    public void setSpeakerOn(boolean on, final Promise promise) {
+        if (on) {
+            audioManager.setSpeakerphoneOn(true);
+            promise.resolve(true);
+        } else {
+            audioManager.setSpeakerphoneOn(false);
+            promise.resolve(false);
+        }
     }
 
     /**

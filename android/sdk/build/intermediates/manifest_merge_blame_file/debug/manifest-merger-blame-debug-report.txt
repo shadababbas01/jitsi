@@ -1,0 +1,147 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="org.jitsi.meet.sdk" >
+5
+6    <uses-sdk
+7        android:minSdkVersion="23"
+8        android:targetSdkVersion="32" />
+9
+10    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+10-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/debug/AndroidManifest.xml:3:5-77
+10-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/debug/AndroidManifest.xml:3:22-75
+11    <!-- XXX ACCESS_NETWORK_STATE is required by WebRTC. -->
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:6:5-79
+12-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.BLUETOOTH" />
+13-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:7:5-68
+13-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:7:22-65
+14    <uses-permission android:name="android.permission.CAMERA" />
+14-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:8:5-65
+14-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:8:22-62
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:9:5-67
+15-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:9:22-64
+16    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+16-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:10:5-75
+16-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:10:22-72
+17    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+17-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:11:5-80
+17-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:11:22-77
+18    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+18-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:12:5-71
+18-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:12:22-68
+19    <uses-permission android:name="android.permission.WAKE_LOCK" />
+19-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:13:5-68
+19-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:13:22-65
+20    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+20-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:14:5-76
+20-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:14:22-73
+21    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+21-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:15:5-77
+21-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:15:22-74
+22
+23    <uses-feature
+23-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:17:5-19:35
+24        android:glEsVersion="0x00020000"
+24-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:18:9-41
+25        android:required="true" />
+25-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:19:9-32
+26    <uses-feature
+26-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:20:5-22:36
+27        android:name="android.hardware.camera"
+27-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:21:9-47
+28        android:required="false" />
+28-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:22:9-33
+29    <uses-feature
+29-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:23:5-25:36
+30        android:name="android.hardware.camera.autofocus"
+30-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:24:9-57
+31        android:required="false" />
+31-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:25:9-33
+32
+33    <application
+33-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:27:5-67:19
+34        android:allowBackup="true"
+34-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:28:9-35
+35        android:label="@string/app_name"
+35-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:29:9-41
+36        android:supportsRtl="true"
+36-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:30:9-35
+37        android:usesCleartextTraffic="true" >
+37-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/debug/AndroidManifest.xml:5:18-53
+38        <activity
+38-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/debug/AndroidManifest.xml:6:9-110
+39            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+39-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/debug/AndroidManifest.xml:6:19-83
+40            android:exported="false" />
+40-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/debug/AndroidManifest.xml:6:84-108
+41        <activity
+41-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:31:9-38:57
+42            android:name="org.jitsi.meet.sdk.JitsiMeetActivity"
+42-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:32:13-46
+43            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+43-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:33:13-122
+44            android:launchMode="singleTask"
+44-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:34:13-44
+45            android:resizeableActivity="true"
+45-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:36:13-46
+46            android:supportsPictureInPicture="true"
+46-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:37:13-52
+47            android:theme="@style/JitsiMeetActivityStyle"
+47-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:35:13-58
+48            android:windowSoftInputMode="adjustResize" />
+48-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:38:13-55
+49
+50        <service
+50-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:40:9-47:19
+51            android:name="org.jitsi.meet.sdk.ConnectionService"
+51-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:41:13-46
+52            android:exported="true"
+52-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:43:13-36
+53            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE" >
+53-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:42:13-84
+54            <intent-filter>
+54-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:44:13-46:29
+55                <action android:name="android.telecom.ConnectionService" />
+55-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:45:17-76
+55-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:45:25-73
+56            </intent-filter>
+57        </service>
+58        <service
+58-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:49:9-51:63
+59            android:name="org.jitsi.meet.sdk.JitsiMeetOngoingConferenceService"
+59-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:50:13-80
+60            android:foregroundServiceType="mediaProjection" />
+60-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:51:13-60
+61
+62        <provider
+62-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:53:9-58:20
+63            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+63-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:54:13-83
+64            android:authorities="${applicationId}.fileprovider"
+64-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:55:13-64
+65            android:enabled="false"
+65-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:56:13-36
+66            tools:replace="android:authorities" >
+66-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:57:13-48
+67        </provider>
+68        <provider
+68-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:59:9-65:20
+69            android:name="androidx.startup.InitializationProvider"
+69-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:60:13-67
+70            android:authorities="${applicationId}.androidx-startup"
+70-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:61:13-68
+71            android:exported="false" >
+71-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:62:13-37
+72            <meta-data
+72-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:63:13-64:52
+73                android:name="org.jitsi.meet.sdk.JitsiInitializer"
+73-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:63:25-75
+74                android:value="androidx.startup" />
+74-->/Users/jassu/AndroidJitsi_8615/androidjitsi_8615/android/sdk/src/main/AndroidManifest.xml:64:17-49
+75        </provider>
+76    </application>
+77
+78</manifest>

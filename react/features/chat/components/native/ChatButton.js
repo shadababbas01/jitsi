@@ -53,6 +53,14 @@ class ChatButton extends AbstractButton<Props, *> {
     _isToggled() {
         return Boolean(this.props._unreadMessageCount);
     }
+    // added by jaswant
+    _getView(props) {
+        if (props.children) {
+            return this.props.children(this._onClick);
+        } else {
+           return super._getView(props);
+        }
+    }
 }
 
 /**

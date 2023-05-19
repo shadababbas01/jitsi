@@ -127,7 +127,7 @@ class RNConnectionService extends ReactContextBaseJavaModule {
 
         try {
             tm = (TelecomManager) ctx.getSystemService(Context.TELECOM_SERVICE);
-            tm.placeCall(address, extras);
+          //  tm.placeCall(address, extras);
         } catch (Throwable tr) {
             JitsiMeetLogger.e(tr, TAG + " error in startCall");
             if (tm != null) {

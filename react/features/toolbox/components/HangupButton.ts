@@ -45,6 +45,13 @@ class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
     _doHangup() {
         this._hangup();
     }
+    _getView(props) {
+        if (props.children) {
+            return this.props.children(this._onClick);
+        } else {
+            return super._getView(props);
+        }
+    }
 }
 
 export default translate(connect()(HangupButton));
