@@ -140,6 +140,11 @@ interface IProps {
      * If true, it tells the thumbnail that it needs to behave differently. E.g. React differently to a single tap.
      */
     tileView?: boolean;
+
+      /**
+     * The width of the thumnail.
+     */
+       width?: number,
 }
 
 /**
@@ -343,15 +348,16 @@ class Thumbnail extends PureComponent<IProps> {
             _raisedHand,
             _renderDominantSpeakerIndicator,
             height,
-            tileView
+            tileView,
+            width
         } = this.props;
         const styleOverrides = tileView ? {
-            aspectRatio: SQUARE_TILE_ASPECT_RATIO,
+            aspectRatio: width/height,
             flex: 0,
             height,
             maxHeight: null,
             maxWidth: null,
-            width: null
+            width: width
         } : null;
 
         return (
@@ -408,6 +414,29 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
         && participant?.role === PARTICIPANT_ROLE.MODERATOR;
     const { gifUrl: gifSrc } = getGifForParticipant(state, id ?? '');
     const mode = getGifDisplayMode(state);
+    const { tileViewDimensions } = state['features/filmstrip'];
+    //added by jaswant
+    var width1,height1
+    if(localParticipantId == id && false){
+        if(participantCount == 3){
+        const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
+        const widthToUse = width - (10 * 2);
+        if(width>height){
+            width1 = tileViewDimensions.thumbnailSize.width;
+            height1 = tileViewDimensions.thumbnailSize.height;
+        }else{
+        width1 = widthToUse;
+        height1 = tileViewDimensions.thumbnailSize.height;
+        }
+    }
+    else{
+        width1 = tileViewDimensions.thumbnailSize.width;
+        height1 = tileViewDimensions.thumbnailSize.height;
+    }
+     }else{
+         width1 = tileViewDimensions.thumbnailSize.width;
+         height1 = tileViewDimensions.thumbnailSize.height;
+     }
 
     return {
         _audioMuted: audioTrack?.muted ?? true,
@@ -422,7 +451,9 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
         _raisedHand: hasRaisedHand(participant),
         _renderDominantSpeakerIndicator: renderDominantSpeakerIndicator,
         _renderModeratorIndicator: renderModeratorIndicator,
-        _videoTrack: videoTrack
+        _videoTrack: videoTrack,
+        width: width1,
+        height: height1
     };
 }
 

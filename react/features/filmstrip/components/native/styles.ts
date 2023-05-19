@@ -172,7 +172,7 @@ export default {
 
     thumbnailDominantSpeaker: {
         borderWidth: 2,
-        borderColor: BaseTheme.palette.action01Hover
+        borderColor: '#ee4136' //added by jaswant
     },
 
     thumbnailGif: {

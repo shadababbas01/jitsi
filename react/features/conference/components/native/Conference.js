@@ -601,7 +601,7 @@ function _mapStateToProps(state) {
         _connecting: isConnecting(state),
         _filmstripVisible: isFilmstripVisible(state),
         _fullscreenEnabled: getFeatureFlag(state, FULLSCREEN_ENABLED, true),
-        _isOneToOneConference: Boolean(participantCount === 2),
+        _isOneToOneConference: Boolean(participantCount === 0),
         _isParticipantsPaneOpen: isOpen,
         _largeVideoParticipantId: state['features/large-video'].participantId,
         _pictureInPictureEnabled: getFeatureFlag(state, PIP_ENABLED),
