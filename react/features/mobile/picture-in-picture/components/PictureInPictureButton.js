@@ -49,7 +49,9 @@ class PictureInPictureButton extends AbstractButton<Props, *> {
      * @returns {React$Node}
      */
     render() {
-        return this.props._enabled ? super.render() : null;
+        //return this.props._enabled ? super.render() : null;
+        return true ? super.render() : null;
+    
     }
 }
 

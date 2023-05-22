@@ -12,6 +12,7 @@ import {
     getLocalParticipant,
     getParticipantByIdOrUndefined,
     getParticipantCount,
+    getParticipantCountWithFake,
     hasRaisedHand,
     isEveryoneModerator,
     isScreenShareParticipant
@@ -407,7 +408,7 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
     const audioTrack = getTrackByMediaTypeAndParticipant(tracks, MEDIA_TYPE.AUDIO, id);
     const videoTrack = getVideoTrackByParticipant(state, participant);
     const isScreenShare = videoTrack?.videoType === VIDEO_TYPE.DESKTOP;
-    const participantCount = getParticipantCount(state);
+    const participantCount = getParticipantCountWithFake(state);
     const renderDominantSpeakerIndicator = participant?.dominantSpeaker && participantCount > 2;
     const _isEveryoneModerator = isEveryoneModerator(state);
     const renderModeratorIndicator = tileView && !_isEveryoneModerator
@@ -417,7 +418,7 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
     const { tileViewDimensions } = state['features/filmstrip'];
     //added by jaswant
     var width1,height1
-    if(localParticipantId == id && false){
+    if(localParticipantId == id ){
         if(participantCount == 3){
         const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
         const widthToUse = width - (10 * 2);
