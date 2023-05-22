@@ -34,6 +34,8 @@ import androidx.annotation.Nullable;
 import org.jitsi.meet.sdk.JitsiMeet;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
+import org.jitsi.meet.sdk.JitsiMeetUserInfo;
+import org.jitsi.meet.sdk.incoming_call.IncomingCallInfo;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -148,6 +150,9 @@ public class MainActivity extends JitsiMeetActivity {
     }
 
     private void setJitsiMeetConferenceDefaultOptions() {
+        JitsiMeetUserInfo jitsiMeetUserInfo = new JitsiMeetUserInfo();
+        jitsiMeetUserInfo.setDisplayName("MobileUser");
+        jitsiMeetUserInfo.setAvatar(buildURL("https://picsum.photos/id/237/200/300"));
         // Set default options
         JitsiMeetConferenceOptions defaultOptions
             = new JitsiMeetConferenceOptions.Builder()
@@ -157,7 +162,11 @@ public class MainActivity extends JitsiMeetActivity {
             .setFeatureFlag("call-integration.enabled", false)
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
-           // .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJtZWxwX2NvbmYiLCJzdWIiOiJtZWV0Lm1lbHBhcHAuY29tIiwibW9kZXJhdG9yIjp0cnVlLCJpc3MiOiJtZWxwX2NvbmZfOCIsImNvbnRleHQiOnsiY2FsbGVlIjp7Im5hbWUiOiIiLCJpZCI6IjE1ODQzNjM4NTUiLCJhdmF0YXIiOiIiLCJlbWFpbCI6IiJ9LCJ1c2VyIjp7Im5hbWUiOiJKYXN3YW50IiwiaWQiOiIxNTg0MzYzODU1IiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG5tZWRpYS1mbS5tZWxwYXBwLmNvbS8tMjM3NDc1OTUzLzk3NjZAMTY2ODY2ODYwNzg0MC5qcGc_c2Vzc2lvbmlkPThmMXVuNHU1MGprMCZpc3RodW1iPTEiLCJlbWFpbCI6IjE1ODQzNjM4NTVAbWVscC5jb20ifSwiZ3JvdXAiOiJvbmV0b29uZSJ9LCJpYXQiOjE2ODQ0NzQwOTgsInJvb20iOiJkYmEyY2JiMTM5MzhlMjlhZWQ4NjAxZDQxMGQ0OTJiNCIsInJvb21OYW1lIjoiU3VyYWogUHJha2FzaCIsImV4cCI6MTY4NDUxNzI5OH0.XDV79v28N9dp3d6EA5Y5SZAXc_sR8v4f8P8pYOoZr_I")
+            .setTeamName("Melp Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion")
+            .setUserPicUrl("https://i.pinimg.com/originals/62/ae/fb/62aefb044922a5a847546e30b9036913.jpg")
+            .setIncomingCallInfo(new IncomingCallInfo("One_on_One","", "title",false))
+            .setGroupCall(false)
+            .setAudioOnly(true)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
         new Handler().postDelayed(new Runnable() {

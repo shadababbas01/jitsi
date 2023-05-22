@@ -35,10 +35,14 @@ class CalleeBoxView extends Component {
             );
         }else{
         return (
-            <View style = { styles.imageViewBoxStyle } >
+            avatarImageUrl?
+            (<View style = { styles.imageViewBoxStyle } >
             <Image source={{uri: avatarImageUrl}} style = { {flex: 1, width: undefined, height: undefined, borderRadius: 18, overflow: 'hidden'}} resizeMode = 'stretch'/>
-        </View>
-        );
+        </View>):
+         <View style = { styles.imageViewBoxStyle } >
+         <Image source={VIDEO_TEAMS_INACTIVE_ICON} style = { {flex: 1, width: undefined, height: undefined, borderRadius: 18, overflow: 'hidden'}} resizeMode = 'stretch'/>
+         </View>
+         ); 
         }
     }
 }

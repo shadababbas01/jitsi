@@ -22,7 +22,7 @@ import TileView from '../../../filmstrip/components/native/TileView';
 import { FILMSTRIP_SIZE } from '../../../filmstrip/constants';
 import { isFilmstripVisible } from '../../../filmstrip/functions.native';
 import {
-    getParticipants,
+    getParticipants,getParticipantCountRemoteOnly
 } from '../../../base/participants/functions';
 import LargeVideo from '../../../large-video/components/LargeVideo.native';
 import { KnockingParticipantList } from '../../../lobby/components/native';
@@ -59,6 +59,7 @@ import ConferenceOld from './Conferenceold';
 import { getFeatureFlag } from '../../../base/flags/functions';
 
 
+var totalUser = '0';
 
 /**
  * The type of the React {@code Component} props of {@link Conference}.
@@ -499,6 +500,8 @@ _setSpeakerState(speakerOn){
             return this._renderContentForReducedUi();
         }
 
+        OpenMelpChat.isAudioMode(true);
+
         return (
             !audioOnly ? <ConferenceOld />
             : (
@@ -649,7 +652,14 @@ function _mapStateToProps(state, ownProps) {
 
     const participants = getParticipants(state);
 
+    const participantsCount = getParticipantCountRemoteOnly(state);
+
     const _settings = state['features/base/settings'];
+if(totalUser!=participantsCount){
+    totalUser  = participantsCount
+NativeModules.NativeCallsNew.totalUsers(participantsCount);
+}
+
 
     return {
         ...abstractMapStateToProps(state),

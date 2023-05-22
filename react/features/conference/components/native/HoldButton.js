@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { NativeModules, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { translate } from '../../../base/i18n/functions';
-import { MEDIA_TYPE, setAudioMuted } from '../../../base/media/constants';
+import { MEDIA_TYPE } from '../../../base/media/constants';
+import { setAudioMuted,  } from '../../../base/media/actions';
 import { isLocalTrackMuted } from '../../../base/tracks/functions.any';
-import {
-    AUDIO_MUTE,
-    createToolbarEvent,
-    sendAnalytics
-} from '../../../analytics/functions';
-import {
-    getLocalParticipant,
-    participantUpdated
-} from '../../../base/participants/functions';
+// import {
+//     AUDIO_MUTE,
+//     createToolbarEvent,
+//     sendAnalytics
+// } from '../../../analytics/AnalyticsEvents';
+import { getLocalParticipant} from '../../../base/participants/functions';
+import { participantUpdated } from '../../../base/participants/actions';
+
 
 
 
@@ -119,7 +119,7 @@ class HoldButton extends Component {
      * @returns {void}
      */
     _setAudioMuted(audioMuted: boolean) {
-        sendAnalytics(createToolbarEvent(AUDIO_MUTE, { enable: audioMuted }));
+       // sendAnalytics(createToolbarEvent(AUDIO_MUTE, { enable: audioMuted }));
         this.props.dispatch(setAudioMuted(audioMuted, /* ensureTrack */ true));
 
         // FIXME: The old conference logic as well as the shared video feature

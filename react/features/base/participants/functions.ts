@@ -261,6 +261,20 @@ export function getParticipantCount(stateful: IStateful) {
     return remote.size - fakeParticipants.size - sortedRemoteVirtualScreenshareParticipants.size + (local ? 1 : 0);
 }
 
+// added by jaswant
+
+export function getParticipantCountRemoteOnly(stateful: IStateful) {
+    const state = toState(stateful);
+    const {
+        local,
+        remote,
+        fakeParticipants,
+        sortedRemoteVirtualScreenshareParticipants
+    } = state['features/base/participants'];
+
+    return remote.size - fakeParticipants.size - sortedRemoteVirtualScreenshareParticipants.size;
+}
+
 /**
  * Returns participant ID of the owner of a virtual screenshare participant.
  *

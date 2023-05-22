@@ -99,19 +99,27 @@ function Toolbox(props: Props) {
                 edges = { [ bottomEdge && 'bottom' ].filter(Boolean) }
                 pointerEvents = 'box-none'
                 style = { style }>
-                {!_iAmVisitor && <AudioMuteButton
-                    styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
-                }
-                {!_iAmVisitor && <VideoMuteButton
-                    styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
-                }
                 {additionalButtons.has('chat')
                       && <ChatButton
                           styles = { buttonStylesBorderless }
                           toggledStyles = { backgroundToggledStyle } />
                 }
+                {!_iAmVisitor && <AudioMuteButton
+                    styles = { buttonStylesBorderless }
+                    toggledStyles = { toggledButtonStyles } />
+                }
+                 { _endConferenceSupported
+                    ? <HangupMenuButton
+                        styles = { hangupMenuButtonStyles }
+                        toggledStyles = { toggledButtonStyles } />
+                    : <HangupButton
+                        styles = { hangupButtonStyles } />
+                }
+                {!_iAmVisitor && <VideoMuteButton
+                    styles = { buttonStylesBorderless }
+                    toggledStyles = { toggledButtonStyles } />
+                }
+              
                 {!_iAmVisitor && additionalButtons.has('screensharing')
                     && <ScreenSharingButton styles = { buttonStylesBorderless } />}
                 {additionalButtons.has('raisehand') && (_reactionsEnabled && !_iAmVisitor
@@ -126,13 +134,7 @@ function Toolbox(props: Props) {
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
                 }
-                { _endConferenceSupported
-                    ? <HangupMenuButton
-                        styles = { hangupMenuButtonStyles }
-                        toggledStyles = { toggledButtonStyles } />
-                    : <HangupButton
-                        styles = { hangupButtonStyles } />
-                }
+               
             </SafeAreaView>
         </View>
     );

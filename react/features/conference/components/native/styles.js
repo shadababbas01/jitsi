@@ -30,6 +30,8 @@ export const HOLD_DISABLED_ICON = require('../../../../../images/Icon-hold.png')
 export const BACK_ICON = require('../../../../../images/page1.png');
 export const ADD_ICON = require('../../../../../images/shape.png');
 export const CROSS_ICON = require('../../../../../images/cross.png');
+export const BLUETOOTH = require('../../../../../images/bluetooth.png');
+
 export const INSECURE_ROOM_NAME_LABEL_COLOR = BaseTheme.palette.actionDanger;
 
 const TITLE_BAR_BUTTON_SIZE = 24;
@@ -492,10 +494,8 @@ export default {
         height: hp('22.01%'),
         width: hp('22.01%'),
         borderRadius: 18,
-        borderWidth: 1,
-        padding: 4,
-        borderColor: 'rgb(238, 65, 54)'
-    },
+        padding: 4
+        },
 
     calleeInitialStyle: {
         fontSize: scaleFontSize(64),
@@ -654,7 +654,7 @@ export default {
         // marginTop: hp('1.36%'),
         fontSize: scaleFontSize(8),
         textAlign: 'center',
-        color: 'rgb(64,58,58)',
+        color: 'white',
         fontFamily: 'AkzidenzGroteskPro-Bold'
     },
 
@@ -662,7 +662,7 @@ export default {
         // marginTop: hp('1.36%'),
         fontSize: scaleFontSize(8),
         textAlign: 'center',
-        color: 'rgb(229, 232, 235)',
+        color: 'rgb(34,32,32)',
         fontFamily: 'AkzidenzGroteskPro-Bold'
     },
 

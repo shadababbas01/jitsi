@@ -23,10 +23,25 @@ import styles, { DESKTOP_ENABLED_ICON, DESKTOP_DISABLED_ICON, ADD_CALL_ICON,
     AUDIO_MUTE_TEAMS_INACTIVE_ICON,
     AUDIO_MUTE_ONE_TO_ONE_INACTIVE_ICON,
     VIDEO_ONE_TO_ONE_INACTIVE_ICON,
-    VIDEO_TEAMS_INACTIVE_ICON } from './styles';
+    VIDEO_TEAMS_INACTIVE_ICON ,
+    BLUETOOTH} from './styles';
 import { ColorPalette } from '../../../base/styles/components/styles/ColorPalette';
 import HoldButton from './HoldButton';
 import {NativeModules} from 'react-native';
+import AudioRoutePickerDialog from '../../../mobile/audio-mode/components/AudioRoutePickerDialog';
+import { translate } from '../../../base/i18n/functions';
+import { connect } from 'react-redux';
+import { openSheet } from '../../../base/dialog/actions';
+
+type Props = AbstractButtonProps & {
+
+    /**
+    * The Redux dispatch function.
+    */
+    dispatch: Dispatch<any>
+};
+
+
 
 
 
@@ -42,9 +57,13 @@ function isPlatformiOS(): boolean {
 }
 const { AudioMode, OpenMelpChat } = NativeModules;
 
-class CustomisedToolBox extends Component {
+class CustomisedToolBox extends Component<Props, *> {
     _showAttendess: () =>void;
     _handleSpeakerClick(){
+
+        if(this.props._devices.length>2){
+            this.props.dispatch(openSheet(AudioRoutePickerDialog));
+        }else{
         const { setSpeakerState, speakerOn } = this.props;
 
         if(AudioMode.setSpeakerOn && setSpeakerState){
@@ -56,6 +75,7 @@ class CustomisedToolBox extends Component {
 
             });
         }
+    }
     }
 
     _showAttendees() {
@@ -123,6 +143,36 @@ class CustomisedToolBox extends Component {
         const videoIconInactiveSource =
         this.props.isTeamsCall ? VIDEO_TEAMS_INACTIVE_ICON : VIDEO_ONE_TO_ONE_INACTIVE_ICON;
 
+        const speakerOnOffMessage =
+        this.props.speakerOn ? "SPEAKER ON" : "SPEAKER OFF";
+
+    var text = "SPEAKER OFF";
+    var icon = SPEAKER_DISABLED_ICON ;
+    
+    const devices = this.props._devices;
+    for(let i = 0; i < devices.length; i++){
+        let singleObject = devices[i];
+        let selected = singleObject.selected;
+        let type = singleObject.type;
+        if(type === 'BLUETOOTH' && selected){
+            text = 'BLUETOOTH';
+            icon = BLUETOOTH;
+    
+        }else if(type === 'HEADPHONES' && selected){
+            text = 'HEADPHONES';
+            icon = BLUETOOTH;
+    
+        }else if(type === 'SPEAKER' && selected){
+            text = 'SPEAKER ON';
+            icon = SPEAKER_ENABLED_ICON;
+    
+        }else if(type === 'EARPIECE' && selected){
+            text = 'SPEAKER OFF';
+            icon = SPEAKER_DISABLED_ICON;
+        }
+    }
+
+
         return (
             <View style = { styles.toolBoxContainerStyle }>
                 <View style = { styles.toolBoxSectionContainerStyle} >
@@ -177,8 +227,10 @@ class CustomisedToolBox extends Component {
                              {(_onClick) =>
                             (<TouchableHighlight disabled = {isHoldOn} onPress={this._handleSpeakerClick} underlayColor={ColorPalette.transparent}>
                                 <View style = { styles.toolBoxFunctionContainerStyle }>
-                                    <Image style = { styles.speakerIconStyle } source = {isHoldOn ? SPEAKER_DISABLED_ICON : speakerOn ? SPEAKER_ENABLED_ICON : SPEAKER_DISABLED_ICON}/>
-                                    <Text style = { toolBoxInactiveStyle }>SPEAKER ON</Text>
+                                <Image style={styles.speakerIconStyle} source={icon} />
+                                            <Text style={toolBoxInactiveStyle}>{text}</Text>
+                                    {/* <Image style = { styles.speakerIconStyle } source = {isHoldOn ? SPEAKER_DISABLED_ICON : speakerOn ? SPEAKER_ENABLED_ICON : SPEAKER_DISABLED_ICON}/>
+                                    <Text style = { toolBoxInactiveStyle }>SPEAKER ON</Text> */}
                                 </View>
                             </TouchableHighlight>)
                             }
@@ -231,4 +283,9 @@ class CustomisedToolBox extends Component {
     }
 }
 
-export default CustomisedToolBox;
+function _mapStateToProps(state) {
+    return {
+        _devices: state['features/mobile/audio-mode'].devices
+    };
+}
+export default translate(connect(_mapStateToProps)(CustomisedToolBox));

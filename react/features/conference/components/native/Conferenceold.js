@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { appNavigate } from '../../../app/actions';
 import { FULLSCREEN_ENABLED, PIP_ENABLED } from '../../../base/flags/constants';
 import { getFeatureFlag } from '../../../base/flags/functions';
-import { getParticipantCount } from '../../../base/participants/functions';
+import { getParticipantCount, getParticipantCountRemoteOnly } from '../../../base/participants/functions';
 import Container from '../../../base/react/components/native/Container';
 import LoadingIndicator from '../../../base/react/components/native/LoadingIndicator';
 import TintedView from '../../../base/react/components/native/TintedView';
@@ -59,6 +59,7 @@ import TitleBar from './TitleBar';
 import { EXPANDED_LABEL_TIMEOUT } from './constants';
 import styles from './styles';
 
+var totalUser = '0';
 
 /**
  * The type of the React {@code Component} props of {@link Conference}.
@@ -177,6 +178,7 @@ type State = {
      */
     visibleExpandedLabel: ?string
 }
+const { JSCommunicateComponent, AudioMode, OpenMelpChat } = NativeModules;
 
 /**
  * The conference page of the mobile (i.e. React Native) application.
@@ -405,6 +407,7 @@ class Conference extends AbstractConference<Props, State> {
             alwaysOnTitleBarStyles = styles.alwaysOnTitleBar;
 
         }
+        OpenMelpChat.isAudioMode(false);
 
         return (
             <>
@@ -587,10 +590,15 @@ function _mapStateToProps(state) {
     const { backgroundColor } = state['features/dynamic-branding'];
     const { startCarMode } = state['features/base/settings'];
     const { enabled: audioOnlyEnabled } = state['features/base/audio-only'];
-    const participantCount = getParticipantCount(state);
+    const participantCount = getParticipantCountRemoteOnly(state);
     const brandingStyles = backgroundColor ? {
         backgroundColor
     } : undefined;
+
+    if(totalUser!=participantCount){
+        totalUser  = participantCount
+    NativeModules.NativeCallsNew.totalUsers(participantCount);
+}
 
     return {
         ...abstractMapStateToProps(state),

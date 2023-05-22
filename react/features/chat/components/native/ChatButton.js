@@ -9,6 +9,7 @@ import { navigate } from '../../../mobile/navigation/components/conference/Confe
 import { screen } from '../../../mobile/navigation/routes';
 import { getUnreadPollCount } from '../../../polls/functions';
 import { getUnreadCount } from '../../functions';
+import {NativeModules} from 'react-native';
 
 type Props = AbstractButtonProps & {
 
@@ -39,9 +40,9 @@ class ChatButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
-        this.props._isPollsDisabled
-            ? navigate(screen.conference.chat)
-            : navigate(screen.conference.chatandpolls.main);
+       // this.props._isPollsDisabled  ? navigate(screen.conference.chat) : navigate(screen.conference.chatandpolls.main);
+       NativeModules.NativeCallsNew.OpenChat();
+
     }
 
     /**

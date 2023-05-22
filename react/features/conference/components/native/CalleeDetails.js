@@ -4,7 +4,8 @@ import styles from './styles';
 import CallTimer from './CallTimer';
 import {
     getParticipants,
-    getLocalParticipant
+    getLocalParticipant,
+    getParticipantCountRemoteOnly
 } from '../../../base/participants/functions';
 import { connect } from 'react-redux';
 import CalleeBoxView from './CalleeBoxView';
@@ -124,10 +125,12 @@ function _mapStateToProps(state: Object, ownProps: Props) {
     for(const [id, participant] of participantsMap){
         participants.push(participant);
     }
+    const participantsCount = getParticipantCountRemoteOnly(state);
+
     
-    if(totalUser!=participants.length){
-        totalUser = participants.length;
-    NativeModules.NativeCallsNew.totalUsers(participants.length);
+    if(totalUser!=participantsCount){
+        totalUser = participantsCount;
+    NativeModules.NativeCallsNew.totalUsers(participantsCount);
     }
 
 
