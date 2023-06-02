@@ -36,6 +36,8 @@ import CollapsibleList from './CollapsibleList';
 import MeetingParticipantItem from './MeetingParticipantItem';
 // @ts-ignore
 import styles from './styles';
+import {NativeModules} from 'react-native';
+
 
 
 interface IProps extends WithTranslation {
@@ -151,11 +153,15 @@ class MeetingParticipantList extends PureComponent<IProps> {
      * @returns {void}
      */
     _onInvite() {
-        const { _isAddPeopleFeatureEnabled, dispatch } = this.props;
 
-        setShareDialogVisiblity(_isAddPeopleFeatureEnabled, dispatch);
+        // added by jaswant
+        NativeModules.NativeCallsNew.addToCall();
 
-        dispatch(doInvitePeople());
+        // const { _isAddPeopleFeatureEnabled, dispatch } = this.props;
+
+        // setShareDialogVisiblity(_isAddPeopleFeatureEnabled, dispatch);
+
+        // dispatch(doInvitePeople());
     }
 
     /**
@@ -248,12 +254,13 @@ class MeetingParticipantList extends PureComponent<IProps> {
                             accessibilityLabel = 'participantsPane.actions.invite'
                             disabled = { shareDialogVisible }
                             // eslint-disable-next-line react/jsx-no-bind
-                            icon = { () => (
-                                <Icon
-                                    color = { color }
-                                    size = { 20 }
-                                    src = { IconAddUser } />
-                            ) }
+                            // added by jaswant
+                            // icon = { () => (
+                            //     <Icon
+                            //         color = { color }
+                            //         size = { 0 }
+                            //         src = { IconAddUser } />
+                            // ) }
                             labelKey = 'participantsPane.actions.invite'
                             onClick = { this._onInvite }
                             style = { styles.inviteButton }

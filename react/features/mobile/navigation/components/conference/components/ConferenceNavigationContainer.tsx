@@ -142,6 +142,7 @@ const ConferenceNavigationContainer = () => {
                     name = { screen.conference.liveStream }
                     options = {{
                         ...liveStreamScreenOptions,
+                        headerTitleAlign: 'center', // added by jaswant
                         title: t('liveStreaming.title')
                     }} />
                 <ConferenceStack.Screen

@@ -65,7 +65,7 @@ export { default as IconPin } from './pin.svg';
 export { default as IconPinned } from './pinned.svg';
 export { default as IconPlay } from './play.svg';
 export { default as IconPlus } from './plus.svg';
-export { default as IconRaiseHand } from './raise-hand.svg';
+export { default as IconRaiseHand } from './raisehand.svg';
 export { default as IconRecord } from './record.svg';
 export { default as IconRecordAccount } from './account-record.svg';
 export { default as IconRecordContact } from './contact-record.svg';

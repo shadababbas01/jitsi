@@ -156,12 +156,13 @@ public class MainActivity extends JitsiMeetActivity {
         // Set default options
         JitsiMeetConferenceOptions defaultOptions
             = new JitsiMeetConferenceOptions.Builder()
-           // .setServerURL(buildURL("https://devmeet.melp.us/"))
-            .setServerURL(buildURL(defaultURL))
+            .setServerURL(buildURL("https://devmeet.melp.us/"))
+           // .setServerURL(buildURL(defaultURL))
             .setFeatureFlag("welcomepage.enabled", false)
             .setFeatureFlag("call-integration.enabled", false)
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
+            .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJtZWxwX2NvbmYiLCJzdWIiOiJtZWV0Lm1lbHBhcHAuY29tIiwibW9kZXJhdG9yIjp0cnVlLCJpc3MiOiJtZWxwX2NvbmZfOCIsImNvbnRleHQiOnsiY2FsbGVlIjp7Im5hbWUiOiIiLCJpZCI6IjE1ODQzNjM4NTUiLCJhdmF0YXIiOiIiLCJlbWFpbCI6IiJ9LCJ1c2VyIjp7Im5hbWUiOiJKYXN3YW50IiwiaWQiOiIxNTg0MzYzODU1IiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG5tZWRpYS1mbS5tZWxwYXBwLmNvbS8tMjM3NDc1OTUzLzk3NjZAMTY2ODY2ODYwNzg0MC5qcGc_c2Vzc2lvbmlkPThmMXVuNHU1MGprMCZpc3RodW1iPTEiLCJlbWFpbCI6IjE1ODQzNjM4NTVAbWVscC5jb20ifSwiZ3JvdXAiOiJvbmV0b29uZSJ9LCJpYXQiOjE2ODU2ODMwMzIsInJvb20iOiI3NzA4ZDNiNDljZDMyMDM2Yjc5NmJlNmU3ZDU2NWZlYSIsInJvb21OYW1lIjoiU2hhZGFiICIsImV4cCI6MTY4NTcyNjIzMn0.AJXPtRLHk7jtlZhD3qWohwC3yGxSZQNjfDnf-ufJ4wc")
             .setTeamName("Melp Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion")
             .setUserPicUrl("https://i.pinimg.com/originals/62/ae/fb/62aefb044922a5a847546e30b9036913.jpg")
             .setIncomingCallInfo(new IncomingCallInfo("One_on_One","", "title",false))
@@ -174,7 +175,7 @@ public class MainActivity extends JitsiMeetActivity {
             public void run() {
                 JitsiMeetConferenceOptions defaultOptions1
                         = new JitsiMeetConferenceOptions.Builder()
-                        .setRoom("test_melp")
+                        .setRoom("7708d3b49cd32036b796be6e7d565fea")
                         .build();
                 join(defaultOptions1);
             }
