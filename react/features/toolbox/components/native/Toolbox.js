@@ -102,37 +102,48 @@ function Toolbox(props: Props) {
                 {additionalButtons.has('chat')
                       && <ChatButton
                           styles = { buttonStylesBorderless }
-                          toggledStyles = { backgroundToggledStyle } />
+                         />
                 }
                 {!_iAmVisitor && <AudioMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
                 }
-                 { _endConferenceSupported
+                 {/* added by jaswant { false &&_endConferenceSupported
                     ? <HangupMenuButton
                         styles = { hangupMenuButtonStyles }
                         toggledStyles = { toggledButtonStyles } />
                     : <HangupButton
                         styles = { hangupButtonStyles } />
+                } */
+                
+                <HangupButton
+                        styles = { hangupButtonStyles } />
                 }
                 {!_iAmVisitor && <VideoMuteButton
                     styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
+                     />
                 }
+              { !additionalButtons.has('raisehand') && <RaiseHandButton styles = { buttonStylesBorderless }/>}
+
               
-                {!_iAmVisitor && additionalButtons.has('screensharing')
-                    && <ScreenSharingButton styles = { buttonStylesBorderless } />}
-                {additionalButtons.has('raisehand') && (_reactionsEnabled && !_iAmVisitor
+                {!_iAmVisitor && additionalButtons.has('screensharing') && <ScreenSharingButton styles = { buttonStylesBorderless } />}
+
+
+  { additionalButtons.has('raisehand') && !_iAmVisitor && 
+                     <ReactionsMenuButton styles = { buttonStylesBorderless }/>
+                    }
+
+                {/* {additionalButtons.has('raisehand') && (_reactionsEnabled && !_iAmVisitor
                     ? <ReactionsMenuButton
                         styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />
+                         />
                     : <RaiseHandButton
                         styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />)}
+                        />)} */}
                 {additionalButtons.has('tileview') && <TileViewButton styles = { buttonStylesBorderless } />}
                 {!_iAmVisitor && <OverflowMenuButton
                     styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
+                    />
                 }
                
             </SafeAreaView>

@@ -18,7 +18,7 @@ const toolbarButton = {
     justifyContent: 'center',
     marginHorizontal: 6,
     marginVertical: 6,
-    width: 60
+    width: 50
 };
 
 /**
@@ -27,7 +27,7 @@ const toolbarButton = {
 const toolbarButtonIcon = {
     alignSelf: 'center',
     color: BaseTheme.palette.icon04,
-    fontSize: 40
+    fontSize: 30
 };
 
 
@@ -99,10 +99,12 @@ const styles = {
     toolboxContainer: {
         backgroundColor: BaseTheme.palette.uiBackground,
         flexDirection: 'column',
+        alignItems: 'center',  
         maxWidth: 580,
         marginLeft: 'auto',
         marginRight: 'auto',
         width: '100%'
+       
     }
 };
 
