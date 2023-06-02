@@ -70,6 +70,12 @@ class CustomisedToolBox extends Component<Props, *> {
             AudioMode.setSpeakerOn(!speakerOn)
             .then((val)=>{
                 this.props.setSpeakerState(!speakerOn)
+                if(speakerOn){
+                    AudioMode.setAudioDevice("SPEAKER");
+                }else{
+                    AudioMode.setAudioDevice("EARPIECE");
+
+                }
             })
             .catch(err=>{
 
@@ -108,7 +114,9 @@ class CustomisedToolBox extends Component<Props, *> {
 
 
    }
-
+   componentDidMount() {
+    AudioMode.setAudioDevice("EARPIECE");
+}
 
 
     setHoldState(isHoldOn) {

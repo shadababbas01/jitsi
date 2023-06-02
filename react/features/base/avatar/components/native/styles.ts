@@ -13,7 +13,7 @@ export default {
     avatarContainer: (size: number = DEFAULT_SIZE) => {
         return {
             alignItems: 'center',
-            borderRadius: size,
+            borderRadius: 5, // added by jaswant
             height: size,
             justifyContent: 'center',
             overflow: 'hidden',
