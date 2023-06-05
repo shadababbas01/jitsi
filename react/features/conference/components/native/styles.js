@@ -31,6 +31,7 @@ export const BACK_ICON = require('../../../../../images/page1.png');
 export const ADD_ICON = require('../../../../../images/shape.png');
 export const CROSS_ICON = require('../../../../../images/cross.png');
 export const BLUETOOTH = require('../../../../../images/bluetooth.png');
+export const ENCRYPTED_IMG = require('../../../../../images/test.png');
 
 export const INSECURE_ROOM_NAME_LABEL_COLOR = BaseTheme.palette.actionDanger;
 

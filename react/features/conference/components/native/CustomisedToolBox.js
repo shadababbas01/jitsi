@@ -71,9 +71,9 @@ class CustomisedToolBox extends Component<Props, *> {
             .then((val)=>{
                 this.props.setSpeakerState(!speakerOn)
                 if(speakerOn){
-                    AudioMode.setAudioDevice("SPEAKER");
-                }else{
                     AudioMode.setAudioDevice("EARPIECE");
+                }else{
+                    AudioMode.setAudioDevice("SPEAKER");
 
                 }
             })

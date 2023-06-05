@@ -43,6 +43,8 @@ import PinnedIndicator from './PinnedIndicator';
 import RaisedHandIndicator from './RaisedHandIndicator';
 import ScreenShareIndicator from './ScreenShareIndicator';
 import styles, { AVATAR_SIZE } from './styles';
+import { isToolboxVisible } from '../../../toolbox/functions.native';
+
 
 /**
  * Thumbnail component's property types.
@@ -83,6 +85,11 @@ interface IProps {
      * Shared video local participant owner.
      */
     _localVideoOwner: boolean;
+
+    /**
+     * The indicator which determines whether the Toolbox is visible.
+     */
+     _toolboxVisible: boolean,
 
     /**
      * The ID of the participant obtain from the participant object in Redux.
@@ -173,9 +180,9 @@ class Thumbnail extends PureComponent<IProps> {
      * @returns {void}
      */
     _onClick() {
-        const { _participantId, _pinned, dispatch, tileView } = this.props;
+        const { _participantId, _pinned, dispatch, tileView, _toolboxVisible } = this.props;
 
-        if (tileView) {
+        if (tileView && !_toolboxVisible) {
             dispatch(toggleToolboxVisible());
         } else {
             dispatch(pinParticipant(_pinned ? null : _participantId));
@@ -192,13 +199,15 @@ class Thumbnail extends PureComponent<IProps> {
 
         if (_fakeParticipant && _localVideoOwner) {
             dispatch(showSharedVideoMenu(_participantId));
-        } else if (!_fakeParticipant) {
-            if (_local) {
-                dispatch(showConnectionStatus(_participantId));
-            } else {
-                dispatch(showContextMenuDetails(_participantId));
-            }
-        } // else no-op
+        } 
+        // else if (!_fakeParticipant) {
+        //     if (_local) {
+        //         dispatch(showConnectionStatus(_participantId));
+        //     } else {
+        //         dispatch(showContextMenuDetails(_participantId));
+        //     }
+        // }  added by jaswant
+        // else no-op
     }
 
     /**
@@ -239,7 +248,7 @@ class Thumbnail extends PureComponent<IProps> {
                     style = { ((audioMuted || renderModeratorIndicator) && styles.bottomIndicatorsContainer
                         ) as StyleType }>
                     { audioMuted && !_isVirtualScreenshare && <AudioMutedIndicator /> }
-                    { !tileView && _pinned && <PinnedIndicator />}
+                    {/* { !tileView && _pinned && <PinnedIndicator />} */}
                     { renderModeratorIndicator && !_isVirtualScreenshare && <ModeratorIndicator />}
                     { !tileView && (isScreenShare || _isVirtualScreenshare) && <ScreenShareIndicator /> }
                 </Container>
@@ -411,8 +420,7 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
     const participantCount = getParticipantCountWithFake(state);
     const renderDominantSpeakerIndicator = participant?.dominantSpeaker && participantCount > 2;
     const _isEveryoneModerator = isEveryoneModerator(state);
-    const renderModeratorIndicator = tileView && !_isEveryoneModerator
-        && participant?.role === PARTICIPANT_ROLE.MODERATOR;
+    const renderModeratorIndicator = participant?.role === PARTICIPANT_ROLE.MODERATOR;
     const { gifUrl: gifSrc } = getGifForParticipant(state, id ?? '');
     const mode = getGifDisplayMode(state);
     const { tileViewDimensions } = state['features/filmstrip'];
@@ -454,7 +462,9 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
         _renderModeratorIndicator: renderModeratorIndicator,
         _videoTrack: videoTrack,
         width: width1,
-        height: height1
+        height: height1,
+        _toolboxVisible: isToolboxVisible(state),
+
     };
 }
 

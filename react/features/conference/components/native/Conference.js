@@ -250,6 +250,8 @@ class Conference extends AbstractConference<Props, State> {
 
         const { audioOnly} = this.props;
         if(audioOnly){
+            console.log("Audio Only---constructor1>","EARPIECE");
+
             AudioMode.setAudioDevice("EARPIECE");
 
         }else{

@@ -33,8 +33,8 @@
         "car": "Car Audio",
         "headphones": "Headphones",
         "none": "No audio devices available",
-        "phone": "Phone",
-        "speaker": "Speaker"
+        "phone": "Speaker Off",
+        "speaker": "Speaker On"
     },
     "audioOnly": {
         "audioOnly": "Low bandwidth"
@@ -1107,8 +1107,8 @@
             "closeParticipantsPane": "Close participants pane",
             "collapse": "Collapse",
             "document": "Toggle shared document",
-            "documentClose": "Close shared document",
-            "documentOpen": " Open MelpPad",
+            "documentClose": "Close WhiteBoard & Notes",
+            "documentOpen": " Open WhiteBoard & Notes",
             "download": "Download our apps",
             "embedMeeting": "Embed meeting",
             "endConference": "End meeting for all",
@@ -1192,8 +1192,8 @@
         "closeReactionsMenu": "Close reactions menu",
         "disableNoiseSuppression": "Disable noise suppression",
         "disableReactionSounds": "You can disable reaction sounds for this meeting",
-        "documentClose": "Close MelpPad",
-        "documentOpen": "Open MelpPad",
+        "documentClose": "Close WhiteBoard & Notes",
+        "documentOpen": "Open WhiteBoard & Notes",
         "download": "Download our apps",
         "e2ee": "End-to-End Encryption",
         "embedMeeting": "Embed meeting",
@@ -1341,7 +1341,7 @@
         "flip": "Flip",
         "grantModerator": "Grant Moderator Rights",
         "hideSelfView": "Hide self view",
-        "kick": "Kick out",
+        "kick": "Remove Participant",
         "mirrorVideo": "Mirror my video",
         "moderator": "Moderator",
         "mute": "Participant is muted",
