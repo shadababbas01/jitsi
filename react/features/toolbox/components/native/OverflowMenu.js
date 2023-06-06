@@ -138,7 +138,7 @@ class OverflowMenu extends PureComponent<Props, State> {
                 {!_reactionsEnabled && !toolbarButtons.has('raisehand') && <RaiseHandButton { ...buttonProps } />}
                 {/* <Divider style = { styles.divider } /> */}
                 {/* <SecurityDialogButton { ...buttonProps } /> */}
-                <RecordButton { ...buttonProps } />
+                {/* <RecordButton { ...buttonProps } /> */}
                 <LiveStreamButton { ...buttonProps } />
                 {/* <LinkToSalesforceButton { ...buttonProps } /> */}
                 {/* <Divider style = { styles.divider } /> */}

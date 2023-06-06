@@ -51,7 +51,7 @@ const AlwaysOnLabels = ({ createOnPress }: Props) => {
         <TouchableOpacity
             hitSlop = { LabelHitSlop }
             onPress = { createOnPress(LABEL_ID_RAISED_HANDS_COUNT) } >
-            <RaisedHandsCountLabel />
+            {/* <RaisedHandsCountLabel />  added by jaswant */}
         </TouchableOpacity>
         <TouchableOpacity
             hitSlop = { LabelHitSlop }

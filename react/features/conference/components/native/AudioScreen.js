@@ -5,9 +5,9 @@ const { OpenMelpChat } = NativeModules;
 class AudioScreen extends Component {
 
     componentDidMount(){
-        if(OpenMelpChat && OpenMelpChat.isAudioMode){
-            OpenMelpChat.isAudioMode(true);
-        }
+        // if(OpenMelpChat && OpenMelpChat.isAudioMode){
+        //     OpenMelpChat.isAudioMode(true);
+        // }
     }
 
     render() {

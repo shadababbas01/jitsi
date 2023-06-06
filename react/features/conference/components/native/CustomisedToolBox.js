@@ -179,6 +179,7 @@ class CustomisedToolBox extends Component<Props, *> {
             icon = SPEAKER_DISABLED_ICON;
         }
     }
+    OpenMelpChat.isAudioMode(true);
 
 
         return (

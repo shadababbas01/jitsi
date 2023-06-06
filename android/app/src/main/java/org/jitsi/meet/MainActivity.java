@@ -156,7 +156,7 @@ public class MainActivity extends JitsiMeetActivity {
         // Set default options
         JitsiMeetConferenceOptions defaultOptions
             = new JitsiMeetConferenceOptions.Builder()
-           // .setServerURL(buildURL("https://devmeet.melp.us/"))
+          //  .setServerURL(buildURL("https://devmeet.melp.us/"))
             .setServerURL(buildURL(defaultURL))
             .setFeatureFlag("welcomepage.enabled", false)
             .setFeatureFlag("call-integration.enabled", false)
@@ -175,7 +175,7 @@ public class MainActivity extends JitsiMeetActivity {
             public void run() {
                 JitsiMeetConferenceOptions defaultOptions1
                         = new JitsiMeetConferenceOptions.Builder()
-                        .setRoom("e26e1f47dbdeba1cb6283debceabc6b7")
+                        .setRoom("e26e1f47dbdeba1cb6283debceabc6b7111")
                         .build();
                 join(defaultOptions1);
             }

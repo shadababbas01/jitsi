@@ -501,9 +501,6 @@ _setSpeakerState(speakerOn){
         if (_reducedUI) {
             return this._renderContentForReducedUi();
         }
-
-        OpenMelpChat.isAudioMode(true);
-
         return (
             !audioOnly ? <ConferenceOld />
             : (

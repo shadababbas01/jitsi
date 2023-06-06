@@ -764,7 +764,7 @@ export default {
 
     raisedHandsCountLabel: {
         alignItems: 'center',
-        backgroundColor: BaseTheme.palette.warning02,
+      //  backgroundColor: BaseTheme.palette.warning02, // added by jaswant
         borderRadius: BaseTheme.shape.borderRadius,
         flexDirection: 'row',
         marginBottom: BaseTheme.spacing[0],
@@ -772,7 +772,7 @@ export default {
     },
 
     raisedHandsCountLabelText: {
-        color: BaseTheme.palette.uiBackground,
+        color: '#fff',        // added by jaswant
         paddingLeft: BaseTheme.spacing[2]
     }
 };
