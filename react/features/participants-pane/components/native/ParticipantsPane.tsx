@@ -53,9 +53,9 @@ const ParticipantsPane = () => {
                 lobbyParticipants = { lobbyParticipants }
                 searchString = { searchString }
                 setSearchString = { setSearchString } />
-            {
+            {/*  added by jaswant {
                 showAutoAssign && <AutoAssignButton />
-            }
+            } */}
             {
                 inBreakoutRoom && <LeaveBreakoutRoomButton />
             }

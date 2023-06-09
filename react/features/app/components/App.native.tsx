@@ -150,7 +150,8 @@ export class App extends AbstractApp<IProps> {
             dispatch?.(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
         }
         if (this.props.url && this.props.url.config) {
-            dispatch(updateSettings({ isGroupCall: this.props.url.config.isGroupCall,
+            dispatch(updateSettings({ isPrivateRoom: this.props.url.config.isPrivateRoom,
+                isGroupCall: this.props.url.config.isGroupCall,
                 userPicUrl: this.props.url.config.userPicUrl,
                 teamName: this.props.url.config.teamName }));
         }
