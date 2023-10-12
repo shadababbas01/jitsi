@@ -146,17 +146,17 @@ function _conferenceFailed({ dispatch, getState }: IStore, next: Function, actio
     case JitsiConferenceErrors.CONFERENCE_DESTROYED: {
         const [ reason ] = error.params;
 
-        dispatch(showWarningNotification({
-            description: reason,
-            titleKey: 'dialog.sessTerminated'
-        }, NOTIFICATION_TIMEOUT_TYPE.LONG));
+        // dispatch(showWarningNotification({
+        //     description: reason,
+        //     titleKey: 'dialog.sessTerminated'
+        // }, NOTIFICATION_TIMEOUT_TYPE.LONG));
 
         if (TRIGGER_READY_TO_CLOSE_REASONS.includes(reason)) {
-            if (typeof APP === 'undefined') {
-                dispatch(readyToClose());
-            } else {
-                APP.API.notifyReadyToClose();
-            }
+            // if (typeof APP === 'undefined') {
+            //     dispatch(readyToClose());
+            // } else {
+            //     APP.API.notifyReadyToClose();
+            // } added by jaswant
             setTimeout(() => dispatch(leaveConference()), CONFERENCE_DESTROYED_LEAVE_TIMEOUT);
         }
 

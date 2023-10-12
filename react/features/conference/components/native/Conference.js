@@ -39,7 +39,7 @@ import {
     abstractMapStateToProps
 } from '../AbstractConference';
 import type { AbstractProps } from '../AbstractConference';
-import { isConnecting } from '../functions';
+import { isConnecting , connected} from '../functions.native';
 
 import AlwaysOnLabels from './AlwaysOnLabels';
 import ExpandedLabelPopup from './ExpandedLabelPopup';
@@ -57,6 +57,9 @@ import CalleeDetails from './CalleeDetails';
 import { Chat } from '../../../chat';
 import ConferenceOld from './Conferenceold';
 import { getFeatureFlag } from '../../../base/flags/functions';
+import { getBreakoutRooms, getCurrentRoomId } from '../../../breakout-rooms/functions';
+import { I } from '@jitsi/excalidraw/types/ga';
+
 
 
 var totalUser = '0';
@@ -83,6 +86,8 @@ type Props = AbstractProps & {
      * rendered.
      */
     _connecting: boolean,
+
+    _connected: boolean,
 
     /**
      * Set to {@code true} when the filmstrip is currently visible.
@@ -204,14 +209,13 @@ class Conference extends AbstractConference<Props, State> {
         if (isPlatformiOS()) {
             this.nativeEventEmitter = new NativeEventEmitter(JSCommunicateComponent);
         }
-        const { audioOnly} = this.props;
+        //const { audioOnly} = this.props;
       //  console.log("Audio Only--->",this.props);
-        if(audioOnly){
-            AudioMode.setAudioDevice("EARPIECE");
-            console.log("Audio Only---constructor>","EARPIECE");
-        }else{
-            AudioMode.setAudioDevice("SPEAKER");
-        }
+        // if(audioOnly){
+        //     AudioMode.setAudioDevice("EARPIECE");
+        //  }else{
+        //     AudioMode.setAudioDevice("SPEAKER");
+        // }
     }
 
     /**
@@ -222,15 +226,12 @@ class Conference extends AbstractConference<Props, State> {
      * @returns {void}
      */
     componentDidMount() {
-
         let eventEmitter;
-
         if (isPlatformiOS() && this.nativeEventEmitter) {
             eventEmitter = this.nativeEventEmitter;
         } else {
             eventEmitter = DeviceEventEmitter;
         }
-
         this.subscriptionStartTimer = eventEmitter.addListener(
             'startTimer', this._startTimer);
 
@@ -247,16 +248,13 @@ class Conference extends AbstractConference<Props, State> {
             });
         }
         BackHandler.addEventListener('hardwareBackPress', this._onHardwareBackPress);
-
         const { audioOnly} = this.props;
-        if(audioOnly){
-            console.log("Audio Only---constructor1>","EARPIECE");
+        // if(audioOnly){
+        //     AudioMode.setAudioDevice("EARPIECE");
 
-            AudioMode.setAudioDevice("EARPIECE");
-
-        }else{
-            AudioMode.setAudioDevice("SPEAKER");
-        }
+        // }else{
+        //     AudioMode.setAudioDevice("SPEAKER");
+        // } added by jaswant
     }
 
     /**
@@ -316,7 +314,7 @@ class Conference extends AbstractConference<Props, State> {
         return (
             <Container style = { styles.conference }>
                 <StatusBar
-                    barStyle = 'light-content'
+                    barStyle = 'dark-content'
                     hidden = { false }
                     translucent = { _fullscreenEnabled } />
                 { this._renderContent() }
@@ -491,12 +489,17 @@ _setSpeakerState(speakerOn){
             participants,
             roomName,
             isTeamsCall,
-            audioOnly
+            audioOnly,
+            _connected
+
         } = this.props;
 
         const { interval, showAttendees, speakerOn, connectionStatus } = this.state;
         const secsToMinString = this.secondsToHMS(interval);
 
+            if(!_connecting &&!_connected){ // added by jaswant
+                return;
+            }
 
         if (_reducedUI) {
             return this._renderContentForReducedUi();
@@ -651,8 +654,18 @@ function _mapStateToProps(state, ownProps) {
 
     const participants = getParticipants(state);
 
-    const participantsCount = getParticipantCountRemoteOnly(state);
+    const participantsCount = getParticipantCountRemoteOnly(state);  
+    //   const rooms = getBreakoutRooms(state);
 
+    //   const breakoutRoomsArray = Array.from(rooms);
+
+    //   for (const [id, room] of breakoutRoomsArray) {
+    //     if(room.isMainRoom){
+    //         console.log("Breakout rooms--->",room);
+    //     }
+    //    }
+     
+       
     const _settings = state['features/base/settings'];
 if(totalUser!=participantsCount){
     totalUser  = participantsCount
@@ -677,7 +690,9 @@ NativeModules.NativeCallsNew.totalUsers(participantsCount);
         participants,
         roomName: _settings.teamName || '',
         isTeamsCall: _settings.isGroupCall,
-        audioOnly: state['features/base/audio-only'].enabled
+        audioOnly: state['features/base/audio-only'].enabled,
+        _connected: connected(state),
+
     };
 }
 

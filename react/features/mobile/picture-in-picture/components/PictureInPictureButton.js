@@ -39,6 +39,7 @@ class PictureInPictureButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
+      //  NativeModules.NativeCallsNew.pipMode();
         this.props.dispatch(enterPictureInPicture());
     }
 

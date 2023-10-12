@@ -43,4 +43,4 @@ export const CONFERENCE_LEAVE_REASONS = {
 /**
  * Timeout for properly leaving the conference if it was destroyed.
  */
-export const CONFERENCE_DESTROYED_LEAVE_TIMEOUT = 10000;
+export const CONFERENCE_DESTROYED_LEAVE_TIMEOUT = 15000; // added by jaswant

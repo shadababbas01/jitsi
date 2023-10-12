@@ -346,7 +346,6 @@ export default {
         color: 'white',
         width: '100%',
         textAlign: 'center',
-        marginTop: hp('2.7%'),
         fontSize: scaleFontSize(11),
         fontFamily: 'AkzidenzGroteskPro-Bold'
     },
@@ -363,7 +362,6 @@ export default {
         color: '#222220',
         width: '100%',
         textAlign: 'center',
-        marginTop: hp('2.7%'),
         fontSize: scaleFontSize(11),
         fontFamily: 'AkzidenzGroteskPro-Bold'
     },
@@ -377,7 +375,6 @@ export default {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         position: 'absolute',
-        top: hp('2.7%'),
         right: wp('4.83%')
     },
     securityLogoImageStyle: {
@@ -388,14 +385,12 @@ export default {
         color: 'white',
         fontSize: scaleFontSize(8),
         marginRight: wp('2.415%'),
-        marginTop: hp('0.679%'),
         fontFamily: 'AkzidenzGroteskPro-Bold'
     },
     encryptedTextOneToOneStyle: {
         color: 'rgb(201,207,215)',
         fontSize: scaleFontSize(8),
         marginRight: wp('2.415%'),
-        marginTop: hp('0.679%'),
         fontFamily: 'AkzidenzGroteskPro-Bold'
     },
     calleeContainerStyle: {
@@ -416,7 +411,7 @@ export default {
         position: 'absolute',
         paddingLeft: wp('2.41%'),
         paddingRight: wp('2.41%'),
-        height: hp('4.07%'),
+        height: hp('4.08%'),
         minWidth: wp('22.22%'),
         top: hp('19.8%')
     },
@@ -439,24 +434,26 @@ export default {
 
     callIcon: {
         height: hp(calculatePercentageHeight(13)), // hp('1.76%'),
-        width: hp(calculatePercentageHeight(13)),
-        marginLeft: wp('2.41%')
-    },
+        width: hp(calculatePercentageHeight(13))
+        },
 
     callOneToOneIcon: {
         height: hp('2.85%'),
         width: wp('5.07%'),
-        marginTop: hp('0.679%'),
-        marginLeft: wp('2.41%')
-    },
+        marginTop: hp('0.679%')
+        },
 
     timerTextTeamStyle: {
+        ...BaseTheme.typography.bodyShortBold,
+        lineHeight: 14,
         fontSize: scaleFontSize(13),
         marginLeft: wp('1.93%'),
         color: 'rgb(34,32,32)'
     },
 
     timerTextOneToOneStyle: {
+        ...BaseTheme.typography.bodyShortBold,
+        lineHeight: 14,
         fontSize: scaleFontSize(13),
         marginLeft: wp('1.93%'),
         color: 'rgb(255, 255, 255)'

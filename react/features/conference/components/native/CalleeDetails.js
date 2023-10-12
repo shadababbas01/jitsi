@@ -37,7 +37,7 @@ class CalleeDetails extends Component {
         if(isTeamsCall){
             participantText = decodeURI(roomName);
         }else {
-            participantText = callerName.split(' ')[0];
+            participantText = callerName;
             updatedcallerDetails = callerDetails;
             if(participants.length>1){
                 const filterarray =  participants.filter(p => !p.local)
@@ -47,7 +47,7 @@ class CalleeDetails extends Component {
                         break;
                     }
                  }
-                participantText = participantText + " + "+ `${participants.length-1}`
+                participantText = participantText + " + "+ `${this.props.participantsCount-1}` +" and others"
                 callerDetails = 'Conference Call'
                 NativeModules.NativeCallsNew.updatedUserName(participantText);
             }
@@ -74,7 +74,7 @@ class CalleeDetails extends Component {
         let participantsDetails;
         if(isTeamsCall){
             if(participants.length > 0){
-                participantsDetails = `${participants.length +1}` +" "+"Members";
+                participantsDetails = `${this.props.participantsCount+1}` +" "+"Members";
             }else{
                 participantsDetails = '';
             }
@@ -109,7 +109,7 @@ class CalleeDetails extends Component {
         return (
             <View style = {styles.calleeContainerStyle}>
                 <CalleeBoxView isTeamsCall={isTeamsCall} participantsss = {participants}  roomName = {participantText} userPicUrl ={userPicUrl}/>
-                <CallTimer isTeamsCall={isTeamsCall} secsToMinString = {secsToMinString}/>
+                <CallTimer isTeamsCall={isTeamsCall} secsToMinString = {participants.length}/>
                 <Text style = {isTeamsCall? styles.teamTextStyle: styles.oneToOneTextStyle }>{participantText}</Text>
                 <Text style = { styles.participantTextStyle }>{participantsDetails}</Text>
                 <Text style = { isTeamsCall? styles.connectionStatusTeamsTextStyle : styles.connectionStatusOneToOneTextStyle } >{connectionState}</Text>
@@ -143,7 +143,8 @@ function _mapStateToProps(state: Object, ownProps: Props) {
             participants,
             otherParticipants,
             callerName,
-            callerDetails
+            callerDetails,
+            participantsCount
     };
 }
 

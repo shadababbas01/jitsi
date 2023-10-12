@@ -248,7 +248,7 @@ public class JitsiMeetActivity extends AppCompatActivity
 
     protected void onReadyToClose() {
         JitsiMeetLogger.i("SDK is ready to close");
-        finish();
+      //  finish();
     }
 
     // Activity lifecycle methods

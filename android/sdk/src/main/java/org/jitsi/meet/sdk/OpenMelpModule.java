@@ -90,6 +90,16 @@ public class OpenMelpModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void pipMode() {
+
+        Toast toast = Toast.makeText(context, "PIP Mode", Toast.LENGTH_LONG);
+        toast.show();
+      /*  Intent i = new Intent();
+        i.setAction("HangUpFromJitsi");
+        getReactApplicationContext().sendBroadcast(i);*/
+    }
+
+    @ReactMethod
     public void etharpad() {
 
     }

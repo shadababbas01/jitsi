@@ -109,6 +109,8 @@ class SharedVideo extends Component<IProps> {
             return null;
         }
 
+        console.log("Video---->",videoUrl);
+
         return (
             <View
                 pointerEvents = { isOwner ? 'auto' : 'none' }

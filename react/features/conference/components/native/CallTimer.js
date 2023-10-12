@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import styles, { CALL_ICON, CALL_ONETOONE_ICON } from './styles';
+import ConferenceTimer from '../ConferenceTimer';
+
 class CallTimer extends Component {
 
     // intervalObj; 
@@ -25,12 +27,18 @@ class CallTimer extends Component {
         const timerTextStyle = isTeamsCall?styles.timerTextTeamStyle:styles.timerTextOneToOneStyle;
         const callIcon = isTeamsCall?CALL_ICON:CALL_ONETOONE_ICON;
         const callIconStyle = isTeamsCall? styles.callIcon: styles.callOneToOneIcon;
+        if(secsToMinString>0){
         return (
             <View style = {callerTimeStyle}>
                 <Image source = { callIcon } style = { callIconStyle } />
-                <Text style = {timerTextStyle}>{secsToMinString}</Text>
+                {/* <Text style = {timerTextStyle}>{secsToMinString}</Text> */}
+             <ConferenceTimer textStyle = { timerTextStyle }/>
+
             </View>
         );
+        }else{
+            return null;
+        }
     }
 
     // componentWillUnmount() {

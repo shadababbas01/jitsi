@@ -16,10 +16,9 @@ class UpperTextContainer extends Component {
 
         return (
             <View style  ={styles.parentViewStyle}>
-                <View >
-                       <PictureInPictureButton style={styles.pipButton}/>
-
-                </View>
+                 <View style = { styles.pipButtonContainer }>
+                <PictureInPictureButton styles = { styles.pipButton } />
+            </View>
                 <View >
                        <Text style = {upperTextContainerStyle} >{upperText}</Text>
 

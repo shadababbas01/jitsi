@@ -192,6 +192,7 @@ class YoutubeVideoManager extends AbstractVideoManager<IState> {
      * @inheritdoc
      */
     render() {
+        console.log("Videoview--->",this.playerRef);
         return (<Video
             ref = { this.playerRef }
             { ...this.getPlayerOptions() } />);

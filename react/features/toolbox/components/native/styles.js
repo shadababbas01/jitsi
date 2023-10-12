@@ -86,7 +86,7 @@ const styles = {
      */
     toolbox: {
         alignItems: 'center',
-        backgroundColor: BaseTheme.palette.uiBackground,
+       // backgroundColor: BaseTheme.palette.uiBackground,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
         flexDirection: 'row',
@@ -97,7 +97,7 @@ const styles = {
      * The style of the root/top-level container of {@link Toolbox}.
      */
     toolboxContainer: {
-        backgroundColor: BaseTheme.palette.uiBackground,
+     //   backgroundColor: BaseTheme.palette.uiBackground,
         flexDirection: 'column',
         alignItems: 'center',  
         maxWidth: 580,

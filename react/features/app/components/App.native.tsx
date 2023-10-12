@@ -139,7 +139,7 @@ export class App extends AbstractApp<IProps> {
         }
 
         dispatch?.(updateSettings(this.props.userInfo || {}));
-        dispatch?.(updateSettings(this.props.userInfo || {}));
+    //    dispatch?.(updateSettings(this.props.userInfo || {})); // added by jaswant
         dispatch?.(updateSettings(this.props.incomingCallInfo || {}));
 
 

@@ -182,7 +182,7 @@ class Thumbnail extends PureComponent<IProps> {
     _onClick() {
         const { _participantId, _pinned, dispatch, tileView, _toolboxVisible } = this.props;
 
-        if (tileView && !_toolboxVisible) {
+        if (tileView) {
             dispatch(toggleToolboxVisible());
         } else {
             dispatch(pinParticipant(_pinned ? null : _participantId));
@@ -196,10 +196,15 @@ class Thumbnail extends PureComponent<IProps> {
      */
     _onThumbnailLongPress() {
         const { _fakeParticipant, _participantId, _local, _localVideoOwner, dispatch } = this.props;
+        if (!_fakeParticipant) {
+                if (!_local) {
+                    dispatch(showContextMenuDetails(_participantId));
+                 }
+            }
 
-        if (_fakeParticipant && _localVideoOwner) {
-            dispatch(showSharedVideoMenu(_participantId));
-        } 
+        // if (_fakeParticipant && _localVideoOwner) {
+        //     dispatch(showSharedVideoMenu(_participantId));
+        // } 
         // else if (!_fakeParticipant) {
         //     if (_local) {
         //         dispatch(showConnectionStatus(_participantId));

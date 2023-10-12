@@ -226,10 +226,11 @@ class Conference extends AbstractConference<Props, State> {
         } = this.props;
 
         BackHandler.addEventListener('hardwareBackPress', this._onHardwareBackPress);
-
+        AudioMode.setAudioDeviceForVideoCall(null,2); // added by jaswant
         if (_audioOnlyEnabled && _startCarMode) {
             navigation.navigate(screen.conference.carmode);
         }
+
     }
 
     /**
@@ -270,6 +271,8 @@ class Conference extends AbstractConference<Props, State> {
         BackHandler.removeEventListener('hardwareBackPress', this._onHardwareBackPress);
 
         clearTimeout(this._expandedLabelTimeout.current);
+        AudioMode.setAudioDeviceForVideoCall(null,1); // added by jaswant
+
     }
 
     /**
@@ -609,7 +612,7 @@ function _mapStateToProps(state) {
         _connecting: isConnecting(state),
         _filmstripVisible: isFilmstripVisible(state),
         _fullscreenEnabled: getFeatureFlag(state, FULLSCREEN_ENABLED, true),
-        _isOneToOneConference: Boolean(participantCount === 0),
+        _isOneToOneConference: false,
         _isParticipantsPaneOpen: isOpen,
         _largeVideoParticipantId: state['features/large-video'].participantId,
         _pictureInPictureEnabled: getFeatureFlag(state, PIP_ENABLED),

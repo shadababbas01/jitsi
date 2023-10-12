@@ -65,7 +65,6 @@ class CustomisedToolBox extends Component<Props, *> {
             this.props.dispatch(openSheet(AudioRoutePickerDialog));
         }else{
         const { setSpeakerState, speakerOn } = this.props;
-
         if(AudioMode.setSpeakerOn && setSpeakerState){
             AudioMode.setSpeakerOn(!speakerOn)
             .then((val)=>{
@@ -115,7 +114,7 @@ class CustomisedToolBox extends Component<Props, *> {
 
    }
    componentDidMount() {
-    AudioMode.setAudioDevice("EARPIECE");
+    //AudioMode.setAudioDevice("EARPIECE");
 }
 
 
@@ -180,6 +179,7 @@ class CustomisedToolBox extends Component<Props, *> {
         }
     }
     OpenMelpChat.isAudioMode(true);
+    console.log("Text---->",text);
 
 
         return (

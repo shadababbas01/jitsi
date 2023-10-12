@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { IReduxState } from '../../../app/types';
 import JitsiScreen from '../../../base/modal/components/JitsiScreen';
-import { isLocalParticipantModerator } from '../../../base/participants/functions';
+import { isLocalParticipantModerator ,getParticipantCountRemoteOnly} from '../../../base/participants/functions';
 import { equals } from '../../../base/redux/functions';
 import {
     getBreakoutRooms,
@@ -38,7 +38,9 @@ const ParticipantsPane = () => {
         .filter(room => room.id !== currentRoomId)
         .sort((p1, p2) => (p1?.name || '').localeCompare(p2?.name || ''));
     const inBreakoutRoom = useSelector(isInBreakoutRoom);
-    const showAddBreakoutRoom = useSelector(isAddBreakoutRoomButtonVisible);
+    const { remote,fakeParticipants, sortedRemoteVirtualScreenshareParticipants } = useSelector((state: IReduxState) => state['features/base/participants']);
+    const remoteUsers = remote.size - fakeParticipants.size - sortedRemoteVirtualScreenshareParticipants.size;
+    const showAddBreakoutRoom = useSelector(isAddBreakoutRoomButtonVisible) && remoteUsers > 2;
     const showAutoAssign = useSelector(isAutoAssignParticipantsVisible);
     const lobbyParticipants = useSelector(getKnockingParticipants);
 

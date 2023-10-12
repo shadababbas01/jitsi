@@ -104,7 +104,8 @@ class OngoingNotification {
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOnlyAlertOnce(true)
             .setColor(context.getColor(R.color.red))
-            .setSmallIcon(R.mipmap.melp_logo);
+            .setSmallIcon(R.mipmap.melp_logo)
+            .setOngoing(true);
 
         NotificationCompat.Action hangupAction = createAction(context, JitsiMeetOngoingConferenceService.Action.HANGUP, R.string.ongoing_notification_action_hang_up);
 
@@ -115,8 +116,13 @@ class OngoingNotification {
 
         builder.addAction(hangupAction);
         builder.addAction(audioAction);
+        Notification notification = builder.build();
 
-        return builder.build();
+// Set the flags to prevent the notification from being cleared by swipe
+        notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+
+
+        return notification;
     }
 
     static void resetStartingtime() {

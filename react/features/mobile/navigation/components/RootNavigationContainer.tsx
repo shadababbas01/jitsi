@@ -52,8 +52,8 @@ interface IProps {
 
 
 const RootNavigationContainer = ({ dispatch, isWelcomePageAvailable }: IProps) => {
-    const initialRouteName = isWelcomePageAvailable
-        ? screen.welcome.main : screen.connecting;
+    //const initialRouteName = isWelcomePageAvailable ? screen.welcome.main : screen.connecting; //added by jaswant
+    const initialRouteName =  screen.welcome.main;
     const onReady = useCallback(() => {
         dispatch({
             type: _ROOT_NAVIGATION_READY,
@@ -88,14 +88,14 @@ const RootNavigationContainer = ({ dispatch, isWelcomePageAvailable }: IProps) =
                                 options = { dialInSummaryScreenOptions } />
                         </>
                 }
-                <RootStack.Screen
+                {/* <RootStack.Screen
                     component = { ConnectingPage }
                     name = { screen.connecting }
-                    options = { connectingScreenOptions } />
-                <RootStack.Screen
+                    options = { connectingScreenOptions } /> */}
+                {/* <RootStack.Screen
                     component = { Prejoin }
                     name = { screen.preJoin }
-                    options = { preJoinScreenOptions } />
+                    options = { preJoinScreenOptions } /> */}
                 <RootStack.Screen
                     component = { ConferenceNavigationContainer }
                     name = { screen.conference.root }
