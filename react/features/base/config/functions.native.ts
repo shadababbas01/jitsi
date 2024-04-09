@@ -27,8 +27,8 @@ export function _cleanupConfig(config: IConfig) {
         delete config.analytics?.rtcstatsSendSdp;
         delete config.analytics?.rtcstatsUseLegacy;
         delete config.analytics?.obfuscateRoomName;
-        delete config.analytics?.watchRTCEnabled;
-        delete config.watchRTCConfigParams;
+        delete config.callStatsID;
+        delete config.callStatsSecret;
         config.giphy = { enabled: false };
     }
 }

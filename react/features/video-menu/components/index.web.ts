@@ -1,4 +1,3 @@
-export { default as DemoteToVisitorDialog } from './web/DemoteToVisitorDialog';
 export { default as GrantModeratorDialog } from './web/GrantModeratorDialog';
 export { default as KickRemoteParticipantDialog } from './web/KickRemoteParticipantDialog';
 export { default as MuteEveryoneDialog } from './web/MuteEveryoneDialog';

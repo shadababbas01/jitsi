@@ -1,5 +1,3 @@
-import { AnyAction } from 'redux';
-
 import MiddlewareRegistry from '../base/redux/MiddlewareRegistry';
 
 import { PARTICIPANTS_PANE_CLOSE, PARTICIPANTS_PANE_OPEN } from './actionTypes';
@@ -10,7 +8,7 @@ import { PARTICIPANTS_PANE_CLOSE, PARTICIPANTS_PANE_OPEN } from './actionTypes';
  * @param {IStore} store - The redux store.
  * @returns {Function}
  */
-MiddlewareRegistry.register(() => (next: Function) => (action: AnyAction) => {
+MiddlewareRegistry.register(() => (next: Function) => (action: any) => {
     switch (action.type) {
     case PARTICIPANTS_PANE_OPEN:
         if (typeof APP !== 'undefined') {

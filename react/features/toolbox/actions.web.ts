@@ -1,7 +1,6 @@
 import { IStore } from '../app/types';
 import { overwriteConfig } from '../base/config/actions';
 import { isMobileBrowser } from '../base/environment/utils';
-import { isLayoutTileView } from '../video-layout/functions.any';
 
 import {
     CLEAR_TOOLBOX_TIMEOUT,
@@ -85,16 +84,13 @@ export function hideToolbox(force = false) {
 
         dispatch(clearToolboxTimeout());
 
-        const hoverSelector = isLayoutTileView(state)
-            ? '.remotevideomenu:hover'
-            : '.filmstrip:hover,.remotevideomenu:hover';
-        const hoveredElem = document.querySelector(hoverSelector);
+        const focusSelector = '.toolbox-content-items:focus-within,.filmstrip:focus-within,.remotevideomenu:hover';
 
         if (!force
                 && (hovered
                     || state['features/invite'].calleeInfoVisible
                     || (state['features/chat'].isOpen && !autoHideWhileChatIsOpen)
-                    || hoveredElem)) {
+                    || document.querySelector(focusSelector))) {
             dispatch(
                 setToolboxTimeout(
                     () => dispatch(hideToolbox()),
@@ -200,7 +196,7 @@ export function clearToolboxTimeout() {
  *     visible: boolean
  * }}
  */
-export function setHangupMenuVisible(visible: boolean) {
+export function setHangupMenuVisible(visible: boolean): Object {
     return {
         type: SET_HANGUP_MENU_VISIBLE,
         visible
@@ -232,7 +228,7 @@ export function setOverflowMenuVisible(visible: boolean) {
  *     hovered: boolean
  * }}
  */
-export function setToolbarHovered(hovered: boolean) {
+export function setToolbarHovered(hovered: boolean): Object {
     return {
         type: SET_TOOLBAR_HOVERED,
         hovered
@@ -262,19 +258,5 @@ export function setToolboxTimeout(handler: Function, timeoutMS: number) {
             handler,
             timeoutMS
         });
-    };
-}
-
-/**
-     * Closes the overflow menu if opened.
-     *
-     * @private
-     * @returns {void}
-     */
-export function closeOverflowMenuIfOpen() {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
-        const { overflowMenuVisible } = getState()['features/toolbox'];
-
-        overflowMenuVisible && dispatch(setOverflowMenuVisible(false));
     };
 }

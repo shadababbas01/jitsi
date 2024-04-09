@@ -1,4 +1,3 @@
-import { IStore } from '../app/types';
 import { doGetJSON } from '../base/util/httpUtils';
 
 import {
@@ -18,7 +17,7 @@ import logger from './logger';
  * @returns {Function}
  */
 export function fetchCustomBrandingData() {
-    return async function(dispatch: IStore['dispatch'], getState: IStore['getState']) {
+    return async function(dispatch: Function, getState: Function) {
         const state = getState();
         const { customizationReady } = state['features/dynamic-branding'];
 

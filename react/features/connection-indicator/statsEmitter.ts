@@ -8,11 +8,9 @@ import {
 /**
  * Contains all the callbacks to be notified when stats are updated.
  *
- * ```
  * {
  *     userId: Function[]
- * }
- * ```
+ * }.
  */
 const subscribers: any = {};
 

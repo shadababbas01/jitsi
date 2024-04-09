@@ -11,12 +11,21 @@ import Platform from '../base/react/Platform.native';
 import { toState } from '../base/redux/functions';
 import { ASPECT_RATIO_NARROW } from '../base/responsive-ui/constants';
 import { getHideSelfView } from '../base/settings/functions.any';
+// eslint-disable-next-line lines-around-comment
+// @ts-ignore
 import conferenceStyles from '../conference/components/native/styles';
 import { shouldDisplayTileView } from '../video-layout/functions.native';
 
+// @ts-ignore
 import styles from './components/native/styles';
 
 export * from './functions.any';
+var TILE_ASPECT_RATIO = 1;
+var MAX_COLUMN_LANDSCAPE = 3;
+var MAX_COLUMN_PORTRAIT = 3;
+var max_fit_rows = 3;
+var expected_row = 1;
+var expected_col;
 
 /**
  * Returns true if the filmstrip on mobile is visible, false otherwise.
@@ -116,24 +125,52 @@ export function getTileViewParticipantCount(stateful: IStateful) {
  * @returns {number} - The number of columns to be rendered in tile view.
  * @private
  */
+// export function getColumnCount(stateful: IStateful) {
+//     const state = toState(stateful);
+//     const participantCount = getTileViewParticipantCount(state);
+//     const { aspectRatio } = state['features/base/responsive-ui'];
+
+//     // For narrow view, tiles should stack on top of each other for a lonely
+//     // call and a 1:1 call. Otherwise tiles should be grouped into rows of
+//     // two.
+//     if (aspectRatio === ASPECT_RATIO_NARROW) {
+//         return participantCount >= 3 ? 2 : 1;
+//     }
+
+//     if (participantCount === 4) {
+//         // In wide view, a four person call should display as a 2x2 grid.
+//         return 2;
+//     }
+
+//     return Math.min(participantCount <= 6 ? 3 : 4, participantCount);
+// }
 export function getColumnCount(stateful: IStateful) {
     const state = toState(stateful);
-    const participantCount = getTileViewParticipantCount(state);
-    const { aspectRatio } = state['features/base/responsive-ui'];
+     const participantCount = getParticipantCountWithFake(state);
+     const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
 
-    // For narrow view, tiles should stack on top of each other for a lonely
-    // call and a 1:1 call. Otherwise tiles should be grouped into rows of
-    // two.
-    if (aspectRatio === ASPECT_RATIO_NARROW) {
-        return participantCount >= 3 ? 2 : 1;
-    }
+     if(width > height){
+            if(participantCount <MAX_COLUMN_LANDSCAPE * max_fit_rows)
+            {
+             expected_row = Math.floor(Math.sqrt(participantCount))
+             expected_col = Math.ceil(participantCount / expected_row)
+            }
+             else{
 
-    if (participantCount === 4) {
-        // In wide view, a four person call should display as a 2x2 grid.
-        return 2;
-    }
+          expected_col = participantCount/max_fit_rows
+          expected_col = Math.min(expected_col, MAX_COLUMN_LANDSCAPE)
 
-    return Math.min(participantCount <= 6 ? 3 : 4, participantCount);
+            }
+            return   expected_col;
+
+     }else{
+           expected_row = Math.ceil(Math.sqrt(participantCount));
+           expected_col = Math.min(MAX_COLUMN_PORTRAIT,Math.ceil(participantCount/Math.min(max_fit_rows,expected_row)));
+            expected_row = Math.ceil(participantCount/expected_col)
+        
+       return  expected_col;
+
+     }
 }
 
 /**
@@ -219,7 +256,7 @@ export function getFilmstripDimensions({
     aspectRatio: Symbol;
     clientHeight: number;
     clientWidth: number;
-    insets?: {
+    insets: {
         bottom?: number;
         left?: number;
         right?: number;
@@ -227,7 +264,7 @@ export function getFilmstripDimensions({
     };
     localParticipantVisible?: boolean;
 }) {
-    const { height, width, margin } = styles.thumbnail; // @ts-ignore
+    const { height, width, margin } = styles.thumbnail;
     const conferenceBorder = conferenceStyles.conference.borderWidth || 0;
     const { left = 0, right = 0, top = 0, bottom = 0 } = insets;
 

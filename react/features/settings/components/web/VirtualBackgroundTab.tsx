@@ -1,13 +1,12 @@
+import { withStyles } from '@mui/styles';
 import React from 'react';
 import { WithTranslation } from 'react-i18next';
-import { withStyles } from 'tss-react/mui';
 
 import AbstractDialogTab, {
     IProps as AbstractDialogTabProps
 } from '../../../base/dialog/components/web/AbstractDialogTab';
 import { translate } from '../../../base/i18n/functions';
 import VirtualBackgrounds from '../../../virtual-background/components/VirtualBackgrounds';
-import { IVirtualBackground } from '../../../virtual-background/reducer';
 
 /**
  * The type of the React {@code Component} props of {@link VirtualBackgroundTab}.
@@ -15,19 +14,24 @@ import { IVirtualBackground } from '../../../virtual-background/reducer';
 export interface IProps extends AbstractDialogTabProps, WithTranslation {
 
     /**
+     * Returns the jitsi track that will have background effect applied.
+     */
+    _jitsiTrack: Object;
+
+    /**
      * CSS classes object.
      */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
+    classes: any;
 
     /**
      * Virtual background options.
      */
-    options: IVirtualBackground;
+    options: any;
 
     /**
-     * The id of the selected video device.
+     * The selected thumbnail identifier.
      */
-    selectedVideoInputId: string;
+    selectedThumbnail: string;
 }
 
 const styles = () => {
@@ -79,10 +83,11 @@ class VirtualBackgroundTab extends AbstractDialogTab<IProps, any> {
      */
     render() {
         const {
+            classes,
             options,
-            selectedVideoInputId
+            selectedThumbnail,
+            _jitsiTrack
         } = this.props;
-        const classes = withStyles.getClasses(this.props);
 
         return (
             <div
@@ -90,13 +95,13 @@ class VirtualBackgroundTab extends AbstractDialogTab<IProps, any> {
                 id = 'virtual-background-dialog'
                 key = 'virtual-background'>
                 <VirtualBackgrounds
+                    _jitsiTrack = { _jitsiTrack }
                     onOptionsChange = { this._onOptionsChanged }
                     options = { options }
-                    selectedThumbnail = { options.selectedThumbnail ?? '' }
-                    selectedVideoInputId = { selectedVideoInputId } />
+                    selectedThumbnail = { selectedThumbnail } />
             </div>
         );
     }
 }
 
-export default withStyles(translate(VirtualBackgroundTab), styles);
+export default withStyles(styles)(translate(VirtualBackgroundTab));

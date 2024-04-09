@@ -2,9 +2,9 @@
     display: inline-block;
     position: relative;
     background-size: contain;
-    border: 2px solid transparent;
+    border: $thumbnailVideoBorder solid transparent;
     border-radius: $borderRadius;
-    margin: 0 2px;
+    margin: 0 $thumbnailVideoMargin;
 
     &:hover {
         cursor: hand;

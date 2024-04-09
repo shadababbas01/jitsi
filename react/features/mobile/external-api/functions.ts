@@ -1,8 +1,6 @@
 import debounce from 'lodash/debounce';
 import { NativeModules } from 'react-native';
 
-import { IParticipant } from '../../base/participants/types';
-
 import { readyToClose } from './actions';
 
 
@@ -27,21 +25,3 @@ export function sendEvent(store: Object, name: string, data: Object) {
 export const _sendReadyToClose = debounce(dispatch => {
     dispatch(readyToClose());
 }, 2500, { leading: true });
-
-/**
- * Returns a participant info object based on the passed participant object from redux.
- *
- * @param {Participant} participant - The participant object from the redux store.
- * @returns {Object} - The participant info object.
- */
-export function participantToParticipantInfo(participant: IParticipant) {
-    return {
-        isLocal: participant.local,
-        email: participant.email,
-        name: participant.name,
-        participantId: participant.id,
-        displayName: participant.displayName,
-        avatarUrl: participant.avatarURL,
-        role: participant.role
-    };
-}

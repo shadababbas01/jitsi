@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { connect } from 'react-redux';
 
-import { IReduxState, IStore } from '../../../app/types';
+import { IReduxState } from '../../../app/types';
 import { IconConnection } from '../../../base/icons/svg';
 import { MEDIA_TYPE } from '../../../base/media/constants';
 import {
@@ -61,7 +61,7 @@ type IProps = AbstractProps & {
     /**
      * Redux dispatch function.
      */
-    dispatch: IStore['dispatch'];
+    dispatch: Function;
 
     /**
      * Icon style override.
@@ -87,6 +87,7 @@ class ConnectionIndicator extends AbstractConnectionIndicator<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
+        // @ts-ignore
         this.state = {
             autoHideTimeout: undefined,
             showIndicator: false,

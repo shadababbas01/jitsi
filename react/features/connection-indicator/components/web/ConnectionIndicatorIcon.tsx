@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useStyles } from 'tss-react/mui';
+import { makeStyles } from 'tss-react/mui';
 
 import Icon from '../../../base/icons/components/Icon';
 import { IconConnection, IconConnectionInactive } from '../../../base/icons/svg';
@@ -13,7 +13,7 @@ interface IProps {
     /**
      * An object containing the CSS classes.
      */
-    classes?: Partial<Record<'icon' | 'inactiveIcon', string>>;
+    classes: any;
 
     /**
      * A CSS class that interprets the current connection status as a color.
@@ -40,6 +40,10 @@ interface IProps {
      */
     track?: ITrack;
 }
+
+const useStyles = makeStyles()(() => {
+    return {};
+});
 
 export const ConnectionIndicatorIcon = ({
     classes,
@@ -86,7 +90,7 @@ export const ConnectionIndicatorIcon = ({
         return (
             <span className = 'connection_ninja'>
                 <Icon
-                    className = { cx(classes?.icon, classes?.inactiveIcon, colorClass) }
+                    className = { cx(classes.icon, classes.inactiveIcon, colorClass) }
                     size = { 24 }
                     src = { IconConnectionInactive } />
             </span>
@@ -103,7 +107,7 @@ export const ConnectionIndicatorIcon = ({
     return (
         <span className = { emptyIconWrapperClassName }>
             <Icon
-                className = { cx(classes?.icon, colorClass) }
+                className = { cx(classes.icon, colorClass) }
                 size = { 16 }
                 src = { IconConnection } />
         </span>

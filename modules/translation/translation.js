@@ -1,7 +1,14 @@
+/*  @flow */
+
 import $ from 'jquery';
 import jqueryI18next from 'jquery-i18next';
 
 import i18next from '../../react/features/base/i18n/i18next';
+
+
+type DocumentElement = {
+    lang: string
+}
 
 /**
  * Notifies that the {@link i18next} instance has finished its initialization.
@@ -11,7 +18,7 @@ import i18next from '../../react/features/base/i18n/i18next';
  */
 function _onI18nInitialized() {
 
-    const documentElement
+    const documentElement: DocumentElement
         = document.documentElement || {};
 
     $('[data-i18n]').localize();
@@ -40,7 +47,7 @@ class Translation {
     /**
      *
      */
-    generateTranslationHTML(key, options) {
+    generateTranslationHTML(key: string, options: Object) {
         const optAttr
             = options ? ` data-i18n-options='${JSON.stringify(options)}'` : '';
 
@@ -53,7 +60,7 @@ class Translation {
     /**
      *
      */
-    translateElement(selector, options) {
+    translateElement(selector: Object, options: Object) {
         // XXX i18next expects undefined if options are missing.
         selector.localize(options ? options : undefined);
     }

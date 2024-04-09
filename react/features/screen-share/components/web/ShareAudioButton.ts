@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { IReduxState } from '../../../app/types';
 import { translate } from '../../../base/i18n/functions';
 import { IconVolumeOff, IconVolumeUp } from '../../../base/icons/svg';
-import JitsiMeetJS from '../../../base/lib-jitsi-meet';
 import AbstractButton, { IProps as AbstractButtonProps } from '../../../base/toolbox/components/AbstractButton';
 import { setOverflowMenuVisible } from '../../../toolbox/actions.web';
 import { startAudioScreenShareFlow } from '../../actions.web';
-import { isAudioOnlySharing, isScreenAudioSupported } from '../../functions';
+import { isAudioOnlySharing } from '../../functions';
 
 interface IProps extends AbstractButtonProps {
 
@@ -63,8 +62,7 @@ class ShareAudioButton extends AbstractButton<IProps> {
 function _mapStateToProps(state: IReduxState) {
 
     return {
-        _isAudioOnlySharing: Boolean(isAudioOnlySharing(state)),
-        visible: JitsiMeetJS.isDesktopSharingEnabled() && isScreenAudioSupported()
+        _isAudioOnlySharing: Boolean(isAudioOnlySharing(state))
     };
 }
 

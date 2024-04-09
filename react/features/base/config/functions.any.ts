@@ -1,11 +1,13 @@
 // @ts-ignore
-import { jitsiLocalStorage } from '@jitsi/js-utils';
+import Bourne from '@hapi/bourne';
 // eslint-disable-next-line lines-around-comment
 // @ts-ignore
-import { safeJsonParse } from '@jitsi/js-utils/json';
+import { jitsiLocalStorage } from '@jitsi/js-utils';
 import _ from 'lodash';
 
 import { IReduxState } from '../../app/types';
+import { browser } from '../lib-jitsi-meet';
+import { IMediaState } from '../media/reducer';
 import { parseURLParams } from '../util/parseURLParams';
 
 import { IConfig } from './configType';
@@ -59,13 +61,23 @@ export function getMeetingRegion(state: IReduxState) {
 }
 
 /**
+ * Selector for determining if sending multiple stream support is enabled.
+ *
+ * @param {Object} _state - The global state.
+ * @returns {boolean}
+ */
+export function getMultipleVideoSendingSupportFeatureFlag(_state: IReduxState | IMediaState) {
+    return browser.supportsUnifiedPlan();
+}
+
+/**
  * Selector used to get the SSRC-rewriting feature flag.
  *
  * @param {Object} state - The global state.
  * @returns {boolean}
  */
 export function getSsrcRewritingFeatureFlag(state: IReduxState) {
-    return getFeatureFlag(state, FEATURE_FLAGS.SSRC_REWRITING) ?? true;
+    return getFeatureFlag(state, FEATURE_FLAGS.SSRC_REWRITING);
 }
 
 /**
@@ -211,7 +223,7 @@ export function restoreConfig(baseURL: string) {
 
     if (config) {
         try {
-            return safeJsonParse(config) || undefined;
+            return Bourne.parse(config) || undefined;
         } catch (e) {
             // Somehow incorrect data ended up in the storage. Clean it up.
             jitsiLocalStorage.removeItem(key);

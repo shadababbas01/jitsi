@@ -6,7 +6,6 @@ import { IconExclamationTriangle } from '../../../base/icons/svg';
 import Label from '../../../base/label/components/web/Label';
 import { COLORS } from '../../../base/label/constants';
 import Tooltip from '../../../base/tooltip/components/Tooltip';
-import getUnsafeRoomText from '../../../base/util/getUnsafeRoomText.web';
 import AbstractInsecureRoomNameLabel, { _mapStateToProps } from '../AbstractInsecureRoomNameLabel';
 
 /**
@@ -21,7 +20,7 @@ class InsecureRoomNameLabel extends AbstractInsecureRoomNameLabel {
     _render() {
         return (
             <Tooltip
-                content = { getUnsafeRoomText(this.props.t, 'meeting') }
+                content = { this.props.t('security.insecureRoomNameWarning') }
                 position = 'bottom'>
                 <Label
                     color = { COLORS.red }

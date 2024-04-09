@@ -1,8 +1,8 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import React from 'react';
 import { WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { withStyles } from 'tss-react/mui';
 
 import { IReduxState, IStore } from '../../app/types';
 import { getAvailableDevices } from '../../base/devices/actions.web';
@@ -33,7 +33,7 @@ export interface IProps extends AbstractDialogTabProps, WithTranslation {
     /**
      * CSS classes object.
      */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
+    classes: any;
 
     /**
      * The currently selected desktop share frame rate in the frame rate select dropdown.
@@ -203,13 +203,12 @@ class VideoDeviceSelection extends AbstractDialogTab<IProps, IState> {
      */
     render() {
         const {
+            classes,
             hideAdditionalSettings,
             hideVideoInputPreview,
             localFlipX,
             t
         } = this.props;
-
-        const classes = withStyles.getClasses(this.props);
 
         return (
             <div className = { classes.container }>
@@ -352,7 +351,6 @@ class VideoDeviceSelection extends AbstractDialogTab<IProps, IState> {
                 bottomLabel = { parseInt(currentFramerate, 10) > SS_DEFAULT_FRAME_RATE
                     ? t('settings.desktopShareHighFpsWarning')
                     : t('settings.desktopShareWarning') }
-                id = 'more-framerate-select'
                 label = { t('settings.desktopShareFramerate') }
                 onChange = { this._onFramerateItemSelect }
                 options = { frameRateItems }
@@ -367,4 +365,4 @@ const mapStateToProps = (state: IReduxState) => {
     };
 };
 
-export default connect(mapStateToProps)(withStyles(translate(VideoDeviceSelection), styles));
+export default connect(mapStateToProps)(withStyles(styles)(translate(VideoDeviceSelection)));

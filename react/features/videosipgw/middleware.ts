@@ -39,7 +39,9 @@ MiddlewareRegistry.register(({ dispatch }) => next => action => {
 
         conference.on(
             JitsiConferenceEvents.VIDEO_SIP_GW_AVAILABILITY_CHANGED,
-            (status: string) => dispatch(_availabilityChanged(status)));
+
+            // @ts-ignore
+            (...args) => dispatch(_availabilityChanged(...args)));
         conference.on(
             JitsiConferenceEvents.VIDEO_SIP_GW_SESSION_STATE_CHANGED,
             (event: ISipSessionChangedEvent) => {

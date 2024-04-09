@@ -295,7 +295,7 @@ export default class MessageContainer extends AbstractMessageContainer<IProps, I
     /**
      * Check if a message is visible in view.
      *
-     * @param {Element} message - The message.
+     * @param {Element} message -
      *
      * @returns {boolean}
      */

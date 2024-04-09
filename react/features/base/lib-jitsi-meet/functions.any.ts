@@ -1,7 +1,7 @@
 import { IStateful } from '../app/types';
-import { ConnectionFailedError } from '../connection/types';
 import { toState } from '../redux/functions';
 
+// @ts-ignore
 import JitsiMeetJS from './_';
 
 
@@ -91,7 +91,7 @@ export function isFatalJitsiConferenceError(error: Error | string) {
  * indicates a fatal {@code JitsiConnection} error, {@code true}; otherwise,
  * {@code false}.
  */
-export function isFatalJitsiConnectionError(error: Error | string | ConnectionFailedError) {
+export function isFatalJitsiConnectionError(error: Error | string) {
     if (typeof error !== 'string') {
         error = error.name; // eslint-disable-line no-param-reassign
     }

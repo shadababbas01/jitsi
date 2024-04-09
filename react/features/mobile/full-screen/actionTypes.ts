@@ -1,12 +1,12 @@
 /**
  * The type of (redux) action to set the react-native-immersive's change event
- * subscription.
+ * listener.
  *
  * {
- *     type: _SET_IMMERSIVE_SUBSCRIPTION,
- *     subscription: Function
+ *     type: _SET_IMMERSIVE_LISTENER,
+ *     listener: Function
  * }
  *
  * @protected
  */
-export const _SET_IMMERSIVE_SUBSCRIPTION = '_SET_IMMERSIVE_SUBSCRIPTION';
+export const _SET_IMMERSIVE_LISTENER = '_SET_IMMERSIVE_LISTENER';

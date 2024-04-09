@@ -26,15 +26,9 @@ local target_subdomain_pattern = "^"..escaped_muc_domain_prefix..".([^%.]+)%."..
 -- table to store all incoming iqs without roomname in it, like discoinfo to the muc component
 local roomless_iqs = {};
 
-local OUTBOUND_SIP_JIBRI_PREFIX = 'outbound-sip-jibri@';
-local INBOUND_SIP_JIBRI_PREFIX = 'inbound-sip-jibri@';
-
 local split_subdomain_cache = cache.new(1000);
 local extract_subdomain_cache = cache.new(1000);
 local internal_room_jid_cache = cache.new(1000);
-
-local moderated_subdomains = module:get_option_set("allowners_moderated_subdomains", {})
-local moderated_rooms = module:get_option_set("allowners_moderated_rooms", {})
 
 -- Utility function to split room JID to include room name and subdomain
 -- (e.g. from room1@conference.foo.example.com/res returns (room1, example.com, res, foo))
@@ -242,9 +236,9 @@ function update_presence_identity(
         if creator_group then
             stanza:tag("creator_group"):text(creator_group):up();
         end
+        stanza:up();
     end
 
-    stanza:up(); -- Close identity tag
 end
 
 -- Utility function to check whether feature is present and enabled. Allow
@@ -252,8 +246,9 @@ end
 -- the token) and the value of the feature is true.
 -- If features is not present in the token we skip feature detection and allow
 -- everything.
-function is_feature_allowed(features, ft)
-    if (features == nil or features[ft] == "true" or features[ft] == true) then
+function is_feature_allowed(session, feature)
+    if (session.jitsi_meet_context_features == nil
+        or session.jitsi_meet_context_features[feature] == "true" or session.jitsi_meet_context_features[feature] == true) then
         return true;
     else
         return false;
@@ -275,9 +270,6 @@ function extract_subdomain(room_node)
 end
 
 function starts_with(str, start)
-    if not str then
-        return false;
-    end
     return str:sub(1, #start) == start
 end
 
@@ -299,7 +291,7 @@ end
 -- @returns result of the http call or nil if
 -- the external call failed after the last retry
 function http_get_with_retry(url, retry, auth_token)
-    local content, code, cache_for;
+    local content, code;
     local timeout_occurred;
     local wait, done = async.waiter();
     local request_headers = http_headers or {}
@@ -311,18 +303,8 @@ function http_get_with_retry(url, retry, auth_token)
         if timeout_occurred == nil then
             code = code_;
             if code == 200 or code == 204 then
-                -- module:log("debug", "External call was successful, content %s", content_);
-                content = content_;
-
-                -- if there is cache-control header, let's return the max-age value
-                if response_ and response_.headers and response_.headers['cache-control'] then
-                    local vals = {};
-                    for k, v in response_.headers['cache-control']:gmatch('(%w+)=(%w+)') do
-                      vals[k] = v;
-                    end
-                    -- max-age=123 will be parsed by the regex ^ to age=123
-                    cache_for = vals.age;
-                end
+                module:log("debug", "External call was successful, content %s", content_);
+                content = content_
             else
                 module:log("warn", "Error on GET request: Code %s, Content %s",
                     code_, content_);
@@ -369,7 +351,7 @@ function http_get_with_retry(url, retry, auth_token)
     timer.add_task(http_timeout, cancel);
     wait();
 
-    return content, code, cache_for;
+    return content, code;
 end
 
 -- Checks whether there is status in the <x node
@@ -396,143 +378,15 @@ local function get_focus_occupant(room)
     return room:get_occupant_by_nick(room.jid..'/focus');
 end
 
--- Checks whether the jid is moderated, the room name is in moderated_rooms
--- or if the subdomain is in the moderated_subdomains
--- @return returns on of the:
---      -> false
---      -> true, room_name, subdomain
---      -> true, room_name, nil (if no subdomain is used for the room)
-function is_moderated(room_jid)
-    if moderated_subdomains:empty() and moderated_rooms:empty() then
-        return false;
-    end
-
-    local room_node = jid.node(room_jid);
-    -- parses bare room address, for multidomain expected format is:
-    -- [subdomain]roomName@conference.domain
-    local target_subdomain, target_room_name = extract_subdomain(room_node);
-    if target_subdomain then
-        if moderated_subdomains:contains(target_subdomain) then
-            return true, target_room_name, target_subdomain;
-        end
-    elseif moderated_rooms:contains(room_node) then
-        return true, room_node, nil;
-    end
-
-    return false;
-end
-
--- check if the room tenant starts with vpaas-magic-cookie-
--- @param room the room to check
-function is_vpaas(room)
-    if not room then
-        return false;
-    end
-
-    -- stored check in room object if it exist
-    if room.is_vpaas ~= nil then
-        return room.is_vpaas;
-    end
-
-    room.is_vpaas = false;
-
-    local node, host = jid.split(room.jid);
-    if host ~= muc_domain or not node then
-        return false;
-    end
-    local tenant, conference_name = node:match('^%[([^%]]+)%](.+)$');
-    if not (tenant and conference_name) then
-        return false;
-    end
-
-    if not starts_with(tenant, 'vpaas-magic-cookie-') then
-        return false;
-    end
-
-    room.is_vpaas = true;
-    return true;
-end
-
-function get_sip_jibri_email_prefix(email)
-    if not email then
-        return nil;
-    elseif starts_with(email, INBOUND_SIP_JIBRI_PREFIX) then
-        return INBOUND_SIP_JIBRI_PREFIX;
-    elseif starts_with(email, OUTBOUND_SIP_JIBRI_PREFIX) then
-        return OUTBOUND_SIP_JIBRI_PREFIX;
-    else
-        return nil;
-    end
-end
-
-function is_sip_jibri_join(stanza)
-    if not stanza then
-        return false;
-    end
-
-    local features = stanza:get_child('features');
-    local email = stanza:get_child_text('email');
-
-    if not features or not email then
-        return false;
-    end
-
-    for i = 1, #features do
-        local feature = features[i];
-        if feature.attr and feature.attr.var and feature.attr.var == "http://jitsi.org/protocol/jibri" then
-            if get_sip_jibri_email_prefix(email) then
-                module:log("debug", "Occupant with email %s is a sip jibri ", email);
-                return true;
-            end
-        end
-    end
-
-    return false
-end
-
--- process a host module directly if loaded or hooks to wait for its load
-function process_host_module(name, callback)
-    local function process_host(host)
-
-        if host == name then
-            callback(module:context(host), host);
-        end
-    end
-
-    if prosody.hosts[name] == nil then
-        module:log('info', 'No host/component found, will wait for it: %s', name)
-
-        -- when a host or component is added
-        prosody.events.add_handler('host-activated', process_host);
-    else
-        process_host(name);
-    end
-end
-
-function table_shallow_copy(t)
-    local t2 = {}
-    for k, v in pairs(t) do
-        t2[k] = v
-    end
-    return t2
-end
-
 return {
-    OUTBOUND_SIP_JIBRI_PREFIX = OUTBOUND_SIP_JIBRI_PREFIX;
-    INBOUND_SIP_JIBRI_PREFIX = INBOUND_SIP_JIBRI_PREFIX;
     extract_subdomain = extract_subdomain;
     is_feature_allowed = is_feature_allowed;
     is_healthcheck_room = is_healthcheck_room;
-    is_moderated = is_moderated;
-    is_sip_jibri_join = is_sip_jibri_join;
-    is_vpaas = is_vpaas;
     get_focus_occupant = get_focus_occupant;
     get_room_from_jid = get_room_from_jid;
     get_room_by_name_and_subdomain = get_room_by_name_and_subdomain;
-    get_sip_jibri_email_prefix = get_sip_jibri_email_prefix;
     async_handler_wrapper = async_handler_wrapper;
     presence_check_status = presence_check_status;
-    process_host_module = process_host_module;
     room_jid_match_rewrite = room_jid_match_rewrite;
     room_jid_split_subdomain = room_jid_split_subdomain;
     internal_room_jid_match_rewrite = internal_room_jid_match_rewrite;
@@ -540,5 +394,4 @@ return {
     http_get_with_retry = http_get_with_retry;
     ends_with = ends_with;
     starts_with = starts_with;
-    table_shallow_copy = table_shallow_copy;
 };

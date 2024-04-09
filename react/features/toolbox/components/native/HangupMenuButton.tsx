@@ -8,6 +8,7 @@ import { BUTTON_TYPES } from '../../../base/ui/constants.native';
 
 import HangupMenu from './HangupMenu';
 
+
 /**
  * Button for showing the hangup menu.
  *

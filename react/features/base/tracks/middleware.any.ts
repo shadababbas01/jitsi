@@ -4,6 +4,7 @@ import { IStore } from '../../app/types';
 import { _RESET_BREAKOUT_ROOMS } from '../../breakout-rooms/actionTypes';
 import { isPrejoinPageVisible } from '../../prejoin/functions';
 import { getCurrentConference } from '../conference/functions';
+import { getMultipleVideoSendingSupportFeatureFlag } from '../config/functions.any';
 import {
     SET_AUDIO_MUTED,
     SET_CAMERA_FACING_MODE,
@@ -11,13 +12,14 @@ import {
     SET_VIDEO_MUTED,
     TOGGLE_CAMERA_FACING_MODE
 } from '../media/actionTypes';
-import { gumPending, toggleCameraFacingMode } from '../media/actions';
+import { toggleCameraFacingMode } from '../media/actions';
 import {
     CAMERA_FACING_MODE,
     MEDIA_TYPE,
-    MediaType
+    MediaType,
+    SCREENSHARE_MUTISM_AUTHORITY,
+    VIDEO_MUTISM_AUTHORITY
 } from '../media/constants';
-import { IGUMPendingState } from '../media/types';
 import MiddlewareRegistry from '../redux/MiddlewareRegistry';
 import StateListenerRegistry from '../redux/StateListenerRegistry';
 
@@ -162,7 +164,7 @@ StateListenerRegistry.register(
  * {@code mediaType} in the specified {@code store}.
  */
 function _getLocalTrack(
-        { getState }: { getState: IStore['getState']; },
+        { getState }: { getState: Function; },
         mediaType: MediaType,
         includePending = false) {
     return (
@@ -183,13 +185,15 @@ function _getLocalTrack(
  * @private
  * @returns {void}
  */
-async function _setMuted(store: IStore, { ensureTrack, muted }: {
-    ensureTrack: boolean; muted: boolean; }, mediaType: MediaType) {
+async function _setMuted(store: IStore, { ensureTrack, authority, muted }: {
+    authority: number; ensureTrack: boolean; muted: boolean; }, mediaType: MediaType) {
     const { dispatch, getState } = store;
     const localTrack = _getLocalTrack(store, mediaType, /* includePending */ true);
     const state = getState();
 
-    if (mediaType === MEDIA_TYPE.SCREENSHARE && !muted) {
+    if (mediaType === MEDIA_TYPE.SCREENSHARE
+        && getMultipleVideoSendingSupportFeatureFlag(state)
+        && !muted) {
         return;
     }
 
@@ -198,18 +202,19 @@ async function _setMuted(store: IStore, { ensureTrack, muted }: {
         // completed. If there's no `jitsiTrack`, then the `muted` state will be applied once the `jitsiTrack` is
         // created.
         const { jitsiTrack } = localTrack;
+        const isAudioOnly = (mediaType === MEDIA_TYPE.VIDEO && authority === VIDEO_MUTISM_AUTHORITY.AUDIO_ONLY)
+            || (mediaType === MEDIA_TYPE.SCREENSHARE && authority === SCREENSHARE_MUTISM_AUTHORITY.AUDIO_ONLY);
 
-        if (jitsiTrack) {
-            setTrackMuted(jitsiTrack, muted, state, dispatch)
-                .catch(() => dispatch(trackMuteUnmuteFailed(localTrack, muted)));
+        // Screenshare cannot be unmuted using the video mute button unless it is muted by audioOnly in the legacy
+        // screensharing mode.
+        if (jitsiTrack && (
+            jitsiTrack.videoType !== 'desktop' || isAudioOnly || getMultipleVideoSendingSupportFeatureFlag(state))
+        ) {
+            setTrackMuted(jitsiTrack, muted, state).catch(() => dispatch(trackMuteUnmuteFailed(localTrack, muted)));
         }
     } else if (!muted && ensureTrack && (typeof APP === 'undefined' || isPrejoinPageVisible(state))) {
-        typeof APP !== 'undefined' && dispatch(gumPending([ mediaType ], IGUMPendingState.PENDING_UNMUTE));
-
         // FIXME: This only runs on mobile now because web has its own way of
         // creating local tracks. Adjust the check once they are unified.
-        dispatch(createLocalTracksA({ devices: [ mediaType ] })).then(() => {
-            typeof APP !== 'undefined' && dispatch(gumPending([ mediaType ], IGUMPendingState.NONE));
-        });
+        dispatch(createLocalTracksA({ devices: [ mediaType ] }));
     }
 }

@@ -1,4 +1,3 @@
-import { IStore } from '../../app/types';
 import { APP_WILL_MOUNT, APP_WILL_UNMOUNT } from '../app/actionTypes';
 import MiddlewareRegistry from '../redux/MiddlewareRegistry';
 
@@ -40,7 +39,7 @@ MiddlewareRegistry.register(store => next => action => {
  * @private
  * @returns {void}
  */
-function _onUserInteractionReceived(dispatch: IStore['dispatch'], event: any) {
+function _onUserInteractionReceived(dispatch: Function, event: any) {
     if (event.isTrusted) {
         dispatch({
             type: USER_INTERACTION_RECEIVED
@@ -57,7 +56,7 @@ function _onUserInteractionReceived(dispatch: IStore['dispatch'], event: any) {
  * @private
  * @returns {void}
  */
-function _startListeningForUserInteraction({ dispatch }: { dispatch: IStore['dispatch']; }) {
+function _startListeningForUserInteraction({ dispatch }: { dispatch: Function; }) {
     _stopListeningForUserInteraction();
 
     userInteractionListener = _onUserInteractionReceived.bind(null, dispatch);

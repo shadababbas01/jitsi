@@ -1,3 +1,5 @@
+// @flow
+
 import { NativeModules } from 'react-native';
 
 let GoogleSignin;
@@ -27,7 +29,7 @@ class GoogleApi {
      * {@code GoogleSignin.configure}.
      * @returns {void}
      */
-    configure(config) {
+    configure(config: Object) {
         if (GoogleSignin) {
             GoogleSignin.configure(config);
         }
@@ -38,7 +40,7 @@ class GoogleApi {
      *
      * @returns {Promise}
      */
-    getTokens() {
+    getTokens(): Promise<*> {
         return GoogleSignin.getTokens();
     }
 
@@ -49,7 +51,7 @@ class GoogleApi {
      * @param {string} accessToken - The Google auth token.
      * @returns {Promise}
      */
-    getYouTubeLiveStreams(accessToken) {
+    getYouTubeLiveStreams(accessToken: string): Promise<*> {
         return new Promise((resolve, reject) => {
 
             // Fetching the list of available broadcasts first.
@@ -114,7 +116,7 @@ class GoogleApi {
      * params if needed.
      * @returns {Promise}
      */
-    _fetchGoogleEndpoint(accessToken, endpoint) {
+    _fetchGoogleEndpoint(accessToken, endpoint): Promise<*> {
         return new Promise((resolve, reject) => {
             const headers = {
                 Authorization: `Bearer ${accessToken}`
@@ -143,7 +145,7 @@ class GoogleApi {
      * to retrieve streams for.
      * @returns {Promise}
      */
-    _getLiveStreamsForBroadcasts(accessToken, broadcasts) {
+    _getLiveStreamsForBroadcasts(accessToken, broadcasts): Promise<*> {
         return new Promise((resolve, reject) => {
             const ids = [];
 

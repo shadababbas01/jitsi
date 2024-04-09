@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import React, { TouchEventHandler } from 'react';
 import { useSelector } from 'react-redux';
-import { useStyles } from 'tss-react/mui';
 
 import VideoTrack from '../../../base/media/components/web/VideoTrack';
 import { ITrack } from '../../../base/tracks/types';
@@ -15,15 +15,7 @@ interface IProps {
     /**
      * An object containing the CSS classes.
      */
-    classes?: Partial<Record<
-        'containerBackground' |
-        'indicatorsContainer' |
-        'indicatorsTopContainer' |
-        'tintBackground' |
-        'indicatorsBottomContainer' |
-        'indicatorsBackground',
-        string
-    >>;
+    classes: any;
 
     /**
      * The class name that will be used for the container.
@@ -133,8 +125,6 @@ const VirtualScreenshareParticipant = ({
         style = { styles.video }
         videoTrack = { videoTrack } />;
 
-    const { cx } = useStyles();
-
     return (
         <span
             className = { containerClassName }
@@ -154,10 +144,10 @@ const VirtualScreenshareParticipant = ({
             ) }
             style = { styles.thumbnail }>
             {video}
-            <div className = { classes?.containerBackground } />
+            <div className = { classes.containerBackground } />
             <div
-                className = { cx(classes?.indicatorsContainer,
-                        classes?.indicatorsTopContainer,
+                className = { clsx(classes.indicatorsContainer,
+                        classes.indicatorsTopContainer,
                         currentLayout === LAYOUTS.TILE_VIEW && 'tile-view-mode'
                 ) }>
                 <ThumbnailTopIndicators
@@ -165,14 +155,14 @@ const VirtualScreenshareParticipant = ({
                     participantId = { participantId }
                     thumbnailType = { thumbnailType } />
             </div>
-            {shouldDisplayTintBackground && <div className = { classes?.tintBackground } />}
+            {shouldDisplayTintBackground && <div className = { classes.tintBackground } />}
             <div
-                className = { cx(classes?.indicatorsContainer,
-                        classes?.indicatorsBottomContainer,
+                className = { clsx(classes.indicatorsContainer,
+                        classes.indicatorsBottomContainer,
                         currentLayout === LAYOUTS.TILE_VIEW && 'tile-view-mode'
                 ) }>
                 <ThumbnailBottomIndicators
-                    className = { classes?.indicatorsBackground }
+                    className = { classes.indicatorsBackground }
                     local = { false }
                     participantId = { participantId }
                     showStatusIndicators = { true } />

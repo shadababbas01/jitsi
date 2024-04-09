@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { batch } from 'react-redux';
-import { AnyAction } from 'redux';
 
 // @ts-expect-error
 import UIEvents from '../../../../service/UI/UIEvents';
@@ -544,7 +543,7 @@ function _e2eeUpdated({ getState, dispatch }: IStore, conference: IJitsiConferen
  * @private
  * @returns {Object} The value returned by {@code next(action)}.
  */
-function _localParticipantJoined({ getState, dispatch }: IStore, next: Function, action: AnyAction) {
+function _localParticipantJoined({ getState, dispatch }: IStore, next: Function, action: any) {
     const result = next(action);
 
     const settings = getState()['features/base/settings'];
@@ -570,7 +569,7 @@ function _localParticipantJoined({ getState, dispatch }: IStore, next: Function,
  * @private
  * @returns {Object} The value returned by {@code next(action)}.
  */
-function _localParticipantLeft({ dispatch }: IStore, next: Function, action: AnyAction) {
+function _localParticipantLeft({ dispatch }: IStore, next: Function, action: any) {
     const result = next(action);
 
     dispatch(localParticipantLeft());
@@ -587,7 +586,7 @@ function _localParticipantLeft({ dispatch }: IStore, next: Function, action: Any
  * @private
  * @returns {void}
  */
-function _maybePlaySounds({ getState, dispatch }: IStore, action: AnyAction) {
+function _maybePlaySounds({ getState, dispatch }: IStore, action: any) {
     const state = getState();
     const { startAudioMuted } = state['features/base/config'];
     const { soundsParticipantJoined: joinSound, soundsParticipantLeft: leftSound } = state['features/base/settings'];
@@ -632,7 +631,7 @@ function _maybePlaySounds({ getState, dispatch }: IStore, action: AnyAction) {
  * @private
  * @returns {Object} The value returned by {@code next(action)}.
  */
-function _participantJoinedOrUpdated(store: IStore, next: Function, action: AnyAction) {
+function _participantJoinedOrUpdated(store: IStore, next: Function, action: any) {
     const { dispatch, getState } = store;
     const { overwrittenNameList } = store.getState()['features/base/participants'];
     const { participant: {
@@ -683,7 +682,7 @@ function _participantJoinedOrUpdated(store: IStore, next: Function, action: AnyA
 
     // Only run this if the config is populated, otherwise we preload external resources
     // even if disableThirdPartyRequests is set to true in config
-    if (getState()['features/base/config']?.hosts) {
+    if (Object.keys(getState()['features/base/config']).length) {
         const { disableThirdPartyRequests } = getState()['features/base/config'];
 
         if (!disableThirdPartyRequests && (avatarURL || email || id || name)) {

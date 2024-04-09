@@ -1,9 +1,9 @@
 import { IReduxState, IStore } from '../../app/types';
+// eslint-disable-next-line lines-around-comment
+// @ts-ignore
 import { setPictureInPictureEnabled } from '../../mobile/picture-in-picture/functions';
 import { showNotification } from '../../notifications/actions';
 import { NOTIFICATION_TIMEOUT_TYPE } from '../../notifications/constants';
-import { PIP_WHILE_SCREEN_SHARING_ENABLED } from '../flags/constants';
-import { getFeatureFlag } from '../flags/functions';
 import JitsiMeetJS from '../lib-jitsi-meet';
 import {
     setScreenshareMuted,
@@ -13,7 +13,6 @@ import { VIDEO_MUTISM_AUTHORITY } from '../media/constants';
 
 import { addLocalTrack, replaceLocalTrack } from './actions.any';
 import { getLocalDesktopTrack, getTrackState, isLocalVideoTrackDesktop } from './functions.native';
-
 
 export * from './actions.any';
 
@@ -51,12 +50,8 @@ export function toggleScreensharing(enabled: boolean, _ignore1?: boolean, _ignor
  * @param {Object} state - The redux state.
  * @returns {void}
  */
-async function _startScreenSharing(dispatch: IStore['dispatch'], state: IReduxState) {
-    const pipWhileScreenSharingEnabled = getFeatureFlag(state, PIP_WHILE_SCREEN_SHARING_ENABLED, false);
-
-    if (!pipWhileScreenSharingEnabled) {
-        setPictureInPictureEnabled(false);
-    }
+async function _startScreenSharing(dispatch: Function, state: IReduxState) {
+    setPictureInPictureEnabled(false);
 
     try {
         const tracks: any[] = await JitsiMeetJS.createLocalTracks({ devices: [ 'desktop' ] });
@@ -84,7 +79,7 @@ async function _startScreenSharing(dispatch: IStore['dispatch'], state: IReduxSt
             }, NOTIFICATION_TIMEOUT_TYPE.LONG));
         }
     } catch (error: any) {
-        console.log('ERROR creating screen-sharing stream ', error);
+        console.log('ERROR creating ScreeSharing stream ', error);
 
         setPictureInPictureEnabled(true);
     }

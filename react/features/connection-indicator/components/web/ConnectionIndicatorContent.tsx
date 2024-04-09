@@ -3,7 +3,6 @@ import { WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { IReduxState, IStore } from '../../../app/types';
-import { openDialog } from '../../../base/dialog/actions';
 import { translate } from '../../../base/i18n/functions';
 import { MEDIA_TYPE } from '../../../base/media/constants';
 import {
@@ -26,8 +25,6 @@ import AbstractConnectionIndicator, {
     IState as AbstractState,
     INDICATOR_DISPLAY_THRESHOLD
 } from '../AbstractConnectionIndicator';
-
-import BandwidthSettingsDialog from './BandwidthSettingsDialog';
 
 /**
  * An array of display configurations for the connection indicator and its bars.
@@ -82,11 +79,6 @@ interface IProps extends AbstractProps, WithTranslation {
     _disableShowMoreStats: boolean;
 
     /**
-     * Whether to enable assumed bandwidth.
-     */
-    _enableAssumedBandwidth?: boolean;
-
-    /**
      * Whether or not should display the "Save Logs" link in the local video
      * stats table.
      */
@@ -107,11 +99,6 @@ interface IProps extends AbstractProps, WithTranslation {
      * Whether is narrow layout or not.
      */
     _isNarrowLayout: boolean;
-
-    /**
-     * Invoked to open the bandwidth settings dialog.
-     */
-    _onOpenBandwidthDialog: () => void;
 
     /**
      * Invoked to save the conference logs.
@@ -214,14 +201,12 @@ class ConnectionIndicatorContent extends AbstractConnectionIndicator<IProps, ISt
                 connectionSummary = { this._getConnectionStatusTip() }
                 disableShowMoreStats = { this.props._disableShowMoreStats }
                 e2eeVerified = { this.props._isE2EEVerified }
-                enableAssumedBandwidth = { this.props._enableAssumedBandwidth }
                 enableSaveLogs = { this.props._enableSaveLogs }
                 framerate = { framerate }
                 isLocalVideo = { this.props._isLocalVideo }
                 isNarrowLayout = { this.props._isNarrowLayout }
                 isVirtualScreenshareParticipant = { this.props._isVirtualScreenshareParticipant }
                 maxEnabledResolution = { maxEnabledResolution }
-                onOpenBandwidthDialog = { this.props._onOpenBandwidthDialog }
                 onSaveLogs = { this.props._onSaveLogs }
                 onShowMore = { this._onToggleShowMore }
                 packetLoss = { packetLoss }
@@ -319,15 +304,6 @@ export function _mapDispatchToProps(dispatch: IStore['dispatch']) {
          */
         _onSaveLogs() {
             dispatch(saveLogs());
-        },
-
-        /**
-         * Opens the bandwidth settings dialog.
-         *
-         * @returns {void}
-         */
-        _onOpenBandwidthDialog() {
-            dispatch(openDialog(BandwidthSettingsDialog));
         }
     };
 }
@@ -359,9 +335,8 @@ export function _mapStateToProps(state: IReduxState, ownProps: any) {
 
     return {
         _audioSsrc: audioTrack ? conference?.getSsrcByTrack(audioTrack.jitsiTrack) : undefined,
-        _disableShowMoreStats: Boolean(state['features/base/config'].disableShowMoreStats),
-        _enableAssumedBandwidth: state['features/base/config'].testing?.assumeBandwidth,
         _enableSaveLogs: Boolean(state['features/base/config'].enableSaveLogs),
+        _disableShowMoreStats: Boolean(state['features/base/config'].disableShowMoreStats),
         _isConnectionStatusInactive,
         _isConnectionStatusInterrupted,
         _isE2EEVerified: Boolean(participant?.e2eeVerified),

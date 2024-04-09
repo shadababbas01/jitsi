@@ -172,12 +172,10 @@ class VideoManager extends AbstractVideoManager {
      * @inheritdoc
      */
     render() {
-        return (
-            <video
-                id = 'sharedVideoPlayer'
-                ref = { this.playerRef }
-                { ...this.getPlayerOptions() } />
-        );
+        return (<video
+            id = 'sharedVideoPlayer'
+            ref = { this.playerRef }
+            { ...this.getPlayerOptions() } />);
     }
 }
 

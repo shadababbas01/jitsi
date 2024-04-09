@@ -1,3 +1,5 @@
+// @flow
+
 import Logger from '@jitsi/logger';
 
 const logger = Logger.getLogger(__filename);
@@ -9,7 +11,7 @@ const logger = Logger.getLogger(__filename);
  * the external communication.
  * @returns {Promise}
  */
-export function getAvailableDevices(transport) {
+export function getAvailableDevices(transport: Object) {
     return transport.sendRequest({
         type: 'devices',
         name: 'getAvailableDevices'
@@ -27,7 +29,7 @@ export function getAvailableDevices(transport) {
  * the external communication.
  * @returns {Promise}
  */
-export function getCurrentDevices(transport) {
+export function getCurrentDevices(transport: Object) {
     return transport.sendRequest({
         type: 'devices',
         name: 'getCurrentDevices'
@@ -48,7 +50,7 @@ export function getCurrentDevices(transport) {
  * Default - 'input'.
  * @returns {Promise}
  */
-export function isDeviceChangeAvailable(transport, deviceType) {
+export function isDeviceChangeAvailable(transport: Object, deviceType: string) {
     return transport.sendRequest({
         deviceType,
         type: 'devices',
@@ -64,7 +66,7 @@ export function isDeviceChangeAvailable(transport, deviceType) {
  * the external communication.
  * @returns {Promise}
  */
-export function isDeviceListAvailable(transport) {
+export function isDeviceListAvailable(transport: Object) {
     return transport.sendRequest({
         type: 'devices',
         name: 'isDeviceListAvailable'
@@ -79,7 +81,7 @@ export function isDeviceListAvailable(transport) {
  * the external communication.
  * @returns {Promise}
  */
-export function isMultipleAudioInputSupported(transport) {
+export function isMultipleAudioInputSupported(transport: Object) {
     return transport.sendRequest({
         type: 'devices',
         name: 'isMultipleAudioInputSupported'
@@ -95,7 +97,7 @@ export function isMultipleAudioInputSupported(transport) {
  * @param {string} id - The id of the new device.
  * @returns {Promise}
  */
-export function setAudioInputDevice(transport, label, id) {
+export function setAudioInputDevice(transport: Object, label: string, id: string) {
     return _setDevice(transport, {
         id,
         kind: 'audioinput',
@@ -112,7 +114,7 @@ export function setAudioInputDevice(transport, label, id) {
  * @param {string} id - The id of the new device.
  * @returns {Promise}
  */
-export function setAudioOutputDevice(transport, label, id) {
+export function setAudioOutputDevice(transport: Object, label: string, id: string) {
     return _setDevice(transport, {
         id,
         kind: 'audiooutput',
@@ -128,7 +130,7 @@ export function setAudioOutputDevice(transport, label, id) {
  * @param {Object} device - The new device to be used.
  * @returns {Promise}
  */
-function _setDevice(transport, device) {
+function _setDevice(transport: Object, device) {
     return transport.sendRequest({
         type: 'devices',
         name: 'setDevice',
@@ -145,7 +147,7 @@ function _setDevice(transport, device) {
  * @param {string} id - The id of the new device.
  * @returns {Promise}
  */
-export function setVideoInputDevice(transport, label, id) {
+export function setVideoInputDevice(transport: Object, label: string, id: string) {
     return _setDevice(transport, {
         id,
         kind: 'videoinput',

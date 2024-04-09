@@ -7,6 +7,11 @@ import { leaveConference } from '../../base/conference/actions';
 import { translate } from '../../base/i18n/functions';
 import { IProps as AbstractButtonProps } from '../../base/toolbox/components/AbstractButton';
 import AbstractHangupButton from '../../base/toolbox/components/AbstractHangupButton';
+import {  NativeModules} from 'react-native';
+import { endConference } from '../../base/conference/actions';
+import { appNavigate } from '../../app/actions.native';
+import { getParticipantCountRemoteOnly } from '../../base/participants/functions';
+
 
 /**
  * Component that renders a toolbar button for leaving the current conference.
@@ -43,8 +48,37 @@ class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
      * @returns {void}
      */
     _doHangup() {
-        this._hangup();
+        if(this.props._settings.isPrivateRoom){
+            sendAnalytics(createToolbarEvent('endmeeting'));
+            this.props.dispatch(endConference());
+            this.props.dispatch(appNavigate(undefined));
+            NativeModules.NativeCallsNew.hangup();
+            this._hangup();
+        }else if(this.props._settings.isGroupCall && this.props._participantsCount == 1){
+            sendAnalytics(createToolbarEvent('endmeeting'));
+            this.props.dispatch(endConference());
+            this.props.dispatch(appNavigate(undefined));
+            NativeModules.NativeCallsNew.hangup();
+            this._hangup();
+        }else{
+            NativeModules.NativeCallsNew.hangup();
+            this._hangup();
+        }
+    }
+    _getView(props) {
+        if (props.children) {
+            return this.props.children(this._onClick);
+        } else {
+            return super._getView(props);
+        }
     }
 }
+function _mapStateToProps(state) {
+    
+    return {
+        _settings: state['features/base/settings'],
+        _participantsCount: getParticipantCountRemoteOnly(state)
 
-export default translate(connect()(HangupButton));
+    };
+}
+export default translate(connect(_mapStateToProps)(HangupButton));

@@ -2,7 +2,6 @@ import React, { PureComponent, ReactNode } from 'react';
 import { SafeAreaView, ScrollView, View, ViewStyle } from 'react-native';
 import { connect } from 'react-redux';
 
-import { IStore } from '../../../../app/types';
 import SlidingView from '../../../react/components/native/SlidingView';
 import { hideSheet } from '../../actions';
 
@@ -26,7 +25,7 @@ type Props = {
     /**
      * Redux Dispatch function.
      */
-    dispatch: IStore['dispatch'];
+    dispatch: Function;
 
     /**
      * Handler for the cancel event, which happens when the user dismisses
@@ -37,7 +36,7 @@ type Props = {
     /**
      * Function to render a bottom sheet footer element, if necessary.
      */
-    renderFooter?: () => React.ReactNode;
+    renderFooter?: Function;
 
     /**
      * Function to render a bottom sheet header element, if necessary.
@@ -110,7 +109,9 @@ class BottomSheet extends PureComponent<Props> {
         } = this.props;
 
         return (
-            <SlidingView
+            <SlidingView // @ts-ignore
+                accessibilityRole = 'menu'
+                accessibilityViewIsModal = { true }
                 onHide = { this._onCancel }
                 position = 'bottom'
                 show = { Boolean(showSlidingView) }>

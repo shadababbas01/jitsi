@@ -1,31 +1,33 @@
+/* eslint-disable lines-around-comment */
+
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useCallback } from 'react';
 import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
-import { IReduxState, IStore } from '../../../app/types';
+import { IReduxState } from '../../../app/types';
+// @ts-ignore
 import DialInSummary from '../../../invite/components/dial-in-summary/native/DialInSummary';
 import Prejoin from '../../../prejoin/components/native/Prejoin';
-import UnsafeRoomWarning from '../../../prejoin/components/native/UnsafeRoomWarning';
-import { isUnsafeRoomWarningEnabled } from '../../../prejoin/functions';
-// eslint-disable-next-line
 // @ts-ignore
 import WelcomePage from '../../../welcome/components/WelcomePage';
 import { isWelcomePageEnabled } from '../../../welcome/functions';
-import Whiteboard from '../../../whiteboard/components/native/Whiteboard';
+// @ts-ignore
 import { _ROOT_NAVIGATION_READY } from '../actionTypes';
+// @ts-ignore
 import { rootNavigationRef } from '../rootNavigationContainerRef';
+// @ts-ignore
 import { screen } from '../routes';
+// @ts-ignore
 import {
     conferenceNavigationContainerScreenOptions,
     connectingScreenOptions,
     dialInSummaryScreenOptions,
     navigationContainerTheme,
     preJoinScreenOptions,
-    unsafeMeetingScreenOptions,
-    welcomeScreenOptions,
-    whiteboardScreenOptions
+    welcomeScreenOptions
+    // @ts-ignore
 } from '../screenOptions';
 
 import ConnectingPage from './ConnectingPage';
@@ -40,12 +42,7 @@ interface IProps {
     /**
      * Redux dispatch function.
      */
-    dispatch: IStore['dispatch'];
-
-    /**
-    * Is unsafe room warning available?
-    */
-    isUnsafeRoomWarningAvailable: boolean;
+    dispatch: Function;
 
     /**
     * Is welcome page available?
@@ -54,9 +51,9 @@ interface IProps {
 }
 
 
-const RootNavigationContainer = ({ dispatch, isUnsafeRoomWarningAvailable, isWelcomePageAvailable }: IProps) => {
-    const initialRouteName = isWelcomePageAvailable
-        ? screen.welcome.main : screen.connecting;
+const RootNavigationContainer = ({ dispatch, isWelcomePageAvailable }: IProps) => {
+    //const initialRouteName = isWelcomePageAvailable ? screen.welcome.main : screen.connecting; //added by jaswant
+    const initialRouteName =  screen.welcome.main;
     const onReady = useCallback(() => {
         dispatch({
             type: _ROOT_NAVIGATION_READY,
@@ -85,32 +82,20 @@ const RootNavigationContainer = ({ dispatch, isUnsafeRoomWarningAvailable, isWel
                                 name = { screen.welcome.main }
                                 options = { welcomeScreenOptions } />
                             <RootStack.Screen
-
                                 // @ts-ignore
                                 component = { DialInSummary }
                                 name = { screen.dialInSummary }
                                 options = { dialInSummaryScreenOptions } />
                         </>
                 }
-                <RootStack.Screen
+                {/* <RootStack.Screen
                     component = { ConnectingPage }
                     name = { screen.connecting }
-                    options = { connectingScreenOptions } />
-                <RootStack.Screen // @ts-ignore
-                    component = { Whiteboard }
-                    name = { screen.conference.whiteboard }
-                    options = { whiteboardScreenOptions } />
-                <RootStack.Screen
+                    options = { connectingScreenOptions } /> */}
+                {/* <RootStack.Screen
                     component = { Prejoin }
                     name = { screen.preJoin }
-                    options = { preJoinScreenOptions } />
-                {
-                    isUnsafeRoomWarningAvailable
-                    && <RootStack.Screen
-                        component = { UnsafeRoomWarning }
-                        name = { screen.unsafeRoomWarning }
-                        options = { unsafeMeetingScreenOptions } />
-                }
+                    options = { preJoinScreenOptions } /> */}
                 <RootStack.Screen
                     component = { ConferenceNavigationContainer }
                     name = { screen.conference.root }
@@ -128,7 +113,6 @@ const RootNavigationContainer = ({ dispatch, isUnsafeRoomWarningAvailable, isWel
  */
 function mapStateToProps(state: IReduxState) {
     return {
-        isUnsafeRoomWarningAvailable: isUnsafeRoomWarningEnabled(state),
         isWelcomePageAvailable: isWelcomePageEnabled(state)
     };
 }

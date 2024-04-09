@@ -1,8 +1,5 @@
 {
     "addPeople": {
-        "accessibilityLabel": {
-            "meetingLink": "Konferenzlink: {{url}}"
-        },
         "add": "Einladen",
         "addContacts": "Laden Sie Ihre Kontakte ein",
         "contacts": "Kontakte",
@@ -42,18 +39,6 @@
     "audioOnly": {
         "audioOnly": "Geringe Bandbreite"
     },
-    "bandwidthSettings": {
-        "assumedBandwidthBps": "z.B. 10000000 für 10 Mbps",
-        "assumedBandwidthBpsWarning": "Höhere Werte können zu Netzwerk-Problemen führen.",
-        "customValue": "spezifischer Wert",
-        "customValueEffect": "setzt den Wert in bps",
-        "leaveEmpty": "leer lassen",
-        "leaveEmptyEffect": "aktiviert die automatische Abschätzung",
-        "possibleValues": "Mögliche Werte",
-        "setAssumedBandwidthBps": "Angenommene Bandbreite (bps)",
-        "title": "Einstellungen Bandbreite",
-        "zeroEffect": "schaltet Video aus"
-    },
     "breakoutRooms": {
         "actions": {
             "add": "Breakout-Raum hinzufügen",
@@ -63,22 +48,15 @@
             "leaveBreakoutRoom": "Breakout-Raum verlassen",
             "more": "Mehr",
             "remove": "Entfernen",
-            "rename": "Umbenennen",
-            "renameBreakoutRoom": "Breakout-Raum umbenennen",
             "sendToBreakoutRoom": "Anwesende in Breakout-Raum verschieben:"
         },
-        "breakoutList": "Breakout-Liste",
-        "buttonLabel": "Breakout-Räume",
         "defaultName": "Breakout-Raum #{{index}}",
-        "hideParticipantList": "Teilnehmerliste ausblenden",
         "mainRoom": "Hauptraum",
         "notifications": {
             "joined": "Breakout-Raum \"{{name}}\" betreten",
             "joinedMainRoom": "Hauptraum betreten",
             "joinedTitle": "Breakout-Räume"
-        },
-        "showParticipantList": "Teilnehmerliste anzeigen",
-        "title": "Breakout-Räume"
+        }
     },
     "calendarSync": {
         "addMeetingURL": "Konferenzlink hinzufügen",
@@ -178,7 +156,6 @@
         "localport_plural": "Lokale Ports:",
         "maxEnabledResolution": "max. senden",
         "more": "Mehr anzeigen",
-        "no": "Nein",
         "packetloss": "Paketverlust:",
         "participant_id": "Personen-ID:",
         "quality": {
@@ -197,8 +174,7 @@
         "status": "Verbindung:",
         "transport": "Protokoll:",
         "transport_plural": "Protokolle:",
-        "video_ssrc": "Video-SSRC:",
-        "yes": "Ja"
+        "video_ssrc": "Video-SSRC:"
     },
     "dateUtils": {
         "earlier": "Früher",
@@ -209,7 +185,7 @@
         "appNotInstalled": "Sie benötigen die „{{app}}“-App, um der Konferenz auf dem Smartphone beizutreten.",
         "description": "Nichts passiert? Wir haben versucht, die Konferenz in {{app}} zu öffnen. Versuchen Sie es erneut oder treten Sie der Konferenz in {{app}} im Web bei.",
         "descriptionNew": "Nichts passiert? Wir haben versucht, die Konferenz in {{app}} zu öffnen. <br /><br /> Versuchen Sie es erneut oder treten Sie der Konferenz im Web bei.",
-        "descriptionWithoutWeb": "Ist nichts passiert? Wir haben versucht, Ihre Konferenz in der „{{app}}“-Desktop-App zu starten.",
+        "descriptionWithoutWeb": "Ist nichts passiert? Wir haben versucht, Ihre Besprechung in der „{{app}}“-Desktop-App zu starten.",
         "downloadApp": "App herunterladen",
         "downloadMobileApp": "Aus dem App Store herunterladen",
         "ifDoNotHaveApp": "Wenn Sie die App noch nicht haben:",
@@ -219,13 +195,11 @@
         "joinInBrowser": "Im Browser",
         "launchMeetingLabel": "Wie möchten Sie an der Konferenz teilnehmen?",
         "launchWebButton": "Im Web öffnen",
-        "noDesktopApp": "Sie haben die App noch nicht installiert?",
         "noMobileApp": "Sie haben die App noch nicht installiert?",
-        "or": "oder",
-        "termsAndConditions": "Indem Sie fortfahren, stimmen Sie unseren <a href='{{termsAndConditionsLink}}' rel='noopener noreferrer' target='_blank'>Nutzungsbedingungen</a> zu.",
+        "termsAndConditions": "Indem Sie fortfahren, stimmen Sie underen<a href='{{termsAndConditionsLink}}' rel='noopener noreferrer' target='_blank'>Nutzungsbedingungen</a> zu.",
         "title": "Die Konferenz wird in {{app}} geöffnet …",
         "titleNew": "Konferenz starten ...",
-        "tryAgainButton": "Erneut versuchen",
+        "tryAgainButton": "Erneut mit der nativen Applikation versuchen",
         "unsupportedBrowser": "Sie verwenden einen Browser, der noch nicht unterstützt wird."
     },
     "defaultLink": "Bsp.: {{url}}",
@@ -263,12 +237,9 @@
         "Share": "Teilen",
         "Submit": "OK",
         "WaitForHostMsg": "Die Konferenz wurde noch nicht gestartet. Falls Sie die Konferenz leiten, authentifizieren Sie sich bitte. Warten Sie andernfalls, bis die Konferenz gestartet wird.",
-        "WaitingForHostButton": "Auf Moderation warten",
         "WaitingForHostTitle": "Warten auf den Beginn der Konferenz …",
         "Yes": "Ja",
         "accessibilityLabel": {
-            "Cancel": "Abbrechen (Popup schließen)",
-            "Ok": "OK (Speichern und Popup schließen)",
             "close": "Popup schließen",
             "liveStreaming": "Livestream",
             "sharingTabs": "Optionen zum Teilen"
@@ -277,8 +248,6 @@
         "addMeetingNote": "Notiz zu dieser Konferenz hinzufügen",
         "addOptionalNote": "Notiz hinzufügen (optional):",
         "allow": "Erlauben",
-        "allowToggleCameraDialog": "Wollen Sie {{initiatorName}} erlauben, Ihre Kameraauswahl zu ändern?",
-        "allowToggleCameraTitle": "Änderung der Kamera zulassen?",
         "alreadySharedVideoMsg": "Eine andere Person gibt bereits ein Video weiter. Bei dieser Konferenz ist jeweils nur ein geteiltes Video möglich.",
         "alreadySharedVideoTitle": "Nur ein geteiltes Video gleichzeitig",
         "applicationWindow": "Anwendungsfenster",
@@ -339,7 +308,6 @@
         "lockRoom": "Konferenz$t(lockRoomPassword) hinzufügen",
         "lockTitle": "Sperren fehlgeschlagen",
         "login": "Anmelden",
-        "loginQuestion": "Sind Sie sicher, dass sie sich anmelden und die Konferenz verlassen möchten?",
         "logoutQuestion": "Sind Sie sicher, dass Sie sich abmelden und die Konferenz verlassen möchten?",
         "logoutTitle": "Abmelden",
         "maxUsersLimitReached": "Das Limit für die maximale Personenzahl ist erreicht. Die Konferenz ist voll. Bitte wenden Sie sich an die Konferenzleitung oder versuchen Sie es später noch einmal!",
@@ -383,6 +351,8 @@
         "permissionCameraRequiredError": "Der Zugriff auf die Kamera wird benötigt, um in Videokonferenzen teilzunehmen. Bitte in den Einstellungen zulassen",
         "permissionErrorTitle": "Berechtigung benötigt",
         "permissionMicRequiredError": "Der Zugriff auf das Mikrofon wird benötigt, um an Konferenzen mit Ton teilzunehmen. Bitte in den Einstellungen zulassen",
+        "popupError": "Ihr Browser blockiert Pop-ups von dieser Website. Bitte aktivieren Sie Pop-ups in den Sicherheitseinstellungen des Browsers und versuchen Sie es erneut.",
+        "popupErrorTitle": "Pop-up blockiert",
         "readMore": "mehr",
         "recentlyUsedObjects": "Ihre zuletzt verwendeten Objekte",
         "recording": "Aufnahme",
@@ -399,8 +369,6 @@
         "removePassword": "$t(lockRoomPasswordUppercase) entfernen",
         "removeSharedVideoMsg": "Sind Sie sicher, dass Sie das geteilte Video entfernen möchten?",
         "removeSharedVideoTitle": "Freigegebenes Video entfernen",
-        "renameBreakoutRoomLabel": "Raumname",
-        "renameBreakoutRoomTitle": "Breakout-Raum umbenennen",
         "reservationError": "Fehler im Reservierungssystem",
         "reservationErrorMsg": "Fehler, Nummer: {{code}}, Nachricht: {{msg}}",
         "retry": "Wiederholen",
@@ -420,10 +388,8 @@
         "sendPrivateMessageTitle": "Privat antworten?",
         "serviceUnavailable": "Dienst nicht verfügbar",
         "sessTerminated": "Konferenz beendet",
-        "sessTerminatedReason": "Die Konferenz wurde beendet",
         "sessionRestarted": "Konferenz neugestartet",
         "shareAudio": "Fortfahren",
-        "shareAudioAltText": "Um den gewünschten Inhalt zu teilen: Navigiere zu \"Browser tab\", wähle den Inhalt, aktiviere \"Audio teilen\" Kästchen Und klicke den “Teilen” schaltfläche",
         "shareAudioTitle": "Wie kann Audio geteilt werden",
         "shareAudioWarningD1": "müssen Sie Ihre Bildschirmfreigabe stoppen, bevor Sie Audio teilen können.",
         "shareAudioWarningD2": "müssen Sie Ihre Bildschirmfreigabe neustarten und die Option \"Audio freigeben\" auswählen.",
@@ -453,25 +419,7 @@
         "thankYou": "Danke für die Verwendung von {{appName}}!",
         "token": "Token",
         "tokenAuthFailed": "Sie sind nicht berechtigt, dieser Konferenz beizutreten.",
-        "tokenAuthFailedReason": {
-            "audInvalid": "Ungültiger `aud`-Wert. Erwartet wird `jitsi`.",
-            "contextNotFound": "Das `context`-Objekt fehlt.",
-            "expInvalid": "Ungültiger `exp`-Wert.",
-            "featureInvalid": "Ungültiges Feature: {{feature}}, noch nicht implementiert.",
-            "featureValueInvalid": "Ungültiger Wert für Feature: {{feature}}.",
-            "featuresNotFound": "Das `features`-Objekt fehlt.",
-            "headerNotFound": "Header fehlt.",
-            "issInvalid": "Ungültiger `iss`-Wert. Erwartet wird `chat`.",
-            "kidMismatch": "Die Key-ID (kid) passt nicht zum sub.",
-            "kidNotFound": "Fehlende Key-ID (kid).",
-            "nbfFuture": "Der `nbf`-Wert liegt in der Zukunft.",
-            "nbfInvalid": "Ungültiger `nbf`-Wert.",
-            "payloadNotFound": "Fehlende Payload.",
-            "tokenExpired": "Das Token ist abgelaufen."
-        },
         "tokenAuthFailedTitle": "Authentifizierung fehlgeschlagen",
-        "tokenAuthFailedWithReasons": "Teilnahme an der Konferenz fehlgeschlagen. Möglicher Grund: {{reason}}",
-        "tokenAuthUnsupported": "Token-Authentifizierung wird nicht unterstützt.",
         "transcribing": "Wird transkribiert",
         "unlockRoom": "Konferenz$t(lockRoomPassword) entfernen",
         "user": "Anmeldename",
@@ -485,10 +433,6 @@
         "viewUpgradeOptions": "Upgradeoptionen anzeigen",
         "viewUpgradeOptionsContent": "Sie müssen Ihren Tarif erweitern, um Premium-Features wie Aufnahme, Transkription, RTMP-Streaming und mehr zu nutzen.",
         "viewUpgradeOptionsTitle": "Sie haben ein Premium-Feature entdeckt!",
-        "whiteboardLimitContent": "Die maximale Zahl an Nutzenden für das Whiteboard ist erreicht.",
-        "whiteboardLimitReference": "Für weitere Informationen besuchen Sie bitte",
-        "whiteboardLimitReferenceUrl": "unsere Webseite",
-        "whiteboardLimitTitle": "Whiteboard-Nutzung beschränkt",
         "yourEntireScreen": "Ganzer Bildschirm"
     },
     "documentSharing": {
@@ -501,9 +445,6 @@
         "title": "Diese Konferenz einbetten"
     },
     "feedback": {
-        "accessibilityLabel": {
-            "yourChoice": "Ihre Auswahl: {{rating}}"
-        },
         "average": "Durchschnittlich",
         "bad": "Schlecht",
         "detailsLabel": "Sagen Sie uns mehr dazu.",
@@ -536,7 +477,7 @@
         "conferenceURL": "Link:",
         "copyNumber": "Nummer kopieren",
         "country": "Land",
-        "dialANumber": "Um an der Konferenz teilzunehmen, müssen Sie eine dieser Nummern wählen und dann die PIN eingeben.",
+        "dialANumber": "Um am Meeting teilzunehmen, müssen Sie eine dieser Nummern wählen und dann die PIN eingeben.",
         "dialInConferenceID": "PIN:",
         "dialInNotSupported": "Entschuldigung, leider wird das Einwählen derzeit nicht unterstützt.",
         "dialInNumber": "Einwählen:",
@@ -564,7 +505,6 @@
         "password": "$t(lockRoomPasswordUppercase):",
         "reachedLimit": "Sie haben die Grenzen Ihres Tarifs erreicht.",
         "sip": "SIP-Adresse",
-        "sipAudioOnly": "SIP-Adresse (nur Ton)",
         "title": "Teilen",
         "tooltip": "Freigabe-Link und Einwahlinformationen für dieses Meeting",
         "upgradeOptions": "Bitte prüfen Sie Ihre Upgrade-Optionen auf"
@@ -644,6 +584,8 @@
         "youtubeTerms": "YouTube-Nutzungsbedingungen"
     },
     "lobby": {
+        "admit": "Zulassen",
+        "admitAll": "Alle zulassen",
         "backToKnockModeButton": "Kein Passwort, stattdessen Beitritt anfragen",
         "chat": "Chat",
         "dialogTitle": "Lobbymodus",
@@ -669,14 +611,16 @@
         "knockingParticipantList": "Liste anklopfender Personen",
         "lobbyChatStartedNotification": "{{moderator}} hat einen Lobby-Chat mit {{attendee}} gestartet",
         "lobbyChatStartedTitle": "{{moderator}} hat einen Lobby-Chat mit Ihnen gestartet.",
-        "lobbyClosed": "Die Lobby wurde geschlossen.",
         "nameField": "Geben Sie Ihren Namen ein",
         "notificationLobbyAccessDenied": "{{targetParticipantName}} wurde von {{originParticipantName}} der Zutritt verwehrt",
         "notificationLobbyAccessGranted": "{{targetParticipantName}} wurde von {{originParticipantName}} der Zutritt gestattet",
         "notificationLobbyDisabled": "{{originParticipantName}} hat die Lobby deaktiviert",
         "notificationLobbyEnabled": "{{originParticipantName}} hat die Lobby aktiviert",
         "notificationTitle": "Lobby",
+        "passwordField": "Konferenzpasswort eingeben",
         "passwordJoinButton": "Beitreten",
+        "reject": "Ablehnen",
+        "rejectAll": "Alle ablehnen",
         "title": "Lobby",
         "toggleLabel": "Lobby aktivieren"
     },
@@ -708,8 +652,6 @@
         "sessionToken": "Sitzungs-Token",
         "start": "Aufnahme starten",
         "stop": "Aufnahme stoppen",
-        "stopping": "Aufnahme wird gestoppt",
-        "wait": "Bitte warten Sie während wir Ihre Aufnahme speichern",
         "yes": "Ja"
     },
     "lockRoomPassword": "Passwort",
@@ -731,8 +673,6 @@
         "connectedTwoMembers": "{{first}} und {{second}} nehmen am Meeting teil",
         "dataChannelClosed": "Schlechte Videoqualität",
         "dataChannelClosedDescription": "Die Steuerungsverbindung (Bridge Channel) wurde unterbrochen, daher ist die Videoqulität auf die schlechteste Stufe limitiert.",
-        "disabledIframe": "Die Einbettung ist nur für Demo-Zwecke vorgesehen. Diese Konferenz wird in {{timeout}} Minuten beendet.",
-        "disabledIframeSecondary": "Die Einbettung von {{domain}} ist nur für Demo-Zwecke vorgesehen. Diese Konferenz wird in {{timeout}} Minuten beendet. Bitte nutzen Sie <a href='{{jaasDomain}}' rel='noopener noreferrer' target='_blank'>Jitsi as a Service</a> für produktive Zwecke!",
         "disconnected": "getrennt",
         "displayNotifications": "Benachrichtigungen anzeigen für",
         "dontRemindMe": "Nicht erinnern",
@@ -779,6 +719,7 @@
         "newDeviceCameraTitle": "Neue Kamera erkannt",
         "noiseSuppressionDesktopAudioDescription": "Die Rauschunterdrückung kann nicht genutzt werden, wenn der Computersound geteilt wird, bitte zuerst deaktivieren und dann nochmals versuchen.",
         "noiseSuppressionFailedTitle": "Rauschunterdrückung konnte nicht gestartet werden",
+        "noiseSuppressionNoTrackDescription": "Bitte eigenes Mikrofon zuerst aktivieren.",
         "noiseSuppressionStereoDescription": "Rauschunterdrückung unterstützt aktuell keinen Stereoton.",
         "oldElectronClientDescription1": "Sie scheinen eine alte Version des Jitsi-Meet-Clients zu nutzen. Diese hat bekannte Schwachstellen. Bitte aktualisieren Sie auf unsere ",
         "oldElectronClientDescription2": "aktuelle Version",
@@ -808,20 +749,15 @@
         "videoUnmuteBlockedDescription": "Die Kamera und Bildschirmfreigabe kann aus Überlastungsschutzgründen temporär nicht eingeschaltet werden.",
         "videoUnmuteBlockedTitle": "Kamera und Bildschirmfreigabe kann nicht aktiviert werden!",
         "viewLobby": "Lobby ansehen",
-        "waitingParticipants": "{{waitingParticipants}} Personen",
-        "whiteboardLimitDescription": "Bitte speichern Sie Ihre Inhalte, da das Nutzungslimit bald erreicht wird und dann Ihr Whiteboard geschlossen wird.",
-        "whiteboardLimitTitle": "Whiteboard-Nutzung"
+        "waitingParticipants": "{{waitingParticipants}} Personen"
     },
     "participantsPane": {
         "actions": {
-            "admit": "Zulassen",
-            "admitAll": "Alle zulassen",
             "allow": "Anwesenden erlauben:",
             "allowVideo": "Kamera einschalten",
             "askUnmute": "Anfragen, Stummschaltung aufzuheben",
             "audioModeration": "Für sich selbst die Stummschaltung aufzuheben",
             "blockEveryoneMicCamera": "Kamera und Mikrofon von allen sperren",
-            "breakoutRooms": "Breakout-Räume",
             "invite": "Person einladen",
             "moreModerationActions": "Weitere Moderationsoptionen",
             "moreModerationControls": "Weitere Moderationsoptionen",
@@ -829,7 +765,6 @@
             "mute": "Stummschalten",
             "muteAll": "Alle stummschalten",
             "muteEveryoneElse": "Alle anderen stummschalten",
-            "reject": "Ablehnen",
             "stopEveryonesVideo": "Alle Kameras ausschalten",
             "stopVideo": "Kamera ausschalten",
             "unblockEveryoneMicCamera": "Kamera und Mikrofon von allen entsperren",
@@ -839,7 +774,6 @@
         "headings": {
             "lobby": "Lobby ({{count}})",
             "participantsList": "Anwesende ({{count}})",
-            "visitorRequests": " (Anfragen {{count}})",
             "visitors": "Gäste ({{count}})",
             "waitingLobby": "In der Lobby ({{count}})"
         },
@@ -930,14 +864,12 @@
         "joinWithoutAudio": "Ohne Ton beitreten",
         "keyboardShortcuts": "Tastaturkurzbefehle aktivieren",
         "linkCopied": "Link in die Zwischenablage kopiert",
-        "lookGood": "Alles scheint zu funktionieren.",
+        "lookGood": "Ihr Mikrofon scheint zu funktionieren.",
         "or": "oder",
         "premeeting": "Vorschau",
-        "proceedAnyway": "Trotzdem fortsetzen",
         "screenSharingError": "Fehler bei Bildschirmfreigabe:",
         "showScreen": "Konferenzvorschau aktivieren",
         "startWithPhone": "Mit Telefonaudio starten",
-        "unsafeRoomConsent": "Ich verstehe das Risiko und möchte der Konferenz beitreten",
         "videoOnlyError": "Videofehler:",
         "videoTrackError": "Videotrack konnte nicht erstellt werden.",
         "viewAllNumbers": "alle Nummern anzeigen"
@@ -1018,15 +950,12 @@
         "onlyRecordSelf": "Nur eigenes Kamerabild und Ton aufzeichnen",
         "pending": "Aufzeichnung des Meetings wird vorbereitet…",
         "rec": "AUFZ",
-        "recordAudioAndVideo": "Kamera und Ton aufzeichnen",
-        "recordTranscription": "Transkription aufzeichnen",
         "saveLocalRecording": "Aufzeichnung lokal abspeichern",
         "serviceDescription": "Ihre Aufzeichnung wird vom Aufzeichnungsdienst gespeichert",
         "serviceDescriptionCloud": "Cloud-Aufzeichnung",
         "serviceDescriptionCloudInfo": "Aufzeichnungen werden 24 Stunden nach Aufzeichnungsende automatisch gelöscht.",
         "serviceName": "Aufnahmedienst",
         "sessionAlreadyActive": "Diese Konferenz wird bereits aufgezeichnet.",
-        "showAdvancedOptions": "Weitere Optionen",
         "signIn": "Anmelden",
         "signOut": "Abmelden",
         "surfaceError": "Bitte das aktuelle Tab auswählen.",
@@ -1042,14 +971,8 @@
     "security": {
         "about": "Sie können Ihre Konferenz mit einem Passwort sichern. Teilnehmer müssen dieses eingeben, bevor sie an der Sitzung teilnehmen dürfen.",
         "aboutReadOnly": "Mit Moderationsrechten kann die Konferenz mit einem Passwort gesichert werden. Personen müssen dieses eingeben, bevor sie an der Sitzung teilnehmen dürfen.",
-        "insecureRoomNameWarningNative": "Der Raumname ist unsicher. Unerwünschte Teilnehmer könnten Ihrer Konferenz beitreten. {{recommendAction}} Lernen Sie mehr über die Absicherung Ihrer Konferenz ",
-        "insecureRoomNameWarningWeb": "Der Raumname ist unsicher. Unerwünschte Teilnehmer könnten Ihrer Konferenz beitreten {{recommendAction}} Lernen Sie <a href=\"{{securityUrl}}\" rel=\"security\" target=\"_blank\">hier</a> mehr über die Absicherung Ihrer Konferenz.",
-        "title": "Sicherheitsoptionen",
-        "unsafeRoomActions": {
-            "meeting": "Erwägen Sie die Absicherung Ihrer Konferenz über den Sicherheits-Button.",
-            "prejoin": "Erwägen Sie einen einzigartigeren Raumnamen zu wählen.",
-            "welcome": "Erwägen Sie einen einzigartigeren Raumnamen zu wählen oder wählen Sie einen der Vorschläge."
-        }
+        "insecureRoomNameWarning": "Der Raumname ist unsicher. Unerwünschte Teilnehmer könnten Ihrer Konferenz beitreten",
+        "title": "Sicherheitsoptionen"
     },
     "settings": {
         "audio": "Audio",
@@ -1103,7 +1026,6 @@
         "alertOk": "OK",
         "alertTitle": "Warnung",
         "alertURLText": "Die angegebene Server-URL ist ungültig",
-        "apply": "Übernehmen",
         "buildInfoSection": "Build-Informationen",
         "conferenceSection": "Konferenz",
         "disableCallIntegration": "Native Anrufintegration deaktivieren",
@@ -1114,14 +1036,12 @@
         "displayNamePlaceholderText": "z.B. Erika Musterfrau",
         "email": "E-Mail",
         "emailPlaceholderText": "email@beispiel.de",
-        "gavatarMessage": "Wenn Sie ein Gravatar-Konto mit Ihrer Emailadresse haben, wird dieses als Ihr Profilfoto verwendet.",
         "goTo": "Gehe zu",
         "header": "Einstellungen",
         "help": "Hilfe",
         "links": "Links",
         "privacy": "Datenschutz",
         "profileSection": "Profil",
-        "sdkVersion": "SDK-Version",
         "serverURL": "Server-URL",
         "showAdvanced": "Erweiterte Einstellungen anzeigen",
         "startCarModeInLowBandwidthMode": "Automodus mit Datensparmodus starten",
@@ -1147,7 +1067,6 @@
         "neutral": "Neutral",
         "sad": "Traurig",
         "search": "Suche",
-        "searchHint": "Suche Anwesende",
         "seconds": "{{count}} Sek.",
         "speakerStats": "Sprechstatistik",
         "speakerTime": "Sprechzeit",
@@ -1170,7 +1089,7 @@
     "toolbar": {
         "Settings": "Einstellungen",
         "accessibilityLabel": {
-            "Settings": "Einstellungen einschalten",
+            "Settings": "Einstellungen ein-/ausschalten",
             "audioOnly": "„Nur Audio“ ein-/ausschalten",
             "audioRoute": "Audiogerät auswählen",
             "boo": "Buhen",
@@ -1216,12 +1135,11 @@
             "moreActions": "Menü „Weitere Einstellungen“ ein-/ausschalten",
             "moreActionsMenu": "Menü „Weitere Einstellungen“",
             "moreOptions": "Menü „Weitere Optionen“",
-            "mute": "Mikrofon deaktivieren",
+            "mute": "Mikrofon aktivieren / deaktivieren",
             "muteEveryone": "Alle stummschalten",
             "muteEveryoneElse": "Alle anderen stummschalten",
             "muteEveryoneElsesVideoStream": "Alle anderen Kameras ausschalten",
             "muteEveryonesVideoStream": "Alle Kameras ausschalten",
-            "muteGUMPending": "Verbinde Ihr Mikrofon",
             "noiseSuppression": "Rauschunterdrückung",
             "openChat": "Chat öffnen",
             "participants": "Anwesende",
@@ -1229,7 +1147,6 @@
             "privateMessage": "Private Nachricht senden",
             "profile": "Profil bearbeiten",
             "raiseHand": "Hand heben",
-            "reactions": "Interaktionen",
             "reactionsMenu": "Interaktionsmenü öffnen / schließen",
             "recording": "Aufzeichnung ein-/ausschalten",
             "remoteMute": "Personen stummschalten",
@@ -1254,8 +1171,7 @@
             "toggleFilmstrip": "Miniaturansichten ein-/ausschalten",
             "unmute": "Stummschaltung aufheben",
             "videoblur": "Unscharfer Hintergrund ein-/ausschalten",
-            "videomute": "Kamera stoppen",
-            "videomuteGUMPending": "Verbinde Ihre Kamera",
+            "videomute": "„Video stummschalten“ ein-/ausschalten",
             "videounmute": "Kamera einschalten"
         },
         "addPeople": "Personen zur Konferenz hinzufügen",
@@ -1303,10 +1219,9 @@
         "lowerYourHand": "Hand senken",
         "moreActions": "Weitere Einstellungen",
         "moreOptions": "Weitere Optionen",
-        "mute": "Audio stummschalten",
+        "mute": "Stummschalten",
         "muteEveryone": "Alle stummschalten",
         "muteEveryonesVideo": "Alle Kameras ausschalten",
-        "muteGUMPending": "Verbinde Ihre Kamera",
         "noAudioSignalDesc": "Wenn Sie das Gerät nicht absichtlich über die Systemeinstellungen oder die Hardware stumm geschaltet haben, sollten Sie einen Wechsel des Geräts in Erwägung ziehen.",
         "noAudioSignalDescSuggestion": "Wenn Sie das Gerät nicht absichtlich über die Systemeinstellungen oder die Hardware stummgeschaltet haben, sollten Sie einen Wechsel auf das vorgeschlagene Gerät in Erwägung ziehen.",
         "noAudioSignalDialInDesc": "Sie können sich auch über die Einwahlnummer einwählen:",
@@ -1329,7 +1244,6 @@
         "reactionLike": "Daumen hoch senden",
         "reactionSilence": "Stille senden",
         "reactionSurprised": "Überrascht senden",
-        "reactions": "Interaktionen",
         "security": "Sicherheitsoptionen",
         "selectBackground": "Hintergrund auswählen",
         "shareRoom": "Person einladen",
@@ -1352,7 +1266,6 @@
         "unmute": "Stummschaltung aufheben",
         "videoSettings": "Kameraeinstellungen",
         "videomute": "Kamera stoppen",
-        "videomuteGUMPending": "Verbinde Ihre Kamera",
         "videounmute": "Kamera einschalten"
     },
     "transcribing": {
@@ -1362,7 +1275,6 @@
         "failedToStart": "Transkribieren konnte nicht gestartet werden",
         "labelToolTip": "Das Meeting wird transkribiert",
         "off": "Transkribieren gestoppt",
-        "on": "Transkribieren gestartet",
         "pending": "Transkribieren des Meetings wird vorbereitet…",
         "sourceLanguageDesc": "Aktuell ist die Sprache der Konferenz auf <b>{{sourceLanguage}}</b> eingestellt. <br/> Sie könne dies hier ",
         "sourceLanguageHere": "ändern",
@@ -1442,10 +1354,6 @@
         "videomute": "Person hat die Kamera angehalten"
     },
     "virtualBackground": {
-        "accessibilityLabel": {
-            "currentBackground": "Aktueller Hintergrund: {{background}}",
-            "selectBackground": "Hintergrund auswählen"
-        },
         "addBackground": "Hintergrund hinzufügen",
         "apply": "Anwenden",
         "backgroundEffectError": "Hintergrund konnte nicht aktiviert werden.",
@@ -1469,14 +1377,7 @@
         "webAssemblyWarning": "WebAssembly wird nicht unterstützt",
         "webAssemblyWarningDescription": "WebAssembly ist deaktiviert oder wird in diesem Browser nicht unterstützt"
     },
-    "visitors": {
-        "chatIndicator": "(Gast)",
-        "labelTooltip": "Anzahl Gäste: {{count}}",
-        "notification": {
-            "description": "Bitte melden Sie sich um teilzunehmen",
-            "title": "Sie sind Gast in der Konferenz"
-        }
-    },
+    "visitorsLabel": "Anzahl Gäste: {{count}}",
     "volumeSlider": "Lautstärkeregler",
     "welcomepage": {
         "accessibilityLabel": {

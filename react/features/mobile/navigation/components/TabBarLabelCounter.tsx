@@ -1,6 +1,8 @@
+// @ts-ignore
 import React from 'react';
 import { StyleProp, Text, TextStyle, View } from 'react-native';
 
+// @ts-ignore
 import { navigationStyles } from './styles';
 
 interface ITabBarLabelCounterProps {

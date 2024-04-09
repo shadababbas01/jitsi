@@ -1,5 +1,3 @@
-import { IReduxState } from '../app/types';
-
 let filterSupport: boolean | undefined;
 
 /**
@@ -18,16 +16,6 @@ export function checkBlurSupport() {
     }
 
     return filterSupport;
-}
-
-/**
- * Checks if virtual background is enabled.
- *
- * @param {IReduxState} state - The state of the app.
- * @returns {boolean} True if virtual background is enabled and false if virtual background is disabled.
- */
-export function checkVirtualBackgroundEnabled(state: IReduxState) {
-    return state['features/base/config'].disableVirtualBackground !== true;
 }
 
 /**
@@ -65,6 +53,7 @@ export const toDataURL = async (url: string) => {
  * @param {number} width - Value for resizing the image width.
  * @param {number} height - Value for resizing the image height.
  * @returns {Promise<string>}
+ *
  */
 export function resizeImage(base64image: any, width = 1920, height = 1080): Promise<string> {
 

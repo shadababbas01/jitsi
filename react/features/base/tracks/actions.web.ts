@@ -1,7 +1,6 @@
 // @ts-expect-error
 import { AUDIO_ONLY_SCREEN_SHARE_NO_TRACK } from '../../../../modules/UI/UIErrors';
 import { IReduxState, IStore } from '../../app/types';
-import { showModeratedNotification } from '../../av-moderation/actions';
 import { shouldShowModeratedNotification } from '../../av-moderation/functions';
 import { setNoiseSuppressionEnabled } from '../../noise-suppression/actions';
 import { showNotification } from '../../notifications/actions';
@@ -11,25 +10,22 @@ import { setScreenAudioShareState, setScreenshareAudioTrack } from '../../screen
 import { isAudioOnlySharing, isScreenVideoShared } from '../../screen-share/functions';
 import { toggleScreenshotCaptureSummary } from '../../screenshot-capture/actions';
 import { isScreenshotCaptureEnabled } from '../../screenshot-capture/functions';
+// eslint-disable-next-line lines-around-comment
+// @ts-ignore
 import { AudioMixerEffect } from '../../stream-effects/audio-mixer/AudioMixerEffect';
 import { getCurrentConference } from '../conference/functions';
-import { openDialog } from '../dialog/actions';
 import { JitsiTrackErrors, JitsiTrackEvents } from '../lib-jitsi-meet';
 import { setScreenshareMuted } from '../media/actions';
 import { MEDIA_TYPE, VIDEO_TYPE } from '../media/constants';
 
 import {
     addLocalTrack,
-    replaceLocalTrack,
-    toggleCamera
+    replaceLocalTrack
 } from './actions.any';
-import AllowToggleCameraDialog from './components/web/AllowToggleCameraDialog';
 import {
     createLocalTracksF,
     getLocalDesktopTrack,
-    getLocalJitsiAudioTrack,
-    getLocalVideoTrack,
-    isToggleCameraEnabled
+    getLocalJitsiAudioTrack
 } from './functions';
 import { IShareOptions, IToggleScreenSharingOptions } from './types';
 
@@ -50,7 +46,6 @@ export function toggleScreensharing(
     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
         // check for A/V Moderation when trying to start screen sharing
         if ((enabled || enabled === undefined) && shouldShowModeratedNotification(MEDIA_TYPE.VIDEO, getState())) {
-            dispatch(showModeratedNotification(MEDIA_TYPE.SCREENSHARE));
 
             return Promise.reject();
         }
@@ -267,53 +262,4 @@ async function _toggleScreenSharing(
         // Notify the external API.
         APP.API.notifyScreenSharingStatusChanged(enable, screensharingDetails);
     }
-}
-
-/**
- * Sets the camera facing mode(environment/user). If facing mode not provided, it will do a toggle.
- *
- * @param {string | undefined} facingMode - The selected facing mode.
- * @returns {void}
- */
-export function setCameraFacingMode(facingMode: string | undefined) {
-    return async (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
-        const state = getState();
-
-        if (!isToggleCameraEnabled(state)) {
-            return;
-        }
-
-        if (!facingMode) {
-            dispatch(toggleCamera());
-
-            return;
-        }
-
-        const tracks = state['features/base/tracks'];
-        const localVideoTrack = getLocalVideoTrack(tracks)?.jitsiTrack;
-
-        if (!tracks || !localVideoTrack) {
-            return;
-        }
-
-        const currentFacingMode = localVideoTrack.getCameraFacingMode();
-
-        if (currentFacingMode !== facingMode) {
-            dispatch(toggleCamera());
-        }
-    };
-}
-
-/**
- * Signals to open the permission dialog for toggling camera remotely.
- *
- * @param {Function} onAllow - Callback to be executed if permission to toggle camera was granted.
- * @param {string} initiatorId - The participant id of the requester.
- * @returns {Object} - The open dialog action.
- */
-export function openAllowToggleCameraDialog(onAllow: Function, initiatorId: string) {
-    return openDialog(AllowToggleCameraDialog, {
-        onAllow,
-        initiatorId
-    });
 }

@@ -4,6 +4,8 @@ import { openDialog } from '../base/dialog/actions';
 import { getLocalParticipant } from '../base/participants/functions';
 
 import { RESET_SHARED_VIDEO_STATUS, SET_SHARED_VIDEO_STATUS } from './actionTypes';
+// eslint-disable-next-line lines-around-comment
+// @ts-ignore
 import { SharedVideoDialog } from './components';
 
 /**

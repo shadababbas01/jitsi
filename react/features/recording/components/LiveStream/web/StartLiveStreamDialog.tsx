@@ -217,7 +217,7 @@ class StartLiveStreamDialog
      */
     _parseErrorFromResponse(response: any) {
 
-        if (!response?.result) {
+        if (!response || !response.result) {
             return;
         }
 

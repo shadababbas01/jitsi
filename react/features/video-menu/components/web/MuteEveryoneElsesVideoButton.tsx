@@ -1,48 +1,48 @@
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { createToolbarEvent } from '../../../analytics/AnalyticsEvents';
-import { sendAnalytics } from '../../../analytics/functions';
-import { openDialog } from '../../../base/dialog/actions';
+import { translate } from '../../../base/i18n/functions';
 import { IconVideoOff } from '../../../base/icons/svg';
 import ContextMenuItem from '../../../base/ui/components/web/ContextMenuItem';
-import { NOTIFY_CLICK_MODE } from '../../../toolbox/constants';
-import { IButtonProps } from '../../types';
-
-import MuteEveryonesVideoDialog from './MuteEveryonesVideoDialog';
+import AbstractMuteEveryoneElsesVideoButton, { IProps } from '../AbstractMuteEveryoneElsesVideoButton';
 
 /**
  * Implements a React {@link Component} which displays a button for audio muting
  * every participant in the conference except the one with the given
  * participantID.
- *
- * @returns {JSX.Element}
  */
-const MuteEveryoneElsesVideoButton = ({
-    notifyClick,
-    notifyMode,
-    participantID
-}: IButtonProps): JSX.Element => {
-    const { t } = useTranslation();
-    const dispatch = useDispatch();
+class MuteEveryoneElsesVideoButton extends AbstractMuteEveryoneElsesVideoButton {
+    /**
+     * Instantiates a new {@code Component}.
+     *
+     * @inheritdoc
+     */
+    constructor(props: IProps) {
+        super(props);
 
-    const handleClick = useCallback(() => {
-        notifyClick?.();
-        if (notifyMode === NOTIFY_CLICK_MODE.PREVENT_AND_NOTIFY) {
-            return;
-        }
-        sendAnalytics(createToolbarEvent('mute.everyoneelsesvideo.pressed'));
-        dispatch(openDialog(MuteEveryonesVideoDialog, { exclude: [ participantID ] }));
-    }, [ notifyClick, notifyMode, participantID ]);
+        this._handleClick = this._handleClick.bind(this);
+    }
 
-    return (
-        <ContextMenuItem
-            accessibilityLabel = { t('toolbar.accessibilityLabel.muteEveryoneElsesVideoStream') }
-            icon = { IconVideoOff }
-            onClick = { handleClick }
-            text = { t('videothumbnail.domuteVideoOfOthers') } />
-    );
-};
+    /**
+     * Implements React's {@link Component#render()}.
+     *
+     * @inheritdoc
+     * @returns {ReactElement}
+     */
+    render() {
+        const { t } = this.props;
 
-export default MuteEveryoneElsesVideoButton;
+        return (
+            <ContextMenuItem
+                accessibilityLabel = { t('toolbar.accessibilityLabel.muteEveryoneElsesVideoStream') }
+                icon = { IconVideoOff }
+                // eslint-disable-next-line react/jsx-handler-names
+                onClick = { this._handleClick }
+                text = { t('videothumbnail.domuteVideoOfOthers') } />
+        );
+    }
+
+    _handleClick: () => void;
+}
+
+export default translate(connect()(MuteEveryoneElsesVideoButton));

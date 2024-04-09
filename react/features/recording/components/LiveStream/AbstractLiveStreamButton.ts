@@ -7,8 +7,7 @@ import { isLocalParticipantModerator } from '../../../base/participants/function
 import AbstractButton, { IProps as AbstractButtonProps } from '../../../base/toolbox/components/AbstractButton';
 import { isInBreakoutRoom } from '../../../breakout-rooms/functions';
 import { maybeShowPremiumFeatureDialog } from '../../../jaas/actions';
-import { isRecorderTranscriptionsRunning } from '../../../transcribing/functions';
-import { getActiveSession, isCloudRecordingRunning } from '../../functions';
+import { getActiveSession } from '../../functions';
 
 import { getLiveStreaming } from './functions';
 
@@ -39,8 +38,7 @@ export interface IProps extends AbstractButtonProps {
  * An abstract class of a button for starting and stopping live streaming.
  */
 export default class AbstractLiveStreamButton<P extends IProps> extends AbstractButton<P> {
-    accessibilityLabel = 'dialog.startLiveStreaming';
-    toggledAccessibilityLabel = 'dialog.stopLiveStreaming';
+    accessibilityLabel = 'dialog.accessibilityLabel.liveStreaming';
     icon = IconSites;
     label = 'dialog.startLiveStreaming';
     toggledLabel = 'dialog.stopLiveStreaming';
@@ -133,15 +131,12 @@ export function _mapStateToProps(state: IReduxState, ownProps: IProps) {
         const isModerator = isLocalParticipantModerator(state);
         const liveStreaming = getLiveStreaming(state);
 
-        if (isModerator) {
-            visible = liveStreaming.enabled ? isJwtFeatureEnabled(state, 'livestreaming', true) : false;
-        } else {
-            visible = false;
-        }
+        visible = isModerator && liveStreaming.enabled;
+        visible = isJwtFeatureEnabled(state, 'livestreaming', visible);
     }
 
     // disable the button if the recording is running.
-    if (visible && (isCloudRecordingRunning(state) || isRecorderTranscriptionsRunning(state))) {
+    if (visible && getActiveSession(state, JitsiRecordingConstants.mode.FILE)) {
         _disabled = true;
         _tooltip = 'dialog.liveStreamingDisabledBecauseOfActiveRecordingTooltip';
     }

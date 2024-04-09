@@ -1,8 +1,6 @@
 import { DOMParser } from '@xmldom/xmldom';
-import { atob, btoa } from 'abab';
 import { Platform } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
-import { TextDecoder, TextEncoder } from 'text-encoding';
 
 import 'promise.allsettled/auto'; // Promise.allSettled.
 import 'react-native-url-polyfill/auto'; // Complete URL polyfill.
@@ -290,6 +288,13 @@ function _visitNode(node, callback) {
     global.performance.now = performanceNow;
     global.PerformanceObserver = perf.PerformanceObserver;
 
+    // CallStats
+    //
+    // Required by:
+    // - lib-jitsi-meet
+    require('react-native-callstats/csio-polyfill');
+    global.callstats = require('react-native-callstats/callstats');
+
     // Timers
     //
     // React Native's timers won't run while the app is in the background, this
@@ -313,25 +318,6 @@ function _visitNode(node, callback) {
     // - Strophe
     if (typeof global.sessionStorage === 'undefined') {
         global.sessionStorage = new Storage();
-    }
-
-    global.TextDecoder = TextDecoder;
-    global.TextEncoder = TextEncoder;
-
-    // atob
-    //
-    // Required by:
-    // - Strophe
-    if (typeof global.atob === 'undefined') {
-        global.atob = atob;
-    }
-
-    // btoa
-    //
-    // Required by:
-    // - Strophe
-    if (typeof global.btoa === 'undefined') {
-        global.btoa = btoa;
     }
 
 })(global || window || this); // eslint-disable-line no-invalid-this

@@ -7,6 +7,7 @@ export interface IJwtState {
     callee?: {
         name: string;
     };
+    roomName?: string // added by jaswant
     group?: string;
     jwt?: string;
     server?: string;

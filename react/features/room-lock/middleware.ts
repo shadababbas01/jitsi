@@ -12,10 +12,12 @@ import {
 import { hideDialog } from '../base/dialog/actions';
 import { JitsiConferenceErrors } from '../base/lib-jitsi-meet';
 import MiddlewareRegistry from '../base/redux/MiddlewareRegistry';
-import { showErrorNotification, showNotification } from '../notifications/actions';
+import { showNotification } from '../notifications/actions';
 import { NOTIFICATION_TIMEOUT_TYPE } from '../notifications/constants';
 
 import { _openPasswordRequiredPrompt } from './actions';
+// eslint-disable-next-line lines-around-comment
+// @ts-ignore
 import PasswordRequiredPrompt from './components/PasswordRequiredPrompt';
 import { LOCKED_REMOTELY } from './constants';
 import logger from './logger';
@@ -147,10 +149,10 @@ function _setPasswordFailed(store: IStore, next: Function, action: AnyAction) {
             descriptionKey = 'dialog.lockMessage';
             titleKey = 'dialog.lockTitle';
         }
-        APP.store.dispatch(showErrorNotification({
+        APP.UI.messageHandler.showError({
             descriptionKey,
             titleKey
-        }, NOTIFICATION_TIMEOUT_TYPE.LONG));
+        });
     }
 
     return next(action);

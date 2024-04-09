@@ -1,14 +1,18 @@
+/* eslint-disable lines-around-comment */
 import { IReduxState } from '../app/types';
 import { isMobileBrowser } from '../base/environment/utils';
-import { browser } from '../base/lib-jitsi-meet';
 import Platform from '../base/react/Platform';
 import { URI_PROTOCOL_PATTERN } from '../base/util/uri';
 import { isVpaasMeeting } from '../jaas/functions';
 
+// @ts-ignore
 import DeepLinkingDesktopPage from './components/DeepLinkingDesktopPage';
+// @ts-ignore
 import DeepLinkingMobilePage from './components/DeepLinkingMobilePage';
+// @ts-ignore
 import NoMobileApp from './components/NoMobileApp';
 import { _openDesktopApp } from './openDesktopApp';
+/* eslint-enable lines-around-comment */
 
 /**
  * Generates a deep linking URL based on the current window URL.
@@ -64,7 +68,6 @@ export function getDeepLinkingPage(state: IReduxState) {
     if (launchInWeb
             || !room
             || state['features/base/config'].deeplinking?.disabled
-            || browser.isElectron()
             || (isVpaasMeeting(state) && (!appScheme || appScheme === 'com.8x8.meet'))) {
         return Promise.resolve();
     }

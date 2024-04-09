@@ -29,12 +29,6 @@ interface ISelectProps {
     error?: boolean;
 
     /**
-     * Id of the <select> element.
-     * Necessary for screen reader users, to link the label and error to the select.
-     */
-    id: string;
-
-    /**
      * Label to be displayed above the select.
      */
     label?: string;
@@ -146,7 +140,6 @@ const Select = ({
     className,
     disabled,
     error,
-    id,
     label,
     onChange,
     options,
@@ -156,17 +149,11 @@ const Select = ({
 
     return (
         <div className = { classes.container }>
-            {label && <label
-                className = { cx(classes.label, isMobile && 'is-mobile') }
-                htmlFor = { id } >
-                {label}
-            </label>}
+            {label && <span className = { cx(classes.label, isMobile && 'is-mobile') }>{label}</span>}
             <div className = { classes.selectContainer }>
                 <select
-                    aria-describedby = { bottomLabel ? `${id}-description` : undefined }
                     className = { cx(classes.select, isMobile && 'is-mobile', className, error && 'error') }
                     disabled = { disabled }
-                    id = { id }
                     onChange = { onChange }
                     value = { value }>
                     {options.map(option => (<option
@@ -180,9 +167,7 @@ const Select = ({
                     src = { IconArrowDown } />
             </div>
             {bottomLabel && (
-                <span
-                    className = { cx(classes.bottomLabel, isMobile && 'is-mobile', error && 'error') }
-                    id = { `${id}-description` }>
+                <span className = { cx(classes.bottomLabel, isMobile && 'is-mobile', error && 'error') }>
                     {bottomLabel}
                 </span>
             )}

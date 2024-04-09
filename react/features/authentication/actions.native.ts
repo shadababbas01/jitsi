@@ -1,6 +1,4 @@
-import { Linking } from 'react-native';
-
-import { appNavigate } from '../app/actions.native';
+import { appNavigate } from '../app/actions';
 import { IStore } from '../app/types';
 import { conferenceLeft } from '../base/conference/actions';
 import { connectionFailed } from '../base/connection/actions.native';
@@ -29,13 +27,13 @@ export function cancelLogin() {
         // a reaction to CONNECTION_FAILED). Since the
         // app/user is going to navigate to WelcomePage, the SDK
         // clients/consumers need an event.
-        const { error = { recoverable: undefined }, passwordRequired }
+        const { error, passwordRequired }
             = getState()['features/base/connection'];
 
         passwordRequired
             && dispatch(
                 connectionFailed(
-                    passwordRequired,
+                    passwordRequired, // @ts-ignore
                     set(error, 'recoverable', false) as any));
     };
 }
@@ -53,38 +51,14 @@ export function cancelWaitForOwner() {
         // recoverable by the feature room-lock and, consequently,
         // recoverable-aware features such as mobile's external-api did not
         // deliver the CONFERENCE_FAILED to the SDK clients/consumers. Since the
-        // app/user is going to navigate to WelcomePage, the SDK
+        // app/user is going to nativate to WelcomePage, the SDK
         // clients/consumers need an event.
         const { authRequired } = getState()['features/base/conference'];
 
-        if (authRequired) {
-            dispatch(conferenceLeft(authRequired));
+        authRequired && dispatch(conferenceLeft(authRequired));
 
-            // in case we are showing lobby and on top of it wait for owner
-            // we do not want to navigate away from the conference
-            dispatch(appNavigate(undefined));
-        }
+        dispatch(appNavigate(undefined));
     };
 }
 
-/**
- * Redirect to the default location (e.g. Welcome page).
- *
- * @returns {Function}
- */
-export function redirectToDefaultLocation() {
-    return (dispatch: IStore['dispatch']) => dispatch(appNavigate(undefined));
-}
 
-/**
- * Opens token auth URL page.
- *
- * @param {string} tokenAuthServiceUrl - Authentication service URL.
- *
- * @returns {Function}
- */
-export function openTokenAuthUrl(tokenAuthServiceUrl: string) {
-    return () => {
-        Linking.openURL(tokenAuthServiceUrl);
-    };
-}

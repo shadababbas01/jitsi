@@ -13,7 +13,6 @@ import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
-
 import androidx.annotation.RequiresApi;
 
 import com.facebook.react.bridge.Promise;
@@ -358,7 +357,7 @@ public class ConnectionService extends android.telecom.ConnectionService {
             JitsiMeetLogger.i(TAG + " onDisconnect " + getCallUUID());
             WritableNativeMap data = new WritableNativeMap();
             data.putString("callUUID", getCallUUID());
-            RNConnectionService.getInstance().emitEvent(
+            ReactInstanceManagerHolder.emitEvent(
                     "org.jitsi.meet:features/connection_service#disconnect",
                     data);
             // The JavaScript side will not go back to the native with
@@ -378,7 +377,7 @@ public class ConnectionService extends android.telecom.ConnectionService {
             JitsiMeetLogger.i(TAG + " onAbort " + getCallUUID());
             WritableNativeMap data = new WritableNativeMap();
             data.putString("callUUID", getCallUUID());
-            RNConnectionService.getInstance().emitEvent(
+            ReactInstanceManagerHolder.emitEvent(
                     "org.jitsi.meet:features/connection_service#abort",
                     data);
             // The JavaScript side will not go back to the native with
@@ -407,7 +406,7 @@ public class ConnectionService extends android.telecom.ConnectionService {
         @Override
         public void onCallAudioStateChanged(CallAudioState state) {
             JitsiMeetLogger.d(TAG + " onCallAudioStateChanged: " + state);
-            RNConnectionService module = RNConnectionService.getInstance();
+            RNConnectionService module = ReactInstanceManagerHolder.getNativeModule(RNConnectionService.class);
             if (module != null) {
                 module.onCallAudioStateChange(state);
             }

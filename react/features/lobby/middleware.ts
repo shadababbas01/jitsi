@@ -6,8 +6,7 @@ import { IStore } from '../app/types';
 import { APP_WILL_MOUNT, APP_WILL_UNMOUNT } from '../base/app/actionTypes';
 import {
     CONFERENCE_FAILED,
-    CONFERENCE_JOINED,
-    ENDPOINT_MESSAGE_RECEIVED
+    CONFERENCE_JOINED
 } from '../base/conference/actionTypes';
 import { conferenceWillJoin } from '../base/conference/actions';
 import {
@@ -32,7 +31,6 @@ import {
     handleLobbyChatInitialized,
     removeLobbyChatParticipant
 } from '../chat/actions.any';
-import { arePollsDisabled } from '../conference/functions.any';
 import { hideNotification, showNotification } from '../notifications/actions';
 import {
     LOBBY_NOTIFICATION_ID,
@@ -43,11 +41,7 @@ import {
 import { INotificationProps } from '../notifications/types';
 import { open as openParticipantsPane } from '../participants-pane/actions';
 import { getParticipantsPaneOpen } from '../participants-pane/functions';
-import {
-    isPrejoinEnabledInConfig,
-    isPrejoinPageVisible,
-    shouldAutoKnock
-} from '../prejoin/functions';
+import { shouldAutoKnock } from '../prejoin/functions';
 
 import {
     KNOCKING_PARTICIPANT_ARRIVED_OR_UPDATED,
@@ -84,13 +78,6 @@ MiddlewareRegistry.register(store => next => action => {
         return _conferenceFailed(store, next, action);
     case CONFERENCE_JOINED:
         return _conferenceJoined(store, next, action);
-    case ENDPOINT_MESSAGE_RECEIVED: {
-        const { participant, data } = action;
-
-        _maybeSendLobbyNotification(participant, data, store);
-
-        break;
-    }
     case KNOCKING_PARTICIPANT_ARRIVED_OR_UPDATED: {
         // We need the full update result to be in the store already
         const result = next(action);
@@ -178,6 +165,13 @@ StateListenerRegistry.register(
                     dispatch(updateLobbyParticipantOnLeave(id));
                 });
             });
+
+            conference.on(JitsiConferenceEvents.ENDPOINT_MESSAGE_RECEIVED, (origin: any, sender: any) =>
+                _maybeSendLobbyNotification(origin, sender, {
+                    dispatch,
+                    getState
+                })
+            );
         }
     }
 );
@@ -207,12 +201,13 @@ function _handleLobbyNotification(store: IStore) {
 
     if (knockingParticipants.length === 1) {
         const firstParticipant = knockingParticipants[0];
+        const { disablePolls } = getState()['features/base/config'];
         const showChat = showLobbyChatButton(firstParticipant)(getState());
 
         descriptionKey = 'notify.participantWantsToJoin';
         notificationTitle = firstParticipant.name;
         icon = NOTIFICATION_ICON.PARTICIPANT;
-        customActionNameKey = [ 'participantsPane.actions.admit', 'participantsPane.actions.reject' ];
+        customActionNameKey = [ 'lobby.admit', 'lobby.reject' ];
         customActionType = [ BUTTON_TYPES.PRIMARY, BUTTON_TYPES.DESTRUCTIVE ];
         customActionHandler = [ () => batch(() => {
             dispatch(hideNotification(LOBBY_NOTIFICATION_ID));
@@ -230,7 +225,7 @@ function _handleLobbyNotification(store: IStore) {
             customActionType.splice(1, 0, BUTTON_TYPES.SECONDARY);
             customActionHandler.splice(1, 0, () => batch(() => {
                 dispatch(handleLobbyChatInitialized(firstParticipant.id));
-                dispatch(openChat({}, arePollsDisabled(getState())));
+                dispatch(openChat({}, disablePolls));
             }));
         }
     } else {
@@ -272,24 +267,17 @@ function _conferenceFailed({ dispatch, getState }: IStore, next: Function, actio
     const state = getState();
     const { membersOnly } = state['features/base/conference'];
     const nonFirstFailure = Boolean(membersOnly);
-    const { isDisplayNameRequiredError } = state['features/lobby'];
 
     if (error.name === JitsiConferenceErrors.MEMBERS_ONLY_ERROR) {
         if (typeof error.recoverable === 'undefined') {
             error.recoverable = true;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [ _lobbyJid, lobbyWaitingForHost ] = error.params;
-
         const result = next(action);
 
         dispatch(openLobbyScreen());
 
-        // if there was an error about display name and pre-join is not enabled
-        if (shouldAutoKnock(state)
-                || (isDisplayNameRequiredError && !isPrejoinEnabledInConfig(state))
-                || lobbyWaitingForHost) {
+        if (shouldAutoKnock(state)) {
             dispatch(startKnocking());
         }
 
@@ -299,18 +287,6 @@ function _conferenceFailed({ dispatch, getState }: IStore, next: Function, actio
         }
 
         dispatch(setPasswordJoinFailed(nonFirstFailure));
-
-        return result;
-    } else if (error.name === JitsiConferenceErrors.DISPLAY_NAME_REQUIRED) {
-        const [ isLobbyEnabled ] = error.params;
-
-        const result = next(action);
-
-        // if the error is due to required display name because lobby is enabled for the room
-        // if not showing the prejoin page then show lobby UI
-        if (isLobbyEnabled && !isPrejoinPageVisible(state)) {
-            dispatch(openLobbyScreen());
-        }
 
         return result;
     }

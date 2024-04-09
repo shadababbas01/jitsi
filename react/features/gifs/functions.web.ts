@@ -1,4 +1,5 @@
 import { IReduxState } from '../app/types';
+import { showOverflowDrawer } from '../toolbox/functions.web';
 
 export * from './function.any';
 
@@ -9,5 +10,8 @@ export * from './function.any';
  * @returns {boolean}
  */
 export function isGifsMenuOpen(state: IReduxState) {
-    return state['features/gifs'].menuOpen;
+    const overflowDrawer = showOverflowDrawer(state);
+    const { drawerVisible, menuOpen } = state['features/gifs'];
+
+    return overflowDrawer ? drawerVisible : menuOpen;
 }

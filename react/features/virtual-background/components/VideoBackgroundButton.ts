@@ -4,10 +4,9 @@ import { IReduxState } from '../../app/types';
 import { translate } from '../../base/i18n/functions';
 import { IconImage } from '../../base/icons/svg';
 import AbstractButton, { IProps as AbstractButtonProps } from '../../base/toolbox/components/AbstractButton';
-import { isScreenVideoShared } from '../../screen-share/functions';
 import { openSettingsDialog } from '../../settings/actions';
 import { SETTINGS_TABS } from '../../settings/constants';
-import { checkBlurSupport, checkVirtualBackgroundEnabled } from '../functions';
+import { checkBlurSupport } from '../functions';
 
 /**
  * The type of the React {@code Component} props of {@link VideoBackgroundButton}.
@@ -69,8 +68,6 @@ function _mapStateToProps(state: IReduxState) {
     return {
         _isBackgroundEnabled: Boolean(state['features/virtual-background'].backgroundEffectEnabled),
         visible: checkBlurSupport()
-        && !isScreenVideoShared(state)
-        && checkVirtualBackgroundEnabled(state)
     };
 }
 

@@ -36,6 +36,9 @@ interface ILocalRecordingManager {
 
 const getMimeType = (): string => {
     const possibleTypes = [
+        'video/mp4;codecs=h264',
+        'video/webm;codecs=h264',
+        'video/webm;codecs=vp9',
         'video/webm;codecs=vp8'
     ];
 
@@ -67,9 +70,6 @@ const LocalRecordingManager: ILocalRecordingManager = {
     },
 
     get mediaType() {
-        if (this.selfRecording.on && !this.selfRecording.withVideo) {
-            return 'audio/webm;';
-        }
         if (!preferredMediaType) {
             preferredMediaType = getMimeType();
         }
@@ -138,7 +138,9 @@ const LocalRecordingManager: ILocalRecordingManager = {
     async saveRecording(recordingData, filename) {
         // @ts-ignore
         const blob = await fixWebmDuration(new Blob(recordingData, { type: this.mediaType }));
-        const url = URL.createObjectURL(blob);
+
+        // @ts-ignore
+        const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
 
         const extension = this.mediaType.slice(this.mediaType.indexOf('/') + 1, this.mediaType.indexOf(';'));
@@ -161,11 +163,7 @@ const LocalRecordingManager: ILocalRecordingManager = {
             this.audioContext = undefined;
             this.audioDestination = undefined;
             this.totalSize = MAX_SIZE;
-            setTimeout(() => {
-                if (this.recordingData.length > 0) {
-                    this.saveRecording(this.recordingData, this.getFilename());
-                }
-            }, 1000);
+            setTimeout(() => this.saveRecording(this.recordingData, this.getFilename()), 1000);
         }
     },
 
@@ -244,13 +242,15 @@ const LocalRecordingManager: ILocalRecordingManager = {
 
             // @ts-ignore
             gdmStream = await navigator.mediaDevices.getDisplayMedia({
+                // @ts-ignore
                 video: { displaySurface: 'browser',
                     frameRate: 30 },
-                audio: false, // @ts-ignore
+                audio: false,
                 preferCurrentTab: true
             });
             document.title = currentTitle;
 
+            // @ts-ignore
             const isBrowser = gdmStream.getVideoTracks()[0].getSettings().displaySurface === 'browser';
 
             if (!isBrowser || (supportsCaptureHandle // @ts-ignore

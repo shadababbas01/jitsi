@@ -1,48 +1,48 @@
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { createToolbarEvent } from '../../../analytics/AnalyticsEvents';
-import { sendAnalytics } from '../../../analytics/functions';
-import { openDialog } from '../../../base/dialog/actions';
+import { translate } from '../../../base/i18n/functions';
 import { IconMicSlash } from '../../../base/icons/svg';
 import ContextMenuItem from '../../../base/ui/components/web/ContextMenuItem';
-import { NOTIFY_CLICK_MODE } from '../../../toolbox/constants';
-import { IButtonProps } from '../../types';
-
-import MuteEveryoneDialog from './MuteEveryoneDialog';
+import AbstractMuteEveryoneElseButton, { IProps } from '../AbstractMuteEveryoneElseButton';
 
 /**
  * Implements a React {@link Component} which displays a button for audio muting
  * every participant in the conference except the one with the given
  * participantID.
- *
- * @returns {JSX.Element}
  */
-const MuteEveryoneElseButton = ({
-    notifyClick,
-    notifyMode,
-    participantID
-}: IButtonProps): JSX.Element => {
-    const { t } = useTranslation();
-    const dispatch = useDispatch();
+class MuteEveryoneElseButton extends AbstractMuteEveryoneElseButton {
+    /**
+     * Instantiates a new {@code Component}.
+     *
+     * @inheritdoc
+     */
+    constructor(props: IProps) {
+        super(props);
 
-    const handleClick = useCallback(() => {
-        notifyClick?.();
-        if (notifyMode === NOTIFY_CLICK_MODE.PREVENT_AND_NOTIFY) {
-            return;
-        }
-        sendAnalytics(createToolbarEvent('mute.everyoneelse.pressed'));
-        dispatch(openDialog(MuteEveryoneDialog, { exclude: [ participantID ] }));
-    }, [ dispatch, notifyMode, notifyClick, participantID, sendAnalytics ]);
+        this._handleClick = this._handleClick.bind(this);
+    }
 
-    return (
-        <ContextMenuItem
-            accessibilityLabel = { t('toolbar.accessibilityLabel.muteEveryoneElse') }
-            icon = { IconMicSlash }
-            onClick = { handleClick }
-            text = { t('videothumbnail.domuteOthers') } />
-    );
-};
+    /**
+     * Implements React's {@link Component#render()}.
+     *
+     * @inheritdoc
+     * @returns {ReactElement}
+     */
+    render() {
+        const { t } = this.props;
 
-export default MuteEveryoneElseButton;
+        return (
+            <ContextMenuItem
+                accessibilityLabel = { t('toolbar.accessibilityLabel.muteEveryoneElse') }
+                icon = { IconMicSlash }
+                // eslint-disable-next-line react/jsx-handler-names
+                onClick = { this._handleClick }
+                text = { t('videothumbnail.domuteOthers') } />
+        );
+    }
+
+    _handleClick: () => void;
+}
+
+export default translate(connect()(MuteEveryoneElseButton));

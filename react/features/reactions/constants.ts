@@ -8,24 +8,9 @@ import {
 } from './sounds';
 
 /**
- * The height of the raise hand row in the reactions menu.
+ * Reactions menu height on mobile web (px).
  */
-export const RAISE_HAND_ROW_HEIGHT = 54;
-
-/**
- * The height of the gifs menu when displayed as part of the overflow menu.
- */
-export const GIFS_MENU_HEIGHT_IN_OVERFLOW_MENU = 200;
-
-/**
- * Reactions menu height when displayed as part of drawer.
- */
-export const REACTIONS_MENU_HEIGHT_DRAWER = 144;
-
-/**
- * Reactions menu height when displayed as part of overflow menu.
- */
-export const REACTIONS_MENU_HEIGHT_IN_OVERFLOW_MENU = 106;
+export const REACTIONS_MENU_HEIGHT = 144;
 
 /**
  * The payload name for the datachannel/endpoint reaction event.

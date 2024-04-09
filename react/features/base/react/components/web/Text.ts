@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleType, getFixedPlatformStyle } from '../../../styles/functions.web';
+import { getFixedPlatformStyle } from '../../../styles/functions.web';
 
 /**
  * Implements a React/Web {@link Component} for displaying text similar to React
@@ -16,8 +16,8 @@ export default class Text extends Component<React.HTMLProps<HTMLSpanElement>> {
      * @returns {ReactElement}
      */
     render() {
-        // eslint-disable-next-line react/prop-types
-        const _style = getFixedPlatformStyle(this.props.style as StyleType);
+        // @ts-ignore
+        const _style = getFixedPlatformStyle(this.props.style);
 
         return React.createElement('span', {
             ...this.props,

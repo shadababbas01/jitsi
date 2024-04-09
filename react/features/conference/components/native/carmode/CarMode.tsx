@@ -1,21 +1,30 @@
+/* eslint-disable lines-around-comment */
 import React, { useEffect } from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
+// @ts-ignore
 import JitsiScreen from '../../../../base/modal/components/JitsiScreen';
+// @ts-ignore
 import LoadingIndicator from '../../../../base/react/components/native/LoadingIndicator';
+// @ts-ignore
 import TintedView from '../../../../base/react/components/native/TintedView';
 import { isLocalVideoTrackDesktop } from '../../../../base/tracks/functions.native';
+// @ts-ignore
 import { setPictureInPictureEnabled } from '../../../../mobile/picture-in-picture/functions';
+// @ts-ignore
 import { setIsCarmode } from '../../../../video-layout/actions';
+// @ts-ignore
 import ConferenceTimer from '../../ConferenceTimer';
+// @ts-ignore
 import { isConnecting } from '../../functions';
 
 import CarModeFooter from './CarModeFooter';
 import MicrophoneButton from './MicrophoneButton';
 import TitleBar from './TitleBar';
+// @ts-ignore
 import styles from './styles';
 
 /**
@@ -57,16 +66,17 @@ const CarMode = (): JSX.Element => {
             }
             <View
                 pointerEvents = 'box-none'
-                style = { styles.titleBarSafeViewColor as ViewStyle }>
+                style = { styles.titleBarSafeViewColor }>
                 <View
-                    style = { styles.titleBar as ViewStyle }>
+                    style = { styles.titleBar }>
+                    {/* @ts-ignore */}
                     <TitleBar />
                 </View>
                 <ConferenceTimer textStyle = { styles.roomTimer } />
             </View>
             <View
                 pointerEvents = 'box-none'
-                style = { styles.microphoneContainer as ViewStyle }>
+                style = { styles.microphoneContainer }>
                 <MicrophoneButton />
             </View>
         </JitsiScreen>

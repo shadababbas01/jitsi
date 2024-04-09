@@ -1,14 +1,17 @@
+/* eslint-disable lines-around-comment  */
+
 import { createToolbarEvent } from '../../analytics/AnalyticsEvents';
 import { sendAnalytics } from '../../analytics/functions';
 import { IReduxState } from '../../app/types';
 import { MEET_FEATURES } from '../../base/jwt/constants';
+import { isLocalParticipantModerator } from '../../base/participants/functions';
 import AbstractButton, { IProps as AbstractButtonProps } from '../../base/toolbox/components/AbstractButton';
+// @ts-ignore
 import { maybeShowPremiumFeatureDialog } from '../../jaas/actions';
-import { canStartSubtitles } from '../functions';
 
 export interface IAbstractProps extends AbstractButtonProps {
 
-    _language: string | null;
+    _language: string;
 
     /**
      * Whether the local participant is currently requesting subtitles.
@@ -103,10 +106,13 @@ export class AbstractClosedCaptionButton
  */
 export function _abstractMapStateToProps(state: IReduxState, ownProps: IAbstractProps) {
     const { _requestingSubtitles, _language } = state['features/subtitles'];
+    const { transcription } = state['features/base/config'];
+    const { isTranscribing } = state['features/transcribing'];
 
     // if the participant is moderator, it can enable transcriptions and if
     // transcriptions are already started for the meeting, guests can just show them
-    const { visible = canStartSubtitles(state) } = ownProps;
+    const { visible = Boolean(transcription?.enabled
+        && (isLocalParticipantModerator(state) || isTranscribing)) } = ownProps;
 
     return {
         _requestingSubtitles,

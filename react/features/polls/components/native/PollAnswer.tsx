@@ -9,6 +9,7 @@ import { BUTTON_TYPES } from '../../../base/ui/constants.native';
 import { isSubmitAnswerDisabled } from '../../functions';
 import AbstractPollAnswer, { AbstractProps } from '../AbstractPollAnswer';
 
+// @ts-ignore
 import { chatStyles, dialogStyles } from './styles';
 
 

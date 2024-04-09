@@ -1,6 +1,17 @@
 export const screen = {
+    welcome: {
+        main: 'Welcome',
+        tabs: {
+            recent: 'Recent',
+            calendar: 'Calendar'
+        }
+    },
+    dialInSummary: 'Dial-In Info',
+    connecting: 'Connecting',
+    preJoin: 'Pre-Join',
     conference: {
-        breakoutRooms: 'Breakout Rooms',
+        root: 'Conference root',
+        main: 'Conference',
         carmode: 'Car Mode',
         chat: 'Chat',
         chatandpolls: {
@@ -11,44 +22,28 @@ export const screen = {
             }
         },
         container: 'Conference container',
+        security: 'Security Options',
+        recording: 'Recording',
+        liveStream: 'Live stream',
+        speakerStats: 'Speaker Stats',
+        salesforce: 'Link to Salesforce',
+        participants: 'Participants',
         gifsMenu: 'GIPHY',
         invite: 'Invite',
-        liveStream: 'Live stream',
-        main: 'Conference',
-        participants: 'Participants',
-        root: 'Conference root',
-        recording: 'Recording',
-        salesforce: 'Link to Salesforce',
-        security: 'Security Options',
         sharedDocument: 'Shared document',
-        speakerStats: 'Speaker Stats',
-        subtitles: 'Subtitles',
-        whiteboard: 'Whiteboard'
+        subtitles: 'Subtitles'
     },
-    connecting: 'Connecting',
-    dialInSummary: 'Dial-In Info',
-    preJoin: 'Pre-Join',
     lobby: {
-        chat: 'Lobby chat',
+        root: 'Lobby root',
         main: 'Lobby',
-        root: 'Lobby root'
+        chat: 'Lobby chat'
     },
     settings: {
-        language: 'Language',
+        main: 'Settings',
         links: {
             help: 'Help',
             privacy: 'Privacy',
             terms: 'Terms'
-        },
-        main: 'Settings',
-        profile: 'Profile'
-    },
-    unsafeRoomWarning: 'Unsafe Room Warning',
-    welcome: {
-        main: 'Welcome',
-        tabs: {
-            calendar: 'Calendar',
-            recent: 'Recent'
         }
     }
 };

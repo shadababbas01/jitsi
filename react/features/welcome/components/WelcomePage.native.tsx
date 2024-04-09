@@ -1,9 +1,7 @@
 import React from 'react';
-import {
-    Animated,
+import { Animated,
     NativeSyntheticEvent,
     SafeAreaView,
-    StyleProp,
     TextInputFocusEventData,
     TextStyle,
     TouchableHighlight,
@@ -23,7 +21,6 @@ import BaseTheme from '../../base/ui/components/BaseTheme.native';
 import Button from '../../base/ui/components/native/Button';
 import Input from '../../base/ui/components/native/Input';
 import { BUTTON_TYPES } from '../../base/ui/constants.native';
-import getUnsafeRoomText from '../../base/util/getUnsafeRoomText.native';
 import WelcomePageTabs
     from '../../mobile/navigation/components/welcome/components/WelcomePageTabs';
 
@@ -35,11 +32,6 @@ import {
 import styles from './styles.native';
 
 interface IProps extends AbstractProps {
-
-    /**
-     * Function for getting the unsafe room text.
-     */
-    getUnsafeRoomTextFn: Function;
 
     /**
      * Default prop for navigating between screen components(React Navigation).
@@ -159,7 +151,7 @@ class WelcomePage extends AbstractWelcomePage<IProps> {
                     src = { IconWarning }
                     style = { styles.insecureRoomNameWarningIcon } />
                 <Text style = { styles.insecureRoomNameWarningText }>
-                    { this.props.getUnsafeRoomTextFn(this.props.t) }
+                    { this.props.t('security.insecureRoomNameWarning') }
                 </Text>
             </View>
         );
@@ -332,10 +324,10 @@ class WelcomePage extends AbstractWelcomePage<IProps> {
                 style = { [
                     isSettingsScreenFocused && styles.roomNameInputContainer,
                     { opacity: this.state.roomNameInputAnimation }
-                ] as StyleProp<ViewStyle> }>
-                <SafeAreaView style = { styles.roomContainer as StyleProp<ViewStyle> }>
+                ] }>
+                <SafeAreaView style = { styles.roomContainer as ViewStyle }>
                     <View style = { styles.joinControls } >
-                        <Text style = { styles.enterRoomText as StyleProp<TextStyle> }>
+                        <Text style = { styles.enterRoomText }>
                             { t('welcomepage.roomname') }
                         </Text>
                         <Input
@@ -407,10 +399,9 @@ class WelcomePage extends AbstractWelcomePage<IProps> {
  */
 function _mapStateToProps(state: IReduxState) {
     return {
-        ..._abstractMapStateToProps(state),
+        ..._abstractMapStateToProps(state)
 
         // _reducedUI: state['features/base/responsive-ui'].reducedUI
-        getUnsafeRoomTextFn: (t: Function) => getUnsafeRoomText(state, t, 'welcome')
     };
 }
 

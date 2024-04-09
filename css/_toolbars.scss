@@ -2,10 +2,10 @@
  * Round badge.
  */
 .badge-round {
-    background-color: #165ECC;
+    background-color: $toolbarBadgeBackground;
     border-radius: 50%;
     box-sizing: border-box;
-    color: #FFFFFF;
+    color: $toolbarBadgeColor;
     // Do not inherit the font-family from the toolbar button, because it's an
     // icon style.
     font-family: $baseFontFamily;
@@ -32,14 +32,6 @@
     pointer-events: none;
     z-index: $toolbarZ + 2;
 
-    &.shift-up {
-        bottom: calc(((#{$newToolbarSize} + 30px) * 2) * -1);
-
-        .toolbox-content {
-            margin-bottom: 46px;
-        }
-    }
-
     &.visible {
         bottom: 0;
     }
@@ -57,6 +49,21 @@
     position: relative;
     z-index: $toolbarZ;
     pointer-events: none;
+
+    .button-group-center,
+    .button-group-left,
+    .button-group-right {
+        display: flex;
+        width: 33%;
+    }
+
+    .button-group-center {
+        justify-content: center;
+    }
+
+    .button-group-right {
+        justify-content: flex-end;
+    }
 
     .toolbox-button-wth-dialog {
         display: inline-block;
@@ -95,6 +102,16 @@
     content: '';
     background: $newToolbarBackgroundColor;
     padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.beta-tag {
+    background: #36383C;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    margin-left: 8px;
+    padding: 0 4px;
+    text-transform: uppercase;
 }
 
 .overflow-menu-hr {
@@ -167,7 +184,7 @@ div.hangup-menu-button {
         background: none;
 
         &:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: $newToolbarButtonHoverColor;
         }
     }
 

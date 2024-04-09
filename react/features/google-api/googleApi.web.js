@@ -209,7 +209,7 @@ const googleApi = {
      * @param {boolean} consent - Whether to show account selection dialog.
      * @returns {Promise}
      */
-    showAccountSelection(consent) {
+    showAccountSelection(consent: boolean) {
         return this.get()
             .then(api => new Promise((resolve, reject) => {
                 try {
@@ -244,7 +244,7 @@ const googleApi = {
      * @param {boolean} consent - Whether to show account selection dialog.
      * @returns {Promise}
      */
-    signInIfNotSignedIn(consent) {
+    signInIfNotSignedIn(consent: boolean) {
         return this.get()
             .then(() => this.isSignedIn())
             .then(isSignedIn => {

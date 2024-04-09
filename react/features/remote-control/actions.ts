@@ -1,4 +1,4 @@
-// @ts-expect-error
+// @ts-ignore
 import $ from 'jquery';
 import React from 'react';
 
@@ -229,7 +229,7 @@ export function processPermissionRequestReply(participantId: string, event: any)
  * @returns {void}
  */
 export function handleRemoteControlStoppedEvent(participantId: Object, event: { name: string; type: string; }) {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+    return (dispatch: Function, getState: Function) => {
         const state = getState();
         const { name, type } = event;
         const { controlled } = state['features/remote-control'].controller;
@@ -365,7 +365,7 @@ export function enableReceiver() {
  * @returns {Function}
  */
 export function disableReceiver() {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+    return (dispatch: Function, getState: Function) => {
         const state = getState();
         const { enabled } = state['features/remote-control'].receiver;
 
@@ -405,7 +405,7 @@ export function disableReceiver() {
  * @returns {Function}
  */
 export function stopReceiver(dontNotifyLocalParty = false, dontNotifyRemoteParty = false) {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+    return (dispatch: Function, getState: Function) => {
         const state = getState();
         const { receiver } = state['features/remote-control'];
         const { controller, transport } = receiver;
@@ -427,7 +427,7 @@ export function stopReceiver(dontNotifyLocalParty = false, dontNotifyRemoteParty
             controller: undefined
         });
 
-        transport?.sendEvent({
+        transport.sendEvent({
             name: REMOTE_CONTROL_MESSAGE_NAME,
             type: EVENTS.stop
         });
@@ -476,11 +476,7 @@ export function endpointMessageReceived(participantId: string, message: {
                 if (type === EVENTS.stop) {
                     dispatch(stopReceiver(false, true));
                 } else { // forward the message
-                    try {
-                        transport?.sendEvent(message);
-                    } catch (error) {
-                        logger.error('Error while trying to execute remote control message', error);
-                    }
+                    transport?.sendEvent(message);
                 }
             } // else ignore
         } else {

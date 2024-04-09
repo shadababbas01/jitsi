@@ -1,24 +1,14 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from 'tss-react/mui';
 
 import { translate } from '../../../../base/i18n/functions';
 import { withPixelLineHeight } from '../../../../base/styles/functions.web';
 import Input from '../../../../base/ui/components/web/Input';
 import AbstractStreamKeyForm, {
-    IProps as AbstractProps,
-    _mapStateToProps
+    IProps, _mapStateToProps
 } from '../AbstractStreamKeyForm';
-
-interface IProps extends AbstractProps {
-
-    /**
-     * An object containing the CSS classes.
-     */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
-
-}
 
 const styles = (theme: Theme) => {
     return {
@@ -50,20 +40,32 @@ const styles = (theme: Theme) => {
 class StreamKeyForm extends AbstractStreamKeyForm<IProps> {
 
     /**
+     * Initializes a new {@code StreamKeyForm} instance.
+     *
+     * @param {IProps} props - The React {@code Component} props to initialize
+     * the new {@code StreamKeyForm} instance with.
+     */
+    constructor(props: IProps) {
+        super(props);
+
+        // Bind event handlers so they are only bound once per instance.
+        this._onOpenHelp = this._onOpenHelp.bind(this);
+        this._onOpenHelpKeyPress = this._onOpenHelpKeyPress.bind(this);
+    }
+
+    /**
      * Implements React's {@link Component#render()}.
      *
      * @inheritdoc
      * @returns {ReactElement}
      */
     render() {
-        const { t, value } = this.props;
-        const classes = withStyles.getClasses(this.props);
+        const { classes, t, value } = this.props;
 
         return (
             <div className = 'stream-key-form'>
                 <Input
                     autoFocus = { true }
-                    id = 'streamkey-input'
                     label = { t('dialog.streamKey') }
                     name = 'streamId'
                     onChange = { this._onInputChange }
@@ -81,10 +83,12 @@ class StreamKeyForm extends AbstractStreamKeyForm<IProps> {
                         }
                         { this.props._liveStreaming.helpURL
                             ? <a
+                                aria-label = { t('liveStreaming.streamIdHelp') }
                                 className = { classes.helperLink }
-                                href = { this.props._liveStreaming.helpURL }
-                                rel = 'noopener noreferrer'
-                                target = '_blank'>
+                                onClick = { this._onOpenHelp }
+                                onKeyPress = { this._onOpenHelpKeyPress }
+                                role = 'link'
+                                tabIndex = { 0 }>
                                 { t('liveStreaming.streamIdHelp') }
                             </a>
                             : null
@@ -108,6 +112,33 @@ class StreamKeyForm extends AbstractStreamKeyForm<IProps> {
             </div>
         );
     }
+
+    /**
+     * Opens a new tab with information on how to manually locate a YouTube
+     * broadcast stream key.
+     *
+     * @private
+     * @returns {void}
+     */
+    _onOpenHelp() {
+        window.open(this.props._liveStreaming.helpURL, '_blank', 'noopener');
+    }
+
+    /**
+     * Opens a new tab with information on how to manually locate a YouTube
+     * broadcast stream key.
+     *
+     * @param {Object} e - The key event to handle.
+     *
+     * @private
+     * @returns {void}
+     */
+    _onOpenHelpKeyPress(e: React.KeyboardEvent) {
+        if (e.key === ' ') {
+            e.preventDefault();
+            this._onOpenHelp();
+        }
+    }
 }
 
-export default translate(connect(_mapStateToProps)(withStyles(StreamKeyForm, styles)));
+export default translate(connect(_mapStateToProps)(withStyles(styles)(StreamKeyForm)));

@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import React from 'react';
 import { WithTranslation } from 'react-i18next';
-import { withStyles } from 'tss-react/mui';
 
 import AbstractDialogTab, {
     IProps as AbstractDialogTabProps } from '../../../base/dialog/components/web/AbstractDialogTab';
@@ -17,7 +17,7 @@ export interface IProps extends AbstractDialogTabProps, WithTranslation {
     /**
      * CSS classes object.
      */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
+    classes: any;
 
     /**
      * Whether to display the shortcuts or not.
@@ -112,8 +112,7 @@ class ShortcutsTab extends AbstractDialogTab<IProps, any> {
      * @returns {JSX}
      */
     _renderShortcutsListItem(keyboardKey: string, translationKey: string) {
-        const { t } = this.props;
-        const classes = withStyles.getClasses(this.props);
+        const { classes, t } = this.props;
         let modifierKey = 'Alt';
 
         if (window.navigator?.platform) {
@@ -147,12 +146,12 @@ class ShortcutsTab extends AbstractDialogTab<IProps, any> {
      */
     render() {
         const {
+            classes,
             displayShortcuts,
             keyboardShortcutsHelpDescriptions,
             keyboardShortcutsEnabled,
             t
         } = this.props;
-        const classes = withStyles.getClasses(this.props);
         const shortcutDescriptions: Map<string, string> = displayShortcuts
             ? keyboardShortcutsHelpDescriptions
             : new Map();
@@ -176,4 +175,4 @@ class ShortcutsTab extends AbstractDialogTab<IProps, any> {
     }
 }
 
-export default withStyles(translate(ShortcutsTab), styles);
+export default withStyles(styles)(translate(ShortcutsTab));

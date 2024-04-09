@@ -1,4 +1,3 @@
-import PersistenceRegistry from '../base/redux/PersistenceRegistry';
 import ReducerRegistry from '../base/redux/ReducerRegistry';
 
 import {
@@ -9,18 +8,14 @@ export interface INoiseSuppressionState {
     enabled: boolean;
 }
 
-const STORE_NAME = 'features/noise-suppression';
-
 const DEFAULT_STATE = {
     enabled: false
 };
 
-PersistenceRegistry.register(STORE_NAME);
-
 /**
  * Reduces the Redux actions of the feature features/noise-suppression.
  */
-ReducerRegistry.register<INoiseSuppressionState>(STORE_NAME,
+ReducerRegistry.register<INoiseSuppressionState>('features/noise-suppression',
 (state = DEFAULT_STATE, action): INoiseSuppressionState => {
     const { enabled } = action;
 

@@ -1,3 +1,7 @@
+.recordingSpinner {
+    vertical-align: top;
+}
+
 .recording-dialog {
     flex: 0;
     flex-direction: column;
@@ -15,10 +19,6 @@
             font-size: 14px;
             margin-left: 16px;
             max-width: 70%;
-
-            &-no-space {
-                margin-left: 0;
-            }
         }
 
         &.space-top {
@@ -48,6 +48,10 @@
             color: #040404;
             background-color: #F8AE1A;
         }
+    }
+
+    .recording-switch-disabled {
+        opacity: 0.5;
     }
 
     .recording-icon-container {
@@ -152,7 +156,8 @@
      */
     font-size: 14px;
 
-    .broadcast-dropdown {
+    .broadcast-dropdown,
+    .broadcast-dropdown-trigger {
         text-align: left;
     }
 
@@ -181,7 +186,7 @@
     }
 
     .google-error {
-        color: #c61600;
+        color: $errorColor;
     }
 
     .google-panel {

@@ -4,7 +4,6 @@ import AbstractButton, { IProps as AbstractButtonProps } from '../../../base/too
 
 
 interface IProps extends AbstractButtonProps {
-    backgroundColor?: string;
     icon: string;
     id?: string;
     text: string;
@@ -19,7 +18,6 @@ class CustomOptionButton extends AbstractButton<IProps> {
     iconSrc = this.props.icon;
     id = this.props.id;
     text = this.props.text;
-    backgroundColor = this.props.backgroundColor;
 
     accessibilityLabel = this.text;
 

@@ -7,6 +7,7 @@ import { IReduxState, IStore } from '../../../../app/types';
 import { ASPECT_RATIO_WIDE } from '../../../responsive-ui/constants';
 import { storeVideoTransform } from '../../actions';
 
+// @ts-ignore
 import styles from './styles';
 
 
@@ -124,12 +125,12 @@ class VideoTransform extends Component<IProps, IState> {
     /**
      * The gesture handler object.
      */
-    gestureHandlers: any;
+    gestureHandlers: Object;
 
     /**
      * The initial distance of the fingers on pinch start.
      */
-    initialDistance?: number;
+    initialDistance: number;
 
     /**
      * The initial position of the finger on touch start.
@@ -233,6 +234,8 @@ class VideoTransform extends Component<IProps, IState> {
                     videoTransformedViewContainerStyles,
                     style
                 ] }
+
+                // @ts-ignore
                 { ...this.gestureHandlers.panHandlers }>
                 <SafeAreaView
                     edges = { [ 'bottom', 'left' ] }
@@ -486,7 +489,7 @@ class VideoTransform extends Component<IProps, IState> {
      * @param {?Object | number} value - The value of the gesture, if any.
      * @returns {void}
      */
-    _onGesture(type: string, value?: any) {
+    _onGesture(type: string, value: any) {
         let transform;
 
         switch (type) {
@@ -597,8 +600,7 @@ class VideoTransform extends Component<IProps, IState> {
                 this._onGesture('scale', scale);
             }
         } else if (gestureState.numberActiveTouches === 1
-                && (this.initialDistance === undefined
-                || isNaN(this.initialDistance))
+                && isNaN(this.initialDistance)
                 && this._didMove(gestureState)) {
             // this is a move event
             const position = this._getTouchPosition(evt);
@@ -609,7 +611,7 @@ class VideoTransform extends Component<IProps, IState> {
 
             this.initialPosition = position;
 
-            this._onGesture('move', move);
+           // this._onGesture('move', move); added by jaswant
         }
     }
 
@@ -621,9 +623,11 @@ class VideoTransform extends Component<IProps, IState> {
      */
     _onPanResponderRelease() {
         if (this.lastTap && Date.now() - this.lastTap < TAP_TIMEOUT_MS) {
+            // @ts-ignore
             this._onGesture('press');
         }
 
+        // @ts-ignore
         delete this.initialDistance;
         this.initialPosition = {
             x: 0,

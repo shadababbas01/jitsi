@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { batch, connect, useSelector } from 'react-redux';
+import { batch, connect } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
 import { IReduxState, IStore } from '../../../app/types';
-import { getButtonNotifyMode, getParticipantMenuButtonsWithNotifyClick } from '../../../base/config/functions.web';
 import { isMobileBrowser } from '../../../base/environment/utils';
 import { IconDotsHorizontal } from '../../../base/icons/svg';
-import { getLocalParticipant, getParticipantCount } from '../../../base/participants/functions';
+import { getLocalParticipant } from '../../../base/participants/functions';
 import Popover from '../../../base/popover/components/Popover.web';
 import { setParticipantContextMenuOpen } from '../../../base/responsive-ui/actions';
 import { getHideSelfView } from '../../../base/settings/functions.web';
@@ -18,12 +17,9 @@ import ContextMenuItemGroup from '../../../base/ui/components/web/ContextMenuIte
 import ConnectionIndicatorContent from '../../../connection-indicator/components/web/ConnectionIndicatorContent';
 import { THUMBNAIL_TYPE } from '../../../filmstrip/constants';
 import { isStageFilmstripAvailable } from '../../../filmstrip/functions.web';
-import { NOTIFY_CLICK_MODE } from '../../../toolbox/constants';
 import { renderConnectionStatus } from '../../actions.web';
-import { PARTICIPANT_MENU_BUTTONS as BUTTONS } from '../../constants';
 
 import ConnectionStatusButton from './ConnectionStatusButton';
-import DemoteToVisitorButton from './DemoteToVisitorButton';
 import FlipLocalVideoButton from './FlipLocalVideoButton';
 import HideSelfViewVideoButton from './HideSelfViewVideoButton';
 import TogglePinToStageButton from './TogglePinToStageButton';
@@ -54,11 +50,6 @@ interface IProps {
      * Whether to render the connection info pane.
      */
     _showConnectionInfo: boolean;
-
-    /**
-     * Shows/hides the local switch to visitor button.
-     */
-    _showDemote: boolean;
 
     /**
      * Whether to render the hide self view button.
@@ -137,7 +128,6 @@ const LocalVideoMenuTriggerButton = ({
     _menuPosition,
     _overflowDrawer,
     _showConnectionInfo,
-    _showDemote,
     _showHideSelfViewButton,
     _showLocalVideoFlipButton,
     _showPinToStage,
@@ -149,23 +139,6 @@ const LocalVideoMenuTriggerButton = ({
 }: IProps) => {
     const { classes } = useStyles();
     const { t } = useTranslation();
-    const buttonsWithNotifyClick = useSelector(getParticipantMenuButtonsWithNotifyClick);
-    const visitorsSupported = useSelector((state: IReduxState) => state['features/visitors'].supported);
-
-    const notifyClick = useCallback(
-        (buttonKey: string) => {
-            const notifyMode = getButtonNotifyMode(buttonKey, buttonsWithNotifyClick);
-
-            if (!notifyMode) {
-                return;
-            }
-
-            APP.API.notifyParticipantMenuButtonClicked(
-                buttonKey,
-                _localParticipantId,
-                notifyMode === NOTIFY_CLICK_MODE.PREVENT_AND_NOTIFY
-            );
-        }, [ buttonsWithNotifyClick, getButtonNotifyMode ]);
 
     const _onPopoverOpen = useCallback(() => {
         showPopover?.();
@@ -191,45 +164,22 @@ const LocalVideoMenuTriggerButton = ({
                     {_showLocalVideoFlipButton
                         && <FlipLocalVideoButton
                             className = { _overflowDrawer ? classes.flipText : '' }
-                            // eslint-disable-next-line react/jsx-no-bind
-                            notifyClick = { () => notifyClick(BUTTONS.FLIP_LOCAL_VIDEO) }
-                            notifyMode = { getButtonNotifyMode(BUTTONS.FLIP_LOCAL_VIDEO, buttonsWithNotifyClick) }
                             onClick = { hidePopover } />
                     }
                     {_showHideSelfViewButton
                         && <HideSelfViewVideoButton
                             className = { _overflowDrawer ? classes.flipText : '' }
-                            // eslint-disable-next-line react/jsx-no-bind
-                            notifyClick = { () => notifyClick(BUTTONS.HIDE_SELF_VIEW) }
-                            notifyMode = { getButtonNotifyMode(BUTTONS.HIDE_SELF_VIEW, buttonsWithNotifyClick) }
                             onClick = { hidePopover } />
                     }
                     {
                         _showPinToStage && <TogglePinToStageButton
                             className = { _overflowDrawer ? classes.flipText : '' }
                             noIcon = { true }
-                            // eslint-disable-next-line react/jsx-no-bind
-                            notifyClick = { () => notifyClick(BUTTONS.PIN_TO_STAGE) }
-                            notifyMode = { getButtonNotifyMode(BUTTONS.PIN_TO_STAGE, buttonsWithNotifyClick) }
                             onClick = { hidePopover }
                             participantID = { _localParticipantId } />
                     }
-                    {
-                        _showDemote && visitorsSupported && <DemoteToVisitorButton
-                            className = { _overflowDrawer ? classes.flipText : '' }
-                            noIcon = { true }
-                            // eslint-disable-next-line react/jsx-no-bind
-                            notifyClick = { () => notifyClick(BUTTONS.DEMOTE) }
-                            notifyMode = { getButtonNotifyMode(BUTTONS.DEMOTE, buttonsWithNotifyClick) }
-                            onClick = { hidePopover }
-                            participantID = { _localParticipantId } />
-                    }
-                    {
-                        isMobileBrowser() && <ConnectionStatusButton
-                            // eslint-disable-next-line react/jsx-no-bind
-                            notifyClick = { () => notifyClick(BUTTONS.CONN_STATUS) }
-                            notifyMode = { getButtonNotifyMode(BUTTONS.CONN_STATUS, buttonsWithNotifyClick) }
-                            participantID = { _localParticipantId } />
+                    {isMobileBrowser()
+                        && <ConnectionStatusButton participantId = { _localParticipantId } />
                     }
                 </ContextMenuItemGroup>
             </ContextMenu>
@@ -292,7 +242,6 @@ function _mapStateToProps(state: IReduxState, ownProps: Partial<IProps>) {
 
     return {
         _menuPosition,
-        _showDemote: getParticipantCount(state) > 1,
         _showLocalVideoFlipButton: !disableLocalVideoFlip && videoTrack?.videoType !== 'desktop',
         _showHideSelfViewButton: showHideSelfViewButton,
         _overflowDrawer: overflowDrawer,

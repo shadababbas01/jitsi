@@ -2,6 +2,7 @@ import {
     ADD_GIF_FOR_PARTICIPANT,
     HIDE_GIF_FOR_PARTICIPANT,
     REMOVE_GIF_FOR_PARTICIPANT,
+    SET_GIF_DRAWER_VISIBILITY,
     SET_GIF_MENU_VISIBILITY,
     SHOW_GIF_FOR_PARTICIPANT
 } from './actionTypes';
@@ -57,6 +58,19 @@ export function hideGif(participantId: string) {
     return {
         type: HIDE_GIF_FOR_PARTICIPANT,
         participantId
+    };
+}
+
+/**
+ * Set visibility of the GIF drawer.
+ *
+ * @param {boolean} visible - Whether or not it should be visible.
+ * @returns {Object}
+ */
+export function setGifDrawerVisibility(visible: boolean) {
+    return {
+        type: SET_GIF_DRAWER_VISIBILITY,
+        visible
     };
 }
 

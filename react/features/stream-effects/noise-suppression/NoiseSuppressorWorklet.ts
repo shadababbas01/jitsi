@@ -1,4 +1,4 @@
-// @ts-expect-error
+// @ts-ignore
 import { createRNNWasmModuleSync } from '@jitsi/rnnoise-wasm';
 
 import { leastCommonMultiple } from '../../base/util/math';

@@ -88,7 +88,7 @@ class ColorSchemeRegistry {
     _applyColorScheme(
             stateful: IStateful,
             componentName: string,
-            style: StyleType | null): StyleType {
+            style: StyleType): StyleType {
         let schemedStyle: any;
 
         if (Array.isArray(style)) {
@@ -115,8 +115,8 @@ class ColorSchemeRegistry {
                     // The value is another style object, we apply the same
                     // transformation recursively.
                     schemedStyle[styleName]
-                        = this._applyColorScheme(
-                            stateful, componentName, styleValue as StyleType);
+                        = this._applyColorScheme( // @ts-ignore
+                            stateful, componentName, styleValue);
                 } else if (typeof styleValue === 'function') {
                     // The value is a function, which indicates that it's a
                     // dynamic, schemed color we need to resolve.

@@ -6,6 +6,7 @@ import { translate } from '../../../base/i18n/functions';
 import { IconGear } from '../../../base/icons/svg';
 import AbstractButton, { IProps as AbstractButtonProps } from '../../../base/toolbox/components/AbstractButton';
 import { openSettingsDialog } from '../../actions';
+import { SETTINGS_TABS } from '../../constants';
 
 /**
  * The type of the React {@code Component} props of {@link SettingsButton}.
@@ -40,10 +41,10 @@ class SettingsButton extends AbstractButton<IProps> {
      * @returns {void}
      */
     _handleClick() {
-        const { dispatch, isDisplayedOnWelcomePage = false } = this.props;
+        const { defaultTab = SETTINGS_TABS.AUDIO, dispatch, isDisplayedOnWelcomePage = false } = this.props;
 
         sendAnalytics(createToolbarEvent('settings'));
-        dispatch(openSettingsDialog(undefined, isDisplayedOnWelcomePage));
+        dispatch(openSettingsDialog(defaultTab, isDisplayedOnWelcomePage));
     }
 }
 

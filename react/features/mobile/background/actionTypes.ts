@@ -1,14 +1,14 @@
 /**
- * The type of redux action used for app state subscription.
+ * The type of redux action to set the AppState API change event listener.
  *
  * {
- *     type: _SET_APP_STATE_SUBSCRIPTION,
- *     subscription: NativeEventSubscription
+ *     type: _SET_APP_STATE_LISTENER,
+ *     listener: Function
  * }
  *
  * @protected
  */
-export const _SET_APP_STATE_SUBSCRIPTION = '_SET_APP_STATE_SUBSCRIPTION';
+export const _SET_APP_STATE_LISTENER = '_SET_APP_STATE_LISTENER';
 
 /**
  * The type of redux action which signals that the app state has changed (in

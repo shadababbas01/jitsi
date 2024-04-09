@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import { IReduxState } from '../../../../app/types';
+import { getToolbarButtons } from '../../../../base/config/functions.web';
 import { openDialog } from '../../../../base/dialog/actions';
 import { translate } from '../../../../base/i18n/functions';
 import AbstractRecordButton, {
@@ -48,8 +49,8 @@ class RecordingButton extends AbstractRecordButton<IProps> {
  */
 export function _mapStateToProps(state: IReduxState) {
     const abstractProps = _abstractMapStateToProps(state);
-    const { toolbarButtons } = state['features/toolbox'];
-    const visible = Boolean(toolbarButtons?.includes('recording') && abstractProps.visible);
+    const toolbarButtons = getToolbarButtons(state);
+    const visible = toolbarButtons.includes('recording') && abstractProps.visible;
 
     return {
         ...abstractProps,

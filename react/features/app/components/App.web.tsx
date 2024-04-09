@@ -42,7 +42,7 @@ export class App extends AbstractApp {
      *
      * @override
      */
-    _createMainElement(component: React.ComponentType, props?: Object) {
+    _createMainElement(component: React.ComponentType, props: any) {
         return (
             <JitsiThemeProvider>
                 <GlobalStyles />

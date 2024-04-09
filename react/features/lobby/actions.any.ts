@@ -8,7 +8,6 @@ import { LOBBY_CHAT_MESSAGE } from '../chat/constants';
 import { handleLobbyMessageReceived } from '../chat/middleware';
 import { hideNotification, showNotification } from '../notifications/actions';
 import { LOBBY_NOTIFICATION_ID } from '../notifications/constants';
-import { joinConference } from '../prejoin/actions';
 
 import {
     KNOCKING_PARTICIPANT_ARRIVED_OR_UPDATED,
@@ -21,8 +20,7 @@ import {
     SET_PASSWORD_JOIN_FAILED
 } from './actionTypes';
 import { LOBBY_CHAT_INITIALIZED, MODERATOR_IN_CHAT_WITH_LEFT } from './constants';
-import { getKnockingParticipants, getLobbyConfig, getLobbyEnabled, isEnablingLobbyAllowed } from './functions';
-import logger from './logger';
+import { getKnockingParticipants, getLobbyConfig, getLobbyEnabled } from './functions';
 import { IKnockingParticipant } from './types';
 
 /**
@@ -116,7 +114,9 @@ export function admitMultiple(participants: Array<IKnockingParticipant>) {
     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
         const conference = getCurrentConference(getState);
 
-        conference?.lobbyApproveAccess(participants.map(p => p.id));
+        participants.forEach(p => {
+            conference?.lobbyApproveAccess(p.id);
+        });
     };
 }
 
@@ -205,18 +205,6 @@ export function startKnocking() {
     return async (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
         const state = getState();
         const { membersOnly } = state['features/base/conference'];
-
-        if (!membersOnly) {
-
-            // no membersOnly, this means we got lobby screen shown as someone
-            // tried to join a conference that has lobby enabled without setting display name
-            // join conference should trigger the lobby/member_only path after setting the display name
-            // this is possible only for web, where we can join without a prejoin screen
-            dispatch(joinConference());
-
-            return;
-        }
-
         const localParticipant = getLocalParticipant(state);
 
         dispatch(conferenceWillJoin(membersOnly));
@@ -242,11 +230,7 @@ export function toggleLobbyMode(enabled: boolean) {
         const conference = getCurrentConference(getState);
 
         if (enabled) {
-            if (isEnablingLobbyAllowed(getState())) {
-                conference?.enableLobby();
-            } else {
-                logger.info('Ignoring enable lobby request because there are visitors in the call already.');
-            }
+            conference?.enableLobby();
         } else {
             conference?.disableLobby();
         }
@@ -422,4 +406,3 @@ export function setLobbyMessageListener() {
         });
     };
 }
-

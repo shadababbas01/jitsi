@@ -79,7 +79,7 @@ const useStyles = makeStyles()(theme => {
             width: 6
         },
         track: {
-            background: theme.palette.text03,
+            background: theme.palette.ui02,
             borderRadius: Number(theme.shape.borderRadius) / 2,
             height
         },
@@ -143,9 +143,7 @@ function Slider({ ariaLabel, max, min, onChange, step, value }: IProps) {
 
     return (
         <div className = { classes.sliderContainer }>
-            <ul
-                aria-hidden = { true }
-                className = { cx('empty-list', classes.knobContainer) }>
+            <ul className = { cx('empty-list', classes.knobContainer) }>
                 {knobs.map((_, i) => (
                     <li
                         className = { classes.knob }

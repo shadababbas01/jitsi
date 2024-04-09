@@ -2,9 +2,12 @@
 import { IStore } from '../app/types';
 import { openSheet } from '../base/dialog/actions';
 import { navigate }
+// @ts-ignore
     from '../mobile/navigation/components/conference/ConferenceNavigationContainerRef';
+// @ts-ignore
 import { screen } from '../mobile/navigation/routes';
 import ConnectionStatusComponent
+// @ts-ignore
     from '../video-menu/components/native/ConnectionStatusComponent';
 // @ts-ignore
 import LocalVideoMenu from '../video-menu/components/native/LocalVideoMenu';

@@ -192,7 +192,7 @@ export const brandedDialog = {
  */
 ColorSchemeRegistry.register('Dialog', {
     button: {
-        backgroundColor: '#44A5FF',
+        backgroundColor: schemeColor('buttonBackground'),
         flex: 1,
         padding: BoxModel.padding * 1.5
     },

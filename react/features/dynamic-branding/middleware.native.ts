@@ -4,7 +4,6 @@ import MiddlewareRegistry from '../base/redux/MiddlewareRegistry';
 import { SET_DYNAMIC_BRANDING_DATA } from './actionTypes';
 import { fetchCustomBrandingData } from './actions.native';
 
-import './middleware.any';
 
 MiddlewareRegistry.register(store => next => action => {
     switch (action.type) {
@@ -21,20 +20,16 @@ MiddlewareRegistry.register(store => next => action => {
             avatarBackgrounds = [],
             backgroundColor,
             backgroundImageUrl,
-            brandedIcons,
             didPageUrl,
-            inviteDomain,
-            labels
+            inviteDomain
         } = action.value;
 
         action.value = {
             avatarBackgrounds,
             backgroundColor,
             backgroundImageUrl,
-            brandedIcons,
             didPageUrl,
-            inviteDomain,
-            labels
+            inviteDomain
         };
 
         // The backend may send an empty string, make sure we skip that.

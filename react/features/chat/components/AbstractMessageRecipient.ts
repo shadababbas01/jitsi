@@ -1,10 +1,10 @@
 import { PureComponent } from 'react';
 import { WithTranslation } from 'react-i18next';
 
-import { IReduxState, IStore } from '../../app/types';
+import { IReduxState } from '../../app/types';
 import { getParticipantDisplayName, isLocalParticipantModerator } from '../../base/participants/functions';
-import { setLobbyChatActiveState, setPrivateMessageRecipient } from '../actions.any';
-
+import { setLobbyChatActiveState } from '../actions.any';
+import { setPrivateMessageRecipient } from '../actions.web';
 
 export interface IProps extends WithTranslation {
 
@@ -52,7 +52,7 @@ export default class AbstractMessageRecipient<P extends IProps> extends PureComp
  * @param {Function} dispatch - The Redux dispatch function.
  * @returns {IProps}
  */
-export function _mapDispatchToProps(dispatch: IStore['dispatch']) {
+export function _mapDispatchToProps(dispatch: Function) {
     return {
         _onRemovePrivateMessageRecipient: () => {
             dispatch(setPrivateMessageRecipient());

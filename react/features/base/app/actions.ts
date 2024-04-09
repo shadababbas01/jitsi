@@ -1,10 +1,6 @@
 import { IStore } from '../../app/types';
 
-import {
-    APP_WILL_MOUNT,
-    APP_WILL_NAVIGATE,
-    APP_WILL_UNMOUNT
-} from './actionTypes';
+import { APP_WILL_MOUNT, APP_WILL_UNMOUNT } from './actionTypes';
 
 /**
  * Signals that a specific App will mount (in the terms of React).
@@ -46,24 +42,5 @@ export function appWillUnmount(app: Object) {
     return {
         type: APP_WILL_UNMOUNT,
         app
-    };
-}
-
-/**
- * Signals that a specific App will navigate (in the terms of React).
- *
- * @param {App} app - The App which will navigate.
- * @param {Object} route - The route which will be used.
- * @returns {{
- *     type: APP_WILL_NAVIGATE,
- *     app: App,
- *     route: Object
- * }}
- */
-export function appWillNavigate(app: Object, route: Object) {
-    return {
-        type: APP_WILL_NAVIGATE,
-        app,
-        route
     };
 }

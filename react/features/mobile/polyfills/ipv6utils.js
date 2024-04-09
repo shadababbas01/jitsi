@@ -1,3 +1,5 @@
+// @flow
+
 import { NativeModules } from 'react-native';
 import { RTCSessionDescription } from 'react-native-webrtc';
 
@@ -9,7 +11,7 @@ import { RTCSessionDescription } from 'react-native-webrtc';
  * @private
  * @returns {Promise}
  */
-export function synthesizeIPv6Addresses(sdp) {
+export function synthesizeIPv6Addresses(sdp: RTCSessionDescription) {
     return (
         new Promise(resolve => resolve(_synthesizeIPv6Addresses0(sdp)))
             .then(({ ips, lines }) =>
@@ -30,7 +32,7 @@ export function synthesizeIPv6Addresses(sdp) {
  * be treated as inability to synthesize an IPv6 address from the specified
  * {@code ipv4}.
  */
-const _synthesizeIPv6FromIPv4Address = (function() {
+const _synthesizeIPv6FromIPv4Address: string => Promise<?string> = (function() {
     // POSIX.getaddrinfo
     const { POSIX } = NativeModules;
 

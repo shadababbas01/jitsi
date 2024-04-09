@@ -1,8 +1,6 @@
 import _ from 'lodash';
 
 import { CONFERENCE_INFO } from '../../conference/components/constants';
-import { TOOLBAR_BUTTONS } from '../../toolbox/constants';
-import { ToolbarButton } from '../../toolbox/types';
 import ReducerRegistry from '../redux/ReducerRegistry';
 import { equals } from '../redux/functions';
 
@@ -16,8 +14,8 @@ import {
 import {
     IConfig,
     IDeeplinkingConfig,
-    IDeeplinkingDesktopConfig,
     IDeeplinkingMobileConfig,
+    IDeeplinkingPlatformConfig,
     IMobileDynamicLink
 } from './configType';
 import { _cleanupConfig, _setDeeplinkingDefaults } from './functions';
@@ -45,13 +43,28 @@ const INITIAL_NON_RN_STATE: IConfig = {
  * @type {Object}
  */
 const INITIAL_RN_STATE: IConfig = {
+    analytics: {},
+
+    // FIXME: Mobile codecs should probably be configurable separately, rather
+    // FIXME: than requiring this override here...
+
+    // TODO: Remove comments later, after next release, so that the fix is applied
+    p2p: {
+        // disabledCodec: 'vp9',
+        // preferredCodec: 'vp8'
+    },
+
+    videoQuality: {
+        // disabledCodec: 'vp9',
+        // preferredCodec: 'vp8'
+    }
 };
 
 /**
  * Mapping between old configs controlling the conference info headers visibility and the
  * new configs. Needed in order to keep backwards compatibility.
  */
-const CONFERENCE_HEADER_MAPPING = {
+const CONFERENCE_HEADER_MAPPING: any = {
     hideConferenceTimer: [ 'conference-timer' ],
     hideConferenceSubject: [ 'subject' ],
     hideParticipantsStats: [ 'participants-count' ],
@@ -71,7 +84,6 @@ export interface IConfigState extends IConfig {
             domain: string;
             muc: string;
         };
-        p2p?: object;
         websocket?: string;
     };
 }
@@ -295,7 +307,7 @@ function _translateInterfaceConfig(oldValue: IConfig) {
     } else {
         const disabled = Boolean(oldValue.disableDeepLinking);
         const deeplinking: IDeeplinkingConfig = {
-            desktop: {} as IDeeplinkingDesktopConfig,
+            desktop: {} as IDeeplinkingPlatformConfig,
             hideLogo: false,
             disabled,
             android: {} as IDeeplinkingMobileConfig,
@@ -375,10 +387,9 @@ function _translateLegacyConfig(oldValue: IConfig) {
             } else {
                 newValue.conferenceInfo.alwaysVisible
                     = (newValue.conferenceInfo.alwaysVisible ?? [])
-                    .filter(c => !CONFERENCE_HEADER_MAPPING[key as keyof typeof CONFERENCE_HEADER_MAPPING].includes(c));
+                    .filter(c => !CONFERENCE_HEADER_MAPPING[key].includes(c));
                 newValue.conferenceInfo.autoHide
-                    = (newValue.conferenceInfo.autoHide ?? []).filter(c =>
-                        !CONFERENCE_HEADER_MAPPING[key as keyof typeof CONFERENCE_HEADER_MAPPING].includes(c));
+                    = (newValue.conferenceInfo.autoHide ?? []).filter(c => !CONFERENCE_HEADER_MAPPING[key].includes(c));
             }
         });
     }
@@ -426,7 +437,7 @@ function _translateLegacyConfig(oldValue: IConfig) {
     newValue.e2ee = newValue.e2ee || {};
 
     if (oldValue.e2eeLabels) {
-        newValue.e2ee.labels = oldValue.e2eeLabels;
+        newValue.e2ee.e2eeLabels = oldValue.e2eeLabels;
     }
 
     newValue.defaultLocalDisplayName
@@ -441,7 +452,7 @@ function _translateLegacyConfig(oldValue: IConfig) {
     }
 
     newValue.defaultRemoteDisplayName
-        = newValue.defaultRemoteDisplayName || 'Fellow Jitster';
+        = newValue.defaultRemoteDisplayName || '';
 
     newValue.transcription = newValue.transcription || {};
     if (oldValue.transcribingEnabled !== undefined) {
@@ -465,7 +476,7 @@ function _translateLegacyConfig(oldValue: IConfig) {
     if (oldValue.autoCaptionOnRecord !== undefined) {
         newValue.transcription = {
             ...newValue.transcription,
-            autoTranscribeOnRecord: oldValue.autoCaptionOnRecord
+            autoCaptionOnRecord: oldValue.autoCaptionOnRecord
         };
     }
 
@@ -546,11 +557,6 @@ function _translateLegacyConfig(oldValue: IConfig) {
             ...newValue.securityUi || {},
             hideLobbyButton: oldValue.hideLobbyButton
         };
-    }
-
-    if (oldValue.disableProfile) {
-        newValue.toolbarButtons = (newValue.toolbarButtons || TOOLBAR_BUTTONS)
-            .filter((button: ToolbarButton) => button !== 'profile');
     }
 
     _setDeeplinkingDefaults(newValue.deeplinking as IDeeplinkingConfig);

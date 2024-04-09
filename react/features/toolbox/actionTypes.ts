@@ -54,17 +54,6 @@ export const SET_OVERFLOW_DRAWER = 'SET_OVERFLOW_DRAWER';
  */
 export const SET_OVERFLOW_MENU_VISIBLE = 'SET_OVERFLOW_MENU_VISIBLE';
 
-
-/**
- * The type of the action which sets enabled toolbar buttons.
- *
- * {
- *     type: SET_TOOLBAR_BUTTONS,
- *     toolbarButtons: Array<string>
- * }
- */
-export const SET_TOOLBAR_BUTTONS = 'SET_TOOLBAR_BUTTONS';
-
 /**
  * The type of the action which sets the indicator which determines whether a
  * fToolbar in the Toolbox is hovered.
@@ -116,12 +105,3 @@ export const SET_TOOLBOX_VISIBLE = 'SET_TOOLBOX_VISIBLE';
  * }
  */
 export const TOGGLE_TOOLBOX_VISIBLE = 'TOGGLE_TOOLBOX_VISIBLE';
-
-/**
- * The type of the redux action which sets whether the toolbox should be shifted up or not.
- *
- * {
- *     type: SET_TOOLBOX_SHIFT_UP
- * }
- */
-export const SET_TOOLBOX_SHIFT_UP = 'SET_TOOLBOX_SHIFT_UP';

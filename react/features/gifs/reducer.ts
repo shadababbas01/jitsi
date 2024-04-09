@@ -4,10 +4,12 @@ import {
     ADD_GIF_FOR_PARTICIPANT,
     HIDE_GIF_FOR_PARTICIPANT,
     REMOVE_GIF_FOR_PARTICIPANT,
+    SET_GIF_DRAWER_VISIBILITY,
     SET_GIF_MENU_VISIBILITY
 } from './actionTypes';
 
 const initialState = {
+    drawerVisible: false,
     gifList: new Map(),
     menuOpen: false
 };
@@ -18,6 +20,7 @@ export interface IGif {
 }
 
 export interface IGifsState {
+    drawerVisible: boolean;
     gifList: Map<string, IGif>;
     menuOpen: boolean;
 }
@@ -63,6 +66,11 @@ ReducerRegistry.register<IGifsState>(
                 gifList: newList
             };
         }
+        case SET_GIF_DRAWER_VISIBILITY:
+            return {
+                ...state,
+                drawerVisible: action.visible
+            };
         case SET_GIF_MENU_VISIBILITY:
             return {
                 ...state,

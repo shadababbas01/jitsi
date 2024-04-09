@@ -13,7 +13,7 @@
     1px 0px 1px rgba(0,0,0,0.3),
     0px 0px 1px rgba(0,0,0,0.3);
     transform: translateX(-50%);
-    z-index: 7;
+    z-index: $subtitlesZ;
 
     &.lifted {
         // Lift subtitle above toolbar+dominant speaker box.

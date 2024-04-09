@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from 'tss-react/mui';
 
 import { IReduxState, IStore } from '../../../../app/types';
 import Avatar from '../../../../base/avatar/components/Avatar';
@@ -53,7 +53,7 @@ interface IProps extends AbstractProps {
     /**
      * Css classes.
      */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
+    classes: any;
 
     /**
      * The redux {@code dispatch} function.
@@ -159,7 +159,6 @@ class InviteContactsForm extends AbstractAddPeopleDialog<IProps, IState> {
             _sipInviteEnabled,
             t
         } = this.props;
-        const classes = withStyles.getClasses(this.props);
         let isMultiSelectDisabled = this.state.addToCallInProgress;
         const loadingMessage = 'addPeople.searching';
         const noMatches = 'addPeople.noResults';
@@ -183,10 +182,9 @@ class InviteContactsForm extends AbstractAddPeopleDialog<IProps, IState> {
 
         return (
             <div
-                className = { classes.formWrap }
+                className = { this.props.classes.formWrap }
                 onKeyDown = { this._onKeyDown }>
                 <MultiSelectAutocomplete
-                    id = 'invite-contacts-input'
                     isDisabled = { isMultiSelectDisabled }
                     loadingMessage = { t(loadingMessage) }
                     noMatchesFound = { t(noMatches) }
@@ -444,8 +442,7 @@ class InviteContactsForm extends AbstractAddPeopleDialog<IProps, IState> {
      */
     _renderFormActions() {
         const { inviteItems } = this.state;
-        const { t } = this.props;
-        const classes = withStyles.getClasses(this.props);
+        const { t, classes } = this.props;
 
         if (!inviteItems.length) {
             return null;
@@ -513,4 +510,4 @@ function _mapStateToProps(state: IReduxState) {
     };
 }
 
-export default translate(connect(_mapStateToProps)(withStyles(InviteContactsForm, styles)));
+export default translate(connect(_mapStateToProps)(withStyles(styles)(InviteContactsForm)));

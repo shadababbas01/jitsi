@@ -2,7 +2,6 @@ import { AnyAction } from 'redux';
 
 import { createConnectionEvent } from '../analytics/AnalyticsEvents';
 import { sendAnalytics } from '../analytics/functions';
-import { appWillNavigate } from '../base/app/actions';
 import { SET_ROOM } from '../base/conference/actionTypes';
 import { CONNECTION_ESTABLISHED, CONNECTION_FAILED } from '../base/connection/actionTypes';
 import { getURLWithoutParams } from '../base/connection/utils';
@@ -147,15 +146,11 @@ function _isMaybeSplitBrainError(getState: IStore['getState'], action: AnyAction
  * @private
  * @returns {void}
  */
-function _navigate({ dispatch, getState }: IStore) {
+function _navigate({ getState }: IStore) {
     const state = getState();
     const { app } = state['features/base/app'];
 
-    _getRouteToRender(state).then((route: Object) => {
-        dispatch(appWillNavigate(app, route));
-
-        return app._navigate(route);
-    });
+    _getRouteToRender(state).then(route => app._navigate(route));
 }
 
 /**

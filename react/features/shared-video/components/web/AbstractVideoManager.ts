@@ -1,11 +1,11 @@
-// @ts-expect-error
+// @ts-ignore
 import Logger from '@jitsi/logger';
 import throttle from 'lodash/throttle';
 import { PureComponent } from 'react';
 
 import { createSharedVideoEvent as createEvent } from '../../../analytics/AnalyticsEvents';
 import { sendAnalytics } from '../../../analytics/functions';
-import { IReduxState, IStore } from '../../../app/types';
+import { IReduxState } from '../../../app/types';
 import { getCurrentConference } from '../../../base/conference/functions';
 import { IJitsiConference } from '../../../base/conference/reducer';
 import { MEDIA_TYPE } from '../../../base/media/constants';
@@ -464,7 +464,7 @@ export function _mapStateToProps(state: IReduxState) {
  * @param {Function} dispatch - The Redux dispatch function.
  * @returns {IProps}
  */
-export function _mapDispatchToProps(dispatch: IStore['dispatch']) {
+export function _mapDispatchToProps(dispatch: Function) {
     return {
         _displayWarning: () => {
             dispatch(showWarningNotification({

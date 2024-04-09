@@ -1,14 +1,20 @@
+/* eslint-disable lines-around-comment  */
+
 import React, { useCallback } from 'react';
 
+// @ts-ignore
 import JitsiScreen from '../../../base/modal/components/JitsiScreen';
 import { goBack }
+// @ts-ignore
     from '../../../mobile/navigation/components/conference/ConferenceNavigationContainerRef';
 import AbstractLanguageSelectorDialog, {
     IAbstractLanguageSelectorDialogProps
 } from '../AbstractLanguageSelectorDialog';
 
 import LanguageList from './LanguageList';
+// @ts-ignore
 import styles from './styles';
+
 
 const LanguageSelectorDialog = (props: IAbstractLanguageSelectorDialogProps) => {
     const { language, listItems, onLanguageSelected, subtitles } = props;
@@ -19,6 +25,7 @@ const LanguageSelectorDialog = (props: IAbstractLanguageSelectorDialogProps) => 
     }, [ language ]);
 
     return (
+        // @ts-ignore
         <JitsiScreen
             disableForcedKeyboardDismiss = { true }
             style = { styles.subtitlesContainer }>

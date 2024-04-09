@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import React, { Component } from 'react';
 import { WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { withStyles } from 'tss-react/mui';
 
-import { IReduxState, IStore } from '../../../app/types';
+import { IReduxState } from '../../../app/types';
 import { translate } from '../../../base/i18n/functions';
 import { withPixelLineHeight } from '../../../base/styles/functions.web';
 import Button from '../../../base/ui/components/web/Button';
@@ -49,12 +49,12 @@ interface IProps extends WithTranslation {
     /**
      * CSS classes object.
      */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
+    classes: any;
 
     /**
      * Invoked to change the configured calendar integration.
      */
-    dispatch: IStore['dispatch'];
+    dispatch: Function;
 }
 
 /**
@@ -131,7 +131,7 @@ class CalendarTab extends Component<IProps, IState> {
      * @returns {ReactElement}
      */
     render() {
-        const classes = withStyles.getClasses(this.props);
+        const { classes } = this.props;
         let view;
 
         if (this.state.loading) {
@@ -221,9 +221,9 @@ class CalendarTab extends Component<IProps, IState> {
             _appName,
             _enableGoogleIntegration,
             _enableMicrosoftIntegration,
+            classes,
             t
         } = this.props;
-        const classes = withStyles.getClasses(this.props);
 
         return (
             <>
@@ -255,8 +255,7 @@ class CalendarTab extends Component<IProps, IState> {
      * @returns {ReactElement}
      */
     _renderSignOutState() {
-        const { _profileEmail, t } = this.props;
-        const classes = withStyles.getClasses(this.props);
+        const { _profileEmail, classes, t } = this.props;
 
         return (
             <>
@@ -305,4 +304,4 @@ function _mapStateToProps(state: IReduxState) {
     };
 }
 
-export default withStyles(translate(connect(_mapStateToProps)(CalendarTab)), styles);
+export default withStyles(styles)(translate(connect(_mapStateToProps)(CalendarTab)));

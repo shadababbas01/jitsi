@@ -1,4 +1,5 @@
-/* global APP */
+// @flow
+
 import Logger from '@jitsi/logger';
 
 import { createApiEvent } from '../../react/features/analytics/AnalyticsEvents';
@@ -17,13 +18,12 @@ import { isEnabledFromState } from '../../react/features/av-moderation/functions
 import {
     endConference,
     sendTones,
-    setAssumedBandwidthBps,
     setFollowMe,
     setLocalSubject,
     setPassword,
     setSubject
 } from '../../react/features/base/conference/actions';
-import { getCurrentConference, isP2pActive } from '../../react/features/base/conference/functions';
+import { getCurrentConference } from '../../react/features/base/conference/functions';
 import { overwriteConfig } from '../../react/features/base/config/actions';
 import { getWhitelistedJSON } from '../../react/features/base/config/functions.any';
 import { toggleDialog } from '../../react/features/base/dialog/actions';
@@ -50,8 +50,8 @@ import {
 } from '../../react/features/base/participants/functions';
 import { updateSettings } from '../../react/features/base/settings/actions';
 import { getDisplayName } from '../../react/features/base/settings/functions.web';
-import { setCameraFacingMode } from '../../react/features/base/tracks/actions.web';
-import { CAMERA_FACING_MODE_MESSAGE } from '../../react/features/base/tracks/constants';
+import { toggleCamera } from '../../react/features/base/tracks/actions.any';
+import { isToggleCameraEnabled } from '../../react/features/base/tracks/functions';
 import {
     autoAssignToBreakoutRooms,
     closeBreakoutRoom,
@@ -113,15 +113,17 @@ import { isAudioMuteButtonDisabled } from '../../react/features/toolbox/function
 import { setTileView, toggleTileView } from '../../react/features/video-layout/actions.any';
 import { muteAllParticipants } from '../../react/features/video-menu/actions';
 import { setVideoQuality } from '../../react/features/video-quality/actions';
-import { toggleWhiteboard } from '../../react/features/whiteboard/actions.web';
 import { getJitsiMeetTransport } from '../transport';
 
 import {
     API_ID,
+    ASSUMED_BANDWIDTH_BPS,
     ENDPOINT_TEXT_MESSAGE_NAME
 } from './constants';
 
 const logger = Logger.getLogger(__filename);
+
+declare var APP: Object;
 
 /**
  * List of the available commands.
@@ -244,6 +246,8 @@ function initCommands() {
             }
         },
         'pin-participant': (id, videoType) => {
+            logger.debug('Pin participant command received');
+
             const state = APP.store.getState();
 
             // if id not provided, unpin everybody.
@@ -301,6 +305,7 @@ function initCommands() {
             APP.store.dispatch(removeBreakoutRoom(breakoutRoomJid));
         },
         'resize-large-video': (width, height) => {
+            logger.debug('Resize large video command received');
             sendAnalytics(createApiEvent('largevideo.resized'));
             APP.store.dispatch(resizeLargeVideo(width, height));
         },
@@ -318,9 +323,16 @@ function initCommands() {
                 return;
             }
 
-            APP.store.dispatch(setAssumedBandwidthBps(value));
+            const { conference } = APP.store.getState()['features/base/conference'];
+
+            if (conference) {
+                conference.setAssumedBandwidthBps(value < ASSUMED_BANDWIDTH_BPS
+                    ? ASSUMED_BANDWIDTH_BPS
+                    : value);
+            }
         },
         'set-follow-me': value => {
+            logger.debug('Set follow me command received');
 
             if (value) {
                 sendAnalytics(createApiEvent('follow.me.set'));
@@ -331,16 +343,16 @@ function initCommands() {
             APP.store.dispatch(setFollowMe(value));
         },
         'set-large-video-participant': (participantId, videoType) => {
-            const { getState, dispatch } = APP.store;
+            logger.debug('Set large video participant command received');
 
             if (!participantId) {
                 sendAnalytics(createApiEvent('largevideo.participant.set'));
-                dispatch(selectParticipantInLargeVideo());
+                APP.store.dispatch(selectParticipantInLargeVideo());
 
                 return;
             }
 
-            const state = getState();
+            const state = APP.store.getState();
             const participant = videoType === VIDEO_TYPE.DESKTOP
                 ? getVirtualScreenshareParticipantByOwnerId(state, participantId)
                 : getParticipantById(state, participantId);
@@ -351,9 +363,8 @@ function initCommands() {
                 return;
             }
 
-            dispatch(setTileView(false));
             sendAnalytics(createApiEvent('largevideo.participant.set'));
-            dispatch(selectParticipantInLargeVideo(participant.id));
+            APP.store.dispatch(selectParticipantInLargeVideo(participant.id));
         },
         'set-participant-volume': (participantId, volume) => {
             APP.store.dispatch(setVolume(participantId, volume));
@@ -368,10 +379,12 @@ function initCommands() {
         },
         'toggle-audio': () => {
             sendAnalytics(createApiEvent('toggle-audio'));
+            logger.log('Audio toggle: API command received');
             APP.conference.toggleAudioMuted(false /* no UI */);
         },
         'toggle-video': () => {
             sendAnalytics(createApiEvent('toggle-video'));
+            logger.log('Video toggle: API command received');
             APP.conference.toggleVideoMuted(false /* no UI */, true /* ensure track */);
         },
         'toggle-film-strip': () => {
@@ -388,8 +401,12 @@ function initCommands() {
             sendAnalytics(createApiEvent('film.strip.resize'));
             APP.store.dispatch(resizeFilmStrip(options.width));
         },
-        'toggle-camera': facingMode => {
-            APP.store.dispatch(setCameraFacingMode(facingMode));
+        'toggle-camera': () => {
+            if (!isToggleCameraEnabled(APP.store.getState())) {
+                return;
+            }
+
+            APP.store.dispatch(toggleCamera());
         },
         'toggle-camera-mirror': () => {
             const state = APP.store.getState();
@@ -466,8 +483,8 @@ function initCommands() {
         'toggle-subtitles': () => {
             APP.store.dispatch(toggleRequestingSubtitles());
         },
-        'set-subtitles': (enabled, displaySubtitles, language) => {
-            APP.store.dispatch(setRequestingSubtitles(enabled, displaySubtitles, language));
+        'set-subtitles': enabled => {
+            APP.store.dispatch(setRequestingSubtitles(enabled));
         },
         'toggle-tile-view': () => {
             sendAnalytics(createApiEvent('tile-view.toggled'));
@@ -490,6 +507,7 @@ function initCommands() {
             APP.conference.changeLocalAvatarUrl(avatarUrl);
         },
         'send-chat-message': (message, to, ignorePrivacy = false) => {
+            logger.debug('Send chat message command received');
             if (to) {
                 const participant = getParticipantById(APP.store.getState(), to);
 
@@ -507,6 +525,7 @@ function initCommands() {
             APP.store.dispatch(sendMessage(message, ignorePrivacy));
         },
         'send-endpoint-text-message': (to, text) => {
+            logger.debug('Send endpoint message command received');
             try {
                 APP.conference.sendEndpointMessage(to, {
                     name: ENDPOINT_TEXT_MESSAGE_NAME,
@@ -516,32 +535,26 @@ function initCommands() {
                 logger.error('Failed sending endpoint text message', err);
             }
         },
-        'send-camera-facing-mode-message': (to, facingMode) => {
-            if (!to) {
-                logger.warn('Participant id not set');
-
-                return;
-            }
-
-            APP.conference.sendEndpointMessage(to, {
-                name: CAMERA_FACING_MODE_MESSAGE,
-                facingMode
-            });
-        },
         'overwrite-names': participantList => {
+            logger.debug('Overwrite names command received');
+
             APP.store.dispatch(overwriteParticipantsNames(participantList));
         },
         'toggle-e2ee': enabled => {
+            logger.debug('Toggle E2EE key command received');
             APP.store.dispatch(toggleE2EE(enabled));
         },
         'set-media-encryption-key': keyInfo => {
             APP.store.dispatch(setMediaEncryptionKey(JSON.parse(keyInfo)));
         },
         'set-video-quality': frameHeight => {
+            logger.debug('Set video quality command received');
             sendAnalytics(createApiEvent('set.video.quality'));
             APP.store.dispatch(setVideoQuality(frameHeight));
         },
+
         'start-share-video': url => {
+            logger.debug('Share video command received');
             sendAnalytics(createApiEvent('share.video.start'));
             const id = extractYoutubeIdOrURL(url);
 
@@ -549,7 +562,9 @@ function initCommands() {
                 APP.store.dispatch(playSharedVideo(id));
             }
         },
+
         'stop-share-video': () => {
+            logger.debug('Share video command received');
             sendAnalytics(createApiEvent('share.video.stop'));
             APP.store.dispatch(stopSharedVideo());
         },
@@ -624,7 +639,6 @@ function initCommands() {
          * Only applies to certain jitsi meet deploys.
          * @param { string } arg.youtubeStreamKey - The youtube stream key.
          * @param { string } arg.youtubeBroadcastID - The youtube broadcast ID.
-         * @param { Object } arg.extraMetadata - Any extra metadata params for file recording.
          * @returns {void}
          */
         'start-recording': ({
@@ -635,8 +649,7 @@ function initCommands() {
             rtmpStreamKey,
             rtmpBroadcastID,
             youtubeStreamKey,
-            youtubeBroadcastID,
-            extraMetadata = {}
+            youtubeBroadcastID
         }) => {
             const state = APP.store.getState();
             const conference = getCurrentConference(state);
@@ -686,7 +699,6 @@ function initCommands() {
                         mode: JitsiRecordingConstants.mode.FILE,
                         appData: JSON.stringify({
                             'file_recording_metadata': {
-                                ...extraMetadata,
                                 'upload_credentials': {
                                     'service_name': RECORDING_TYPES.DROPBOX,
                                     'token': dropboxToken
@@ -699,7 +711,6 @@ function initCommands() {
                         mode: JitsiRecordingConstants.mode.FILE,
                         appData: JSON.stringify({
                             'file_recording_metadata': {
-                                ...extraMetadata,
                                 'share': shouldShare
                             }
                         })
@@ -822,14 +833,10 @@ function initCommands() {
             } else {
                 logger.error(' End Conference not supported');
             }
-        },
-        'toggle-whiteboard': () => {
-            APP.store.dispatch(toggleWhiteboard());
         }
     };
     transport.on('event', ({ data, name }) => {
         if (name && commands[name]) {
-            logger.info(`API command received: ${name}`);
             commands[name](...data);
 
             return true;
@@ -977,17 +984,7 @@ function initCommands() {
             callback(getRoomsInfo(APP.store.getState()));
             break;
         }
-        case 'get-p2p-status': {
-            callback(isP2pActive(APP.store.getState()));
-            break;
-        }
-        case '_new_electron_screensharing_supported': {
-            callback(true);
-            break;
-        }
         default:
-            callback({ error: new Error('UnknownRequestError') });
-
             return false;
         }
 
@@ -1033,7 +1030,7 @@ function toggleScreenSharing(enable) {
  * @param {MouseEvent} event - The mouse event to sanitize.
  * @returns {Object}
  */
-function sanitizeMouseEvent(event) {
+function sanitizeMouseEvent(event: MouseEvent) {
     const {
         clientX,
         clientY,
@@ -1071,7 +1068,7 @@ function sanitizeMouseEvent(event) {
  * Jitsi Meet.
  */
 class API {
-    _enabled;
+    _enabled: boolean;
 
     /**
      * Initializes the API. Setups message event listeners that will receive
@@ -1095,11 +1092,7 @@ class API {
         this._enabled = true;
 
         initCommands();
-
         this.notifyBrowserSupport(isSupportedBrowser());
-
-        // Let the embedder know we are ready.
-        this._sendEvent({ name: 'ready' });
     }
 
     /**
@@ -1110,7 +1103,7 @@ class API {
      * otherwise.
      * @returns {void}
      */
-    notifyLargeVideoVisibilityChanged(isHidden) {
+    notifyLargeVideoVisibilityChanged(isHidden: boolean) {
         this._sendEvent({
             name: 'large-video-visibility-changed',
             isVisible: !isHidden
@@ -1124,7 +1117,7 @@ class API {
      * @param {Object} event - The message to pass onto spot.
      * @returns {void}
      */
-    sendProxyConnectionEvent(event) {
+    sendProxyConnectionEvent(event: Object) {
         this._sendEvent({
             name: 'proxy-connection-event',
             ...event
@@ -1137,13 +1130,9 @@ class API {
      * @param {Object} event - The event to be sent.
      * @returns {void}
      */
-    _sendEvent(event = {}) {
+    _sendEvent(event: Object = {}) {
         if (this._enabled) {
-            try {
-                transport.sendEvent(event);
-            } catch (error) {
-                logger.error('Failed to send and IFrame API event', error);
-            }
+            transport.sendEvent(event);
         }
     }
 
@@ -1154,7 +1143,7 @@ class API {
      * @param {boolean} isOpen - True if the chat panel is open.
      * @returns {void}
      */
-    notifyChatUpdated(unreadCount, isOpen) {
+    notifyChatUpdated(unreadCount: number, isOpen: boolean) {
         this._sendEvent({
             name: 'chat-updated',
             unreadCount,
@@ -1169,7 +1158,7 @@ class API {
      * @param {boolean} privateMessage - True if the message was a private message.
      * @returns {void}
      */
-    notifySendingChatMessage(message, privateMessage) {
+    notifySendingChatMessage(message: string, privateMessage: boolean) {
         this._sendEvent({
             name: 'outgoing-message',
             message,
@@ -1183,7 +1172,7 @@ class API {
      * @param {MouseEvent} event - The mousemove event.
      * @returns {void}
      */
-    notifyMouseEnter(event) {
+    notifyMouseEnter(event: MouseEvent) {
         this._sendEvent({
             name: 'mouse-enter',
             event: sanitizeMouseEvent(event)
@@ -1196,7 +1185,7 @@ class API {
      * @param {MouseEvent} event - The mousemove event.
      * @returns {void}
      */
-    notifyMouseLeave(event) {
+    notifyMouseLeave(event: MouseEvent) {
         this._sendEvent({
             name: 'mouse-leave',
             event: sanitizeMouseEvent(event)
@@ -1209,7 +1198,7 @@ class API {
      * @param {MouseEvent} event - The mousemove event.
      * @returns {void}
      */
-    notifyMouseMove(event) {
+    notifyMouseMove(event: MouseEvent) {
         this._sendEvent({
             name: 'mouse-move',
             event: sanitizeMouseEvent(event)
@@ -1223,7 +1212,7 @@ class API {
      * @param {boolean} enabled - Whether or not the new moderation status is enabled.
      * @returns {void}
      */
-    notifyModerationChanged(mediaType, enabled) {
+    notifyModerationChanged(mediaType: string, enabled: boolean) {
         this._sendEvent({
             name: 'moderation-status-changed',
             mediaType,
@@ -1238,7 +1227,7 @@ class API {
      * @param {string} mediaType - Media type for which the participant was approved.
      * @returns {void}
      */
-    notifyParticipantApproved(participantId, mediaType) {
+    notifyParticipantApproved(participantId: string, mediaType: string) {
         this._sendEvent({
             name: 'moderation-participant-approved',
             id: participantId,
@@ -1253,7 +1242,7 @@ class API {
      * @param {string} mediaType - Media type for which the participant was rejected.
      * @returns {void}
      */
-    notifyParticipantRejected(participantId, mediaType) {
+    notifyParticipantRejected(participantId: string, mediaType: string) {
         this._sendEvent({
             name: 'moderation-participant-rejected',
             id: participantId,
@@ -1269,24 +1258,11 @@ class API {
      *
      * @returns {void}
      */
-    notifyNotificationTriggered(title, description) {
+    notifyNotificationTriggered(title: string, description: string) {
         this._sendEvent({
             description,
             name: 'notification-triggered',
             title
-        });
-    }
-
-    /**
-     * Notify request desktop sources.
-     *
-     * @param {Object} options - Object with the options for desktop sources.
-     * @returns {void}
-     */
-    requestDesktopSources(options) {
-        return transport.sendRequest({
-            name: '_request-desktop-sources',
-            options
         });
     }
 
@@ -1296,7 +1272,7 @@ class API {
      * @param {number} videoQuality - The video quality. The number represents the maximum height of the video streams.
      * @returns {void}
      */
-    notifyVideoQualityChanged(videoQuality) {
+    notifyVideoQualityChanged(videoQuality: number) {
         this._sendEvent({
             name: 'video-quality-changed',
             videoQuality
@@ -1311,7 +1287,9 @@ class API {
      * @returns {void}
      */
     notifyReceivedChatMessage(
-            { body, id, nick, privateMessage, ts } = {}) {
+            { body, id, nick, privateMessage, ts }: {
+                body: *, id: string, nick: string, privateMessage: boolean, ts: *
+            } = {}) {
         if (APP.conference.isLocalId(id)) {
             return;
         }
@@ -1334,7 +1312,7 @@ class API {
      * @param {Object} props - The display name of the user.
      * @returns {void}
      */
-    notifyUserJoined(id, props) {
+    notifyUserJoined(id: string, props: Object) {
         this._sendEvent({
             name: 'participant-joined',
             id,
@@ -1349,7 +1327,7 @@ class API {
      * @param {string} id - User id.
      * @returns {void}
      */
-    notifyUserLeft(id) {
+    notifyUserLeft(id: string) {
         this._sendEvent({
             name: 'participant-left',
             id
@@ -1364,7 +1342,7 @@ class API {
      * @param {string} role - The new user role.
      * @returns {void}
      */
-    notifyUserRoleChanged(id, role) {
+    notifyUserRoleChanged(id: string, role: string) {
         this._sendEvent({
             name: 'participant-role-changed',
             id,
@@ -1380,7 +1358,7 @@ class API {
      * @param {string} avatarURL - The new avatar URL of the participant.
      * @returns {void}
      */
-    notifyAvatarChanged(id, avatarURL) {
+    notifyAvatarChanged(id: string, avatarURL: string) {
         this._sendEvent({
             name: 'avatar-changed',
             avatarURL,
@@ -1395,7 +1373,7 @@ class API {
      * @param {Object} data - The event data.
      * @returns {void}
      */
-    notifyEndpointTextMessageReceived(data) {
+    notifyEndpointTextMessageReceived(data: Object) {
         this._sendEvent({
             name: 'endpoint-text-message-received',
             data
@@ -1409,7 +1387,7 @@ class API {
      * @param {string} faceExpression - Detected face expression.
      * @returns {void}
      */
-    notifyFaceLandmarkDetected(faceBox, faceExpression) {
+    notifyFaceLandmarkDetected(faceBox: Object, faceExpression: string) {
         this._sendEvent({
             name: 'face-landmark-detected',
             faceBox,
@@ -1423,7 +1401,7 @@ class API {
      * @param {Object} data - The event data.
      * @returns {void}
      */
-    notifySharingParticipantsChanged(data) {
+    notifySharingParticipantsChanged(data: Object) {
         this._sendEvent({
             name: 'content-sharing-participants-changed',
             data
@@ -1437,7 +1415,7 @@ class API {
      * @param {Object} devices - The new device list.
      * @returns {void}
      */
-    notifyDeviceListChanged(devices) {
+    notifyDeviceListChanged(devices: Object) {
         this._sendEvent({
             name: 'device-list-changed',
             devices
@@ -1455,8 +1433,8 @@ class API {
      * @returns {void}
      */
     notifyDisplayNameChanged(
-            id,
-            { displayName, formattedDisplayName }) {
+            id: string,
+            { displayName, formattedDisplayName }: Object) {
         this._sendEvent({
             name: 'display-name-change',
             displayname: displayName,
@@ -1474,8 +1452,8 @@ class API {
      * @returns {void}
      */
     notifyEmailChanged(
-            id,
-            { email }) {
+            id: string,
+            { email }: Object) {
         this._sendEvent({
             name: 'email-change',
             email,
@@ -1487,46 +1465,14 @@ class API {
      * Notify external application (if API is enabled) that the an error has been logged.
      *
      * @param {string} logLevel - The message log level.
-     * @param {Array<string>} args - Array of strings composing the log message.
+     * @param {Array} args - Array of strings composing the log message.
      * @returns {void}
      */
-    notifyLog(logLevel, args = []) {
-        if (!Array.isArray(args)) {
-            logger.error('notifyLog received wrong argument types!');
-
-            return;
-        }
-
-        // Trying to convert arguments to strings. Otherwise in order to send the event the arguments will be formatted
-        // with JSON.stringify which can throw an error because of circular objects and we will lose the whole log.
-        const formattedArguments = [];
-
-        args.forEach(arg => {
-            let formattedArgument = '';
-
-            if (arg instanceof Error) {
-                formattedArgument += `${arg.toString()}: ${arg.stack}`;
-            } else if (typeof arg === 'object') {
-                // NOTE: The non-enumerable properties of the objects wouldn't be included in the string after
-                // JSON.strigify. For example Map instance will be translated to '{}'. So I think we have to eventually
-                // do something better for parsing the arguments. But since this option for strigify is part of the
-                // public interface and I think it could be useful in some cases I will it for now.
-                try {
-                    formattedArgument += JSON.stringify(arg);
-                } catch (error) {
-                    formattedArgument += arg;
-                }
-            } else {
-                formattedArgument += arg;
-            }
-
-            formattedArguments.push(formattedArgument);
-        });
-
+    notifyLog(logLevel: string, args: Array<string>) {
         this._sendEvent({
             name: 'log',
             logLevel,
-            args: formattedArguments
+            args
         });
     }
 
@@ -1540,7 +1486,7 @@ class API {
      * user and the type of the room.
      * @returns {void}
      */
-    notifyConferenceJoined(roomName, id, props) {
+    notifyConferenceJoined(roomName: string, id: string, props: Object) {
         this._sendEvent({
             name: 'video-conference-joined',
             roomName,
@@ -1555,7 +1501,7 @@ class API {
      * @param {string} roomName - User id.
      * @returns {void}
      */
-    notifyConferenceLeft(roomName) {
+    notifyConferenceLeft(roomName: string) {
         this._sendEvent({
             name: 'video-conference-left',
             roomName
@@ -1570,7 +1516,7 @@ class API {
      *
      * @returns {void}
      */
-    notifyDataChannelClosed(code, reason) {
+    notifyDataChannelClosed(code: number, reason: string) {
         this._sendEvent({
             name: 'data-channel-closed',
             code,
@@ -1613,7 +1559,7 @@ class API {
      * @param {boolean} muted - The new muted status.
      * @returns {void}
      */
-    notifyAudioMutedStatusChanged(muted) {
+    notifyAudioMutedStatusChanged(muted: boolean) {
         this._sendEvent({
             name: 'audio-mute-status-changed',
             muted
@@ -1627,7 +1573,7 @@ class API {
      * @param {boolean} muted - The new muted status.
      * @returns {void}
      */
-    notifyVideoMutedStatusChanged(muted) {
+    notifyVideoMutedStatusChanged(muted: boolean) {
         this._sendEvent({
             name: 'video-mute-status-changed',
             muted
@@ -1641,7 +1587,7 @@ class API {
      * @param {boolean} available - True if available and false otherwise.
      * @returns {void}
      */
-    notifyAudioAvailabilityChanged(available) {
+    notifyAudioAvailabilityChanged(available: boolean) {
         audioAvailable = available;
         this._sendEvent({
             name: 'audio-availability-changed',
@@ -1656,7 +1602,7 @@ class API {
      * @param {boolean} available - True if available and false otherwise.
      * @returns {void}
      */
-    notifyVideoAvailabilityChanged(available) {
+    notifyVideoAvailabilityChanged(available: boolean) {
         videoAvailable = available;
         this._sendEvent({
             name: 'video-availability-changed',
@@ -1671,7 +1617,7 @@ class API {
      * @param {string} id - User id of the new on stage participant.
      * @returns {void}
      */
-    notifyOnStageParticipantChanged(id) {
+    notifyOnStageParticipantChanged(id: string) {
         this._sendEvent({
             name: 'on-stage-participant-changed',
             id
@@ -1685,7 +1631,7 @@ class API {
      * @param {boolean} isVisible - Whether the prejoin video is visible.
      * @returns {void}
      */
-    notifyPrejoinVideoVisibilityChanged(isVisible) {
+    notifyPrejoinVideoVisibilityChanged(isVisible: boolean) {
         this._sendEvent({
             name: 'on-prejoin-video-changed',
             isVisible
@@ -1719,7 +1665,7 @@ class API {
      * @param {string} message - Additional information about the error.
      * @returns {void}
      */
-    notifyOnCameraError(type, message) {
+    notifyOnCameraError(type: string, message: string) {
         this._sendEvent({
             name: 'camera-error',
             type,
@@ -1735,7 +1681,7 @@ class API {
      * @param {string} message - Additional information about the error.
      * @returns {void}
      */
-    notifyOnMicError(type, message) {
+    notifyOnMicError(type: string, message: string) {
         this._sendEvent({
             name: 'mic-error',
             type,
@@ -1751,7 +1697,7 @@ class API {
      * @param {string} error - A failure message, if any.
      * @returns {void}
      */
-    notifyFeedbackSubmitted(error) {
+    notifyFeedbackSubmitted(error: string) {
         this._sendEvent({
             name: 'feedback-submitted',
             error
@@ -1776,7 +1722,7 @@ class API {
      * be displayed or hidden.
      * @returns {void}
      */
-    notifyFilmstripDisplayChanged(visible) {
+    notifyFilmstripDisplayChanged(visible: boolean) {
         this._sendEvent({
             name: 'filmstrip-display-changed',
             visible
@@ -1793,7 +1739,7 @@ class API {
      * other participant.
      * @returns {void}
      */
-    notifyKickedOut(kicked, kicker) {
+    notifyKickedOut(kicked: Object, kicker: Object) {
         this._sendEvent({
             name: 'participant-kicked-out',
             kicked,
@@ -1822,7 +1768,7 @@ class API {
      * share is capturing.
      * @returns {void}
      */
-    notifyScreenSharingStatusChanged(on, details) {
+    notifyScreenSharingStatusChanged(on: boolean, details: Object) {
         this._sendEvent({
             name: 'screen-sharing-status-changed',
             on,
@@ -1837,7 +1783,7 @@ class API {
      * @param {string} id - Id of the dominant participant.
      * @returns {void}
      */
-    notifyDominantSpeakerChanged(id) {
+    notifyDominantSpeakerChanged(id: string) {
         this._sendEvent({
             name: 'dominant-speaker-changed',
             id
@@ -1851,7 +1797,7 @@ class API {
      * @param {string} subject - Conference subject.
      * @returns {void}
      */
-    notifySubjectChanged(subject) {
+    notifySubjectChanged(subject: string) {
         this._sendEvent({
             name: 'subject-change',
             subject
@@ -1866,7 +1812,7 @@ class API {
      * otherwise.
      * @returns {void}
      */
-    notifyTileViewChanged(enabled) {
+    notifyTileViewChanged(enabled: boolean) {
         this._sendEvent({
             name: 'tile-view-changed',
             enabled
@@ -1879,7 +1825,7 @@ class API {
      * @param {string} localStorageContent - The new localStorageContent.
      * @returns {void}
      */
-    notifyLocalStorageChanged(localStorageContent) {
+    notifyLocalStorageChanged(localStorageContent: string) {
         this._sendEvent({
             name: 'local-storage-changed',
             localStorageContent
@@ -1893,7 +1839,7 @@ class API {
      * @param {boolean} handRaised - Whether user has raised hand.
      * @returns {void}
      */
-    notifyRaiseHandUpdated(id, handRaised) {
+    notifyRaiseHandUpdated(id: string, handRaised: boolean) {
         this._sendEvent({
             name: 'raise-hand-updated',
             handRaised,
@@ -1909,7 +1855,7 @@ class API {
      * @param {string} error - Error type or null if success.
      * @returns {void}
      */
-    notifyRecordingStatusChanged(on, mode, error) {
+    notifyRecordingStatusChanged(on: boolean, mode: string, error?: string) {
         this._sendEvent({
             name: 'recording-status-changed',
             on,
@@ -1926,7 +1872,7 @@ class API {
      * @param {number} ttl - The recording download link time to live.
      * @returns {void}
      */
-    notifyRecordingLinkAvailable(link, ttl) {
+    notifyRecordingLinkAvailable(link: string, ttl: number) {
         this._sendEvent({
             name: 'recording-link-available',
             link,
@@ -1940,7 +1886,7 @@ class API {
      * @param {Object} participant - Participant data such as id and name.
      * @returns {void}
      */
-    notifyKnockingParticipant(participant) {
+    notifyKnockingParticipant(participant: Object) {
         this._sendEvent({
             name: 'knocking-participant',
             participant
@@ -1953,7 +1899,7 @@ class API {
      * @param {Object} error - The error.
      * @returns {void}
      */
-    notifyError(error) {
+    notifyError(error: Object) {
         this._sendEvent({
             name: 'error-occurred',
             error
@@ -1967,38 +1913,11 @@ class API {
      * @param {boolean} preventExecution - Whether execution of the button click was prevented or not.
      * @returns {void}
      */
-    notifyToolbarButtonClicked(key, preventExecution) {
+    notifyToolbarButtonClicked(key: string, preventExecution: boolean) {
         this._sendEvent({
             name: 'toolbar-button-clicked',
             key,
             preventExecution
-        });
-    }
-
-    /**
-     * Notify external application (if API is enabled) that transcribing has started or stopped.
-     *
-     * @param {boolean} on - True if transcribing is on, false otherwise.
-     * @returns {void}
-     */
-    notifyTranscribingStatusChanged(on) {
-        this._sendEvent({
-            name: 'transcribing-status-changed',
-            on
-        });
-    }
-
-    /**
-     * Notify external application (if API is enabled) that the user received
-     * a transcription chunk.
-     *
-     * @param {Object} data - The event data.
-     * @returns {void}
-     */
-    notifyTranscriptionChunkReceived(data) {
-        this._sendEvent({
-            name: 'transcription-chunk-received',
-            data
         });
     }
 
@@ -2008,7 +1927,7 @@ class API {
      * @param {boolean} supported - If browser is supported or not.
      * @returns {void}
      */
-    notifyBrowserSupport(supported) {
+    notifyBrowserSupport(supported: boolean) {
         this._sendEvent({
             name: 'browser-support',
             supported
@@ -2084,73 +2003,14 @@ class API {
      * Notify external application ( if API is enabled) that a participant menu button was clicked.
      *
      * @param {string} key - The key of the participant menu button.
-     * @param {string} participantId - The ID of the participant for whom the participant menu button was clicked.
-     * @param {boolean} preventExecution - Whether execution of the button click was prevented or not.
+     * @param {string} participantId - The ID of the participant for with the participant menu button was clicked.
      * @returns {void}
      */
-    notifyParticipantMenuButtonClicked(key, participantId, preventExecution) {
+    notifyParticipantMenuButtonClicked(key, participantId) {
         this._sendEvent({
             name: 'participant-menu-button-clicked',
             key,
-            participantId,
-            preventExecution
-        });
-    }
-
-    /**
-     * Notify external application (if API is enabled) if whiteboard state is
-     * changed.
-     *
-     * @param {WhiteboardStatus} status - The new whiteboard status.
-     * @returns {void}
-     */
-    notifyWhiteboardStatusChanged(status) {
-        this._sendEvent({
-            name: 'whiteboard-status-changed',
-            status
-        });
-    }
-
-    /**
-     * Notify external application (if API is enabled) if non participant message
-     * is received.
-     *
-     * @param {string} id - The resource id of the sender.
-     * @param {Object} json - The json carried by the message.
-     * @returns {void}
-     */
-    notifyNonParticipantMessageReceived(id, json) {
-        this._sendEvent({
-            name: 'non-participant-message-received',
-            id,
-            message: json
-        });
-    }
-
-
-    /**
-     * Notify the external application (if API is enabled) if the connection type changed.
-     *
-     * @param {boolean} isP2p - Whether the new connection is P2P.
-     * @returns {void}
-     */
-    notifyP2pStatusChanged(isP2p) {
-        this._sendEvent({
-            name: 'p2p-status-changed',
-            isP2p
-        });
-    }
-
-    /**
-     * Notify the external application (if API is enabled) when the compute pressure changed.
-     *
-     * @param {Array} records - The new pressure records.
-     * @returns {void}
-     */
-    notifyComputePressureChanged(records) {
-        this._sendEvent({
-            name: 'compute-pressure-changed',
-            records
+            participantId
         });
     }
 

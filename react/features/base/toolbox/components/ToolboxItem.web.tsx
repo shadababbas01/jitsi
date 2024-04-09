@@ -10,19 +10,9 @@ import type { IProps as AbstractToolboxItemProps } from './AbstractToolboxItem';
 interface IProps extends AbstractToolboxItemProps {
 
     /**
-     * The button's background color.
-     */
-    backgroundColor?: string;
-
-    /**
      * Whether or not the item is displayed in a context menu.
      */
     contextMenu?: boolean;
-
-    /**
-     * Whether the button open a menu or not.
-     */
-    isMenuButton?: boolean;
 
     /**
     * On key down handler.
@@ -53,7 +43,7 @@ export default class ToolboxItem extends AbstractToolboxItem<IProps> {
      * @returns {void}
      */
     _onKeyPress(event?: React.KeyboardEvent) {
-        if (event?.key === 'Enter') {
+        if (event?.key === 'Enter' || event?.key === ' ') {
             event.preventDefault();
             this.props.onClick();
         }
@@ -70,9 +60,7 @@ export default class ToolboxItem extends AbstractToolboxItem<IProps> {
      */
     _renderItem() {
         const {
-            backgroundColor,
             contextMenu,
-            isMenuButton,
             disabled,
             elementAfter,
             icon,
@@ -83,9 +71,8 @@ export default class ToolboxItem extends AbstractToolboxItem<IProps> {
             toggled
         } = this.props;
         const className = showLabel ? 'overflow-menu-item' : 'toolbox-button';
-        const buttonAttribute = isMenuButton ? 'aria-expanded' : 'aria-pressed';
         const props = {
-            [buttonAttribute]: toggled,
+            'aria-pressed': toggled,
             'aria-disabled': disabled,
             'aria-label': this.accessibilityLabel,
             className: className + (disabled ? ' disabled' : ''),
@@ -100,17 +87,14 @@ export default class ToolboxItem extends AbstractToolboxItem<IProps> {
         const useTooltip = this.tooltip && this.tooltip.length > 0;
 
         if (contextMenu) {
-            return (
-                <ContextMenuItem
-                    accessibilityLabel = { this.accessibilityLabel }
-                    backgroundColor = { backgroundColor }
-                    disabled = { disabled }
-                    icon = { icon }
-                    onClick = { onClick }
-                    onKeyDown = { onKeyDown }
-                    onKeyPress = { this._onKeyPress }
-                    text = { this.label } />
-            );
+            return (<ContextMenuItem
+                accessibilityLabel = { this.accessibilityLabel }
+                disabled = { disabled }
+                icon = { icon }
+                onClick = { onClick }
+                onKeyDown = { onKeyDown }
+                onKeyPress = { this._onKeyPress }
+                text = { this.label } />);
         }
         let children = (
             <Fragment>
@@ -142,18 +126,14 @@ export default class ToolboxItem extends AbstractToolboxItem<IProps> {
      * @returns {ReactElement}
      */
     _renderIcon() {
-        const { backgroundColor, customClass, disabled, icon, showLabel, toggled } = this.props;
+        const { customClass, disabled, icon, showLabel, toggled } = this.props;
         const iconComponent = (<Icon
             size = { showLabel ? undefined : 24 }
             src = { icon } />);
         const elementType = showLabel ? 'span' : 'div';
         const className = `${showLabel ? 'overflow-menu-item-icon' : 'toolbox-icon'} ${
             toggled ? 'toggled' : ''} ${disabled ? 'disabled' : ''} ${customClass ?? ''}`;
-        const style = backgroundColor && !showLabel ? { backgroundColor } : {};
 
-        return React.createElement(elementType, {
-            className,
-            style
-        }, iconComponent);
+        return React.createElement(elementType, { className }, iconComponent);
     }
 }

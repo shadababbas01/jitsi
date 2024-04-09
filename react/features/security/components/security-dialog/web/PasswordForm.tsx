@@ -140,29 +140,22 @@ class PasswordForm extends Component<IProps, IState> {
      * @returns {ReactElement}
      */
     _renderPasswordField() {
-        const {
-            editEnabled,
-            passwordNumberOfDigits,
-            t
-        } = this.props;
+        if (this.props.editEnabled) {
+            let placeHolderText = this.props.t('dialog.password');
 
-        if (editEnabled) {
-            let placeHolderText = t('dialog.password');
-
-            if (passwordNumberOfDigits) {
+            if (this.props.passwordNumberOfDigits) {
                 placeHolderText = this.props.t('passwordDigitsOnly', {
-                    number: passwordNumberOfDigits });
+                    number: this.props.passwordNumberOfDigits });
             }
 
             return (
                 <div
                     className = 'info-password-form'>
                     <Input
-                        accessibilityLabel = { t('info.addPassword') }
+                        accessibilityLabel = { this.props.t('info.addPassword') }
                         autoFocus = { true }
                         id = 'info-password-input'
-                        maxLength = { passwordNumberOfDigits }
-                        mode = { passwordNumberOfDigits ? 'numeric' : undefined }
+                        maxLength = { this.props.passwordNumberOfDigits }
                         onChange = { this._onEnteredPasswordChange }
                         onKeyPress = { this._onKeyPress }
                         placeholder = { placeHolderText }

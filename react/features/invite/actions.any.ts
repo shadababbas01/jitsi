@@ -66,7 +66,7 @@ export function invite(
         showCalleeInfo = false) {
     return (
             dispatch: IStore['dispatch'],
-            getState: IStore['getState']): Promise<IInvitee[]> => {
+            getState: IStore['getState']): Promise<Array<Object>> => {
         const state = getState();
         const participantsCount = getParticipantCount(state);
         const { calleeInfoVisible } = state['features/invite'];

@@ -1,65 +1,59 @@
-import React, { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { createRemoteVideoMenuButtonEvent } from '../../../analytics/AnalyticsEvents';
-import { sendAnalytics } from '../../../analytics/functions';
-import { IReduxState } from '../../../app/types';
-import { rejectParticipantAudio } from '../../../av-moderation/actions';
+import { translate } from '../../../base/i18n/functions';
 import { IconMicSlash } from '../../../base/icons/svg';
-import { MEDIA_TYPE } from '../../../base/media/constants';
-import { isRemoteTrackMuted } from '../../../base/tracks/functions.any';
 import ContextMenuItem from '../../../base/ui/components/web/ContextMenuItem';
-import { NOTIFY_CLICK_MODE } from '../../../toolbox/constants';
-import { muteRemote } from '../../actions.any';
-import { IButtonProps } from '../../types';
+import AbstractMuteButton, { IProps, _mapStateToProps } from '../AbstractMuteButton';
+
 
 /**
  * Implements a React {@link Component} which displays a button for audio muting
  * a participant in the conference.
  *
- * @returns {JSX.Element|null}
+ * NOTE: At the time of writing this is a button that doesn't use the
+ * {@code AbstractButton} base component, but is inherited from the same
+ * super class ({@code AbstractMuteButton} that extends {@code AbstractButton})
+ * for the sake of code sharing between web and mobile. Once web uses the
+ * {@code AbstractButton} base component, this can be fully removed.
  */
-const MuteButton = ({
-    notifyClick,
-    notifyMode,
-    participantID
-}: IButtonProps): JSX.Element | null => {
-    const { t } = useTranslation();
-    const dispatch = useDispatch();
-    const tracks = useSelector((state: IReduxState) => state['features/base/tracks']);
-    const audioTrackMuted = useMemo(
-        () => isRemoteTrackMuted(tracks, MEDIA_TYPE.AUDIO, participantID),
-        [ isRemoteTrackMuted, participantID, tracks ]
-    );
+class MuteButton extends AbstractMuteButton {
+    /**
+     * Instantiates a new {@code Component}.
+     *
+     * @inheritdoc
+     */
+    constructor(props: IProps) {
+        super(props);
 
-    const handleClick = useCallback(() => {
-        notifyClick?.();
-        if (notifyMode === NOTIFY_CLICK_MODE.PREVENT_AND_NOTIFY) {
-            return;
-        }
-        sendAnalytics(createRemoteVideoMenuButtonEvent(
-            'mute',
-            {
-                'participant_id': participantID
-            }));
-
-        dispatch(muteRemote(participantID, MEDIA_TYPE.AUDIO));
-        dispatch(rejectParticipantAudio(participantID));
-    }, [ dispatch, notifyClick, notifyMode, participantID, sendAnalytics ]);
-
-    if (audioTrackMuted) {
-        return null;
+        this._handleClick = this._handleClick.bind(this);
     }
 
-    return (
-        <ContextMenuItem
-            accessibilityLabel = { t('dialog.muteParticipantButton') }
-            className = 'mutelink'
-            icon = { IconMicSlash }
-            onClick = { handleClick }
-            text = { t('dialog.muteParticipantButton') } />
-    );
-};
+    /**
+     * Implements React's {@link Component#render()}.
+     *
+     * @inheritdoc
+     * @returns {ReactElement}
+     */
+    render() {
+        const { _audioTrackMuted, t } = this.props;
 
-export default MuteButton;
+        if (_audioTrackMuted) {
+            return null;
+        }
+
+        return (
+            <ContextMenuItem
+                accessibilityLabel = { t('dialog.muteParticipantButton') }
+                className = 'mutelink'
+                icon = { IconMicSlash }
+                // eslint-disable-next-line react/jsx-handler-names
+                onClick = { this._handleClick }
+                text = { t('dialog.muteParticipantButton') } />
+        );
+    }
+
+    _handleClick: () => void;
+}
+
+export default translate(connect(_mapStateToProps)(MuteButton));

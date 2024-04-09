@@ -28,13 +28,6 @@ const useStyles = makeStyles()(theme => {
             color: theme.palette.text01
         },
 
-        text: {
-            maxWidth: 'calc(100% - 30px)',
-            overflow: 'hidden',
-            whiteSpace: 'break-spaces',
-            wordBreak: 'break-all'
-        },
-
         iconButton: {
             padding: '2px',
 
@@ -79,7 +72,7 @@ const MessageRecipient = ({
             className = { classes.container }
             id = 'chat-recipient'
             role = 'alert'>
-            <span className = { classes.text }>
+            <span>
                 {t(_isLobbyChatActive ? 'chat.lobbyChatMessageTo' : 'chat.messageTo', {
                     recipient: _isLobbyChatActive ? _lobbyMessageRecipient : _privateMessageRecipient
                 })}

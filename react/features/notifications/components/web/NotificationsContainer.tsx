@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
-import { IReduxState, IStore } from '../../../app/types';
+import { IReduxState } from '../../../app/types';
 import { hideNotification } from '../../actions';
 import { areThereNotifications } from '../../functions';
 import { INotificationProps } from '../../types';
@@ -33,7 +33,7 @@ interface IProps {
     /**
      * Invoked to update the redux store in order to remove notifications.
      */
-    dispatch: IStore['dispatch'];
+    dispatch: Function;
 
     /**
      * Whether or not the notifications are displayed in a portal.

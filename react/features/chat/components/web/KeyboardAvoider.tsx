@@ -23,17 +23,16 @@ function KeyboardAvoider() {
      * @returns {void}
      */
     function handleViewportResize() {
-        const { innerWidth, visualViewport } = window;
-        const { width, height } = visualViewport ?? {};
+        const { innerWidth, visualViewport: { width, height } } = window;
 
         // Compare the widths to make sure the {@code visualViewport} didn't resize due to zooming.
         if (width === innerWidth) {
-            if (Number(height) < storedHeight) {
-                setElementHeight(storedHeight - Number(height));
+            if (height < storedHeight) {
+                setElementHeight(storedHeight - height);
             } else {
                 setElementHeight(0);
             }
-            setStoredHeight(Number(height));
+            setStoredHeight(height);
         }
     }
 
@@ -41,10 +40,10 @@ function KeyboardAvoider() {
         // Call the handler in case the keyboard is open when the {@code KeyboardAvoider} is mounted.
         handleViewportResize();
 
-        window.visualViewport?.addEventListener('resize', handleViewportResize);
+        window.visualViewport.addEventListener('resize', handleViewportResize);
 
         return () => {
-            window.visualViewport?.removeEventListener('resize', handleViewportResize);
+            window.visualViewport.removeEventListener('resize', handleViewportResize);
         };
     }, []);
 

@@ -1,5 +1,5 @@
 /**
- * The size of the chat. Equal to $sidebarWidth SCSS variable.
+ * The size of the chat.
  */
 export const CHAT_SIZE = 315;
 
@@ -38,8 +38,3 @@ export const CHAT_TABS = {
     POLLS: 'polls-tab',
     CHAT: 'chat-tab'
 };
-
-/**
- * Formatter string to display the message timestamp.
- */
-export const TIMESTAMP_FORMAT = 'H:mm';

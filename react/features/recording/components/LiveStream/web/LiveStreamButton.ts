@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import { IReduxState } from '../../../../app/types';
+import { getToolbarButtons } from '../../../../base/config/functions.web';
 import { openDialog } from '../../../../base/dialog/actions';
 import { translate } from '../../../../base/i18n/functions';
 import AbstractLiveStreamButton, {
@@ -49,11 +50,11 @@ class LiveStreamButton extends AbstractLiveStreamButton<IProps> {
  */
 function _mapStateToProps(state: IReduxState, ownProps: any) {
     const abstractProps = _abstractMapStateToProps(state, ownProps);
-    const { toolbarButtons } = state['features/toolbox'];
+    const toolbarButtons = getToolbarButtons(state);
     let { visible } = ownProps;
 
     if (typeof visible === 'undefined') {
-        visible = Boolean(toolbarButtons?.includes('livestreaming') && abstractProps.visible);
+        visible = toolbarButtons.includes('livestreaming') && abstractProps.visible;
     }
 
     return {

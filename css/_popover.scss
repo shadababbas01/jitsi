@@ -1,5 +1,5 @@
 .popover {
-    z-index: 8;
+    z-index: $popoverZ;
 
     .popover-content {
         position: relative;

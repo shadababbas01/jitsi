@@ -78,8 +78,7 @@ class PresenceLabel extends Component<IProps> {
                 className = { className }
                 { ...style }>
                 { text }
-            </Text>
-        );
+            </Text>);
     }
 
     /**

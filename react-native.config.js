@@ -26,5 +26,10 @@ module.exports = {
                 ios: null
             }
         }
+    },
+    project: {
+        ios: {
+            project: '.ios/jitsi-meet.xcworkspace'
+        }
     }
 };

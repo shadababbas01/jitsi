@@ -1,16 +1,19 @@
 import React, { PureComponent } from 'react';
-import { WithTranslation } from 'react-i18next';
 
 import { IReduxState } from '../../app/types';
 import isInsecureRoomName from '../../base/util/isInsecureRoomName';
-import { isUnsafeRoomWarningEnabled } from '../../prejoin/functions';
 
-interface IProps extends WithTranslation {
+interface IProps {
 
     /**
      * True of the label should be visible.
      */
     _visible: boolean;
+
+    /**
+     * Function to be used to translate i18n labels.
+     */
+    t: Function;
 }
 
 /**
@@ -49,9 +52,10 @@ export default class AbstractInsecureRoomNameLabel extends PureComponent<IProps>
 export function _mapStateToProps(state: IReduxState) {
     const { locked, room } = state['features/base/conference'];
     const { lobbyEnabled } = state['features/lobby'];
+    const { enableInsecureRoomNameWarning = false } = state['features/base/config'];
 
     return {
-        _visible: Boolean(isUnsafeRoomWarningEnabled(state)
+        _visible: Boolean(enableInsecureRoomNameWarning
             && room && isInsecureRoomName(room)
             && !(lobbyEnabled || Boolean(locked)))
     };

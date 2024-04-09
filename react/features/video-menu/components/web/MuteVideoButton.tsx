@@ -1,66 +1,58 @@
-import React, { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { createRemoteVideoMenuButtonEvent } from '../../../analytics/AnalyticsEvents';
-import { sendAnalytics } from '../../../analytics/functions';
-import { IReduxState } from '../../../app/types';
-import { openDialog } from '../../../base/dialog/actions';
+import { translate } from '../../../base/i18n/functions';
 import { IconVideoOff } from '../../../base/icons/svg';
-import { MEDIA_TYPE } from '../../../base/media/constants';
-import { isRemoteTrackMuted } from '../../../base/tracks/functions.any';
 import ContextMenuItem from '../../../base/ui/components/web/ContextMenuItem';
-import { NOTIFY_CLICK_MODE } from '../../../toolbox/constants';
-import { IButtonProps } from '../../types';
-
-import MuteRemoteParticipantsVideoDialog from './MuteRemoteParticipantsVideoDialog';
+import AbstractMuteVideoButton, { IProps, _mapStateToProps } from '../AbstractMuteVideoButton';
 
 /**
  * Implements a React {@link Component} which displays a button for disabling
  * the camera of a participant in the conference.
  *
- * @returns {JSX.Element|null}
+ * NOTE: At the time of writing this is a button that doesn't use the
+ * {@code AbstractButton} base component, but is inherited from the same
+ * super class ({@code AbstractMuteVideoButton} that extends {@code AbstractButton})
+ * for the sake of code sharing between web and mobile. Once web uses the
+ * {@code AbstractButton} base component, this can be fully removed.
  */
-const MuteVideoButton = ({
-    notifyClick,
-    notifyMode,
-    participantID
-}: IButtonProps): JSX.Element | null => {
-    const { t } = useTranslation();
-    const dispatch = useDispatch();
-    const tracks = useSelector((state: IReduxState) => state['features/base/tracks']);
+class MuteVideoButton extends AbstractMuteVideoButton {
+    /**
+     * Instantiates a new {@code Component}.
+     *
+     * @inheritdoc
+     */
+    constructor(props: IProps) {
+        super(props);
 
-    const videoTrackMuted = useMemo(
-        () => isRemoteTrackMuted(tracks, MEDIA_TYPE.VIDEO, participantID),
-        [ isRemoteTrackMuted, participantID, tracks ]
-    );
-
-    const handleClick = useCallback(() => {
-        notifyClick?.();
-        if (notifyMode === NOTIFY_CLICK_MODE.PREVENT_AND_NOTIFY) {
-            return;
-        }
-        sendAnalytics(createRemoteVideoMenuButtonEvent(
-            'video.mute.button',
-            {
-                'participant_id': participantID
-            }));
-
-        dispatch(openDialog(MuteRemoteParticipantsVideoDialog, { participantID }));
-    }, [ dispatch, notifyClick, notifyClick, participantID, sendAnalytics ]);
-
-    if (videoTrackMuted) {
-        return null;
+        this._handleClick = this._handleClick.bind(this);
     }
 
-    return (
-        <ContextMenuItem
-            accessibilityLabel = { t('participantsPane.actions.stopVideo') }
-            className = 'mutevideolink'
-            icon = { IconVideoOff }
-            onClick = { handleClick }
-            text = { t('participantsPane.actions.stopVideo') } />
-    );
-};
+    /**
+     * Implements React's {@link Component#render()}.
+     *
+     * @inheritdoc
+     * @returns {ReactElement}
+     */
+    render() {
+        const { _videoTrackMuted, t } = this.props;
 
-export default MuteVideoButton;
+        if (_videoTrackMuted) {
+            return null;
+        }
+
+        return (
+            <ContextMenuItem
+                accessibilityLabel = { t('participantsPane.actions.stopVideo') }
+                className = 'mutevideolink'
+                icon = { IconVideoOff }
+                // eslint-disable-next-line react/jsx-handler-names
+                onClick = { this._handleClick }
+                text = { t('participantsPane.actions.stopVideo') } />
+        );
+    }
+
+    _handleClick: () => void;
+}
+
+export default translate(connect(_mapStateToProps)(MuteVideoButton));

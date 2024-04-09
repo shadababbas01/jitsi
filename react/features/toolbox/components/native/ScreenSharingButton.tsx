@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 import { IReduxState } from '../../../app/types';
 import { isDesktopShareButtonDisabled } from '../../functions.native';
 
-import ScreenSharingAndroidButton from './ScreenSharingAndroidButton';
-import ScreenSharingIosButton from './ScreenSharingIosButton';
+// @ts-ignore
+import ScreenSharingAndroidButton from './ScreenSharingAndroidButton.js';
+// eslint-disable-next-line lines-around-comment
+// @ts-ignore
+import ScreenSharingIosButton from './ScreenSharingIosButton.js';
 
 const ScreenSharingButton = (props: any) => (
     <>

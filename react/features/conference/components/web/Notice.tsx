@@ -1,43 +1,43 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { makeStyles } from 'tss-react/mui';
+import { connect } from 'react-redux';
 
 import { IReduxState } from '../../../app/types';
 
-const useStyles = makeStyles()(theme => {
-    return {
-        notice: {
-            position: 'absolute',
-            left: '50%',
-            zIndex: 3,
-            marginTop: theme.spacing(2),
-            transform: 'translateX(-50%)'
-        },
+interface IProps {
+    _message?: string;
+}
 
-        message: {
-            backgroundColor: theme.palette.uiBackground,
-            color: theme.palette.text01,
-            padding: '3px',
-            borderRadius: '5px'
-        }
-    };
-});
-
-const Notice = () => {
-    const message = useSelector((state: IReduxState) => state['features/base/config'].noticeMessage);
-    const { classes } = useStyles();
-
-    if (!message) {
+const Notice = ({ _message }: IProps) => {
+    if (!_message) {
         return null;
     }
 
     return (
-        <div className = { classes.notice }>
-            <span className = { classes.message } >
-                {message}
+        <div className = 'notice'>
+            <span className = 'notice__message' >
+                {_message}
             </span>
         </div>
     );
 };
 
-export default Notice;
+/**
+ * Maps (parts of) the Redux state to the associated
+ * {@code Notice}'s props.
+ *
+ * @param {Object} state - The Redux state.
+ * @private
+ * @returns {{
+ *     _message: string,
+ * }}
+ */
+function _mapStateToProps(state: IReduxState) {
+    const {
+        noticeMessage
+    } = state['features/base/config'];
+
+    return {
+        _message: noticeMessage
+    };
+}
+export default connect(_mapStateToProps)(Notice);

@@ -6,6 +6,8 @@ import { IStore } from '../app/types';
 import { openDialog } from '../base/dialog/actions';
 
 import { refreshCalendar } from './actions';
+// eslint-disable-next-line lines-around-comment
+// @ts-ignore
 import UpdateCalendarEventDialog from './components/UpdateCalendarEventDialog.native';
 import { addLinkToCalendarEntry } from './functions.native';
 
@@ -38,6 +40,8 @@ export function updateCalendarEvent(eventId: string) {
         const roomName = generateRoomWithoutSeparator();
 
         addLinkToCalendarEntry(getState(), eventId, `${defaultUrl}/${roomName}`)
+
+        // @ts-ignore
         .finally(() => {
             dispatch(refreshCalendar(false, false));
         });

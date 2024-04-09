@@ -1,20 +1,22 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import React from 'react';
 import { WithTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { withStyles } from 'tss-react/mui';
 
+// @ts-expect-error
+import UIEvents from '../../../../../service/UI/UIEvents';
 import { createProfilePanelButtonEvent } from '../../../analytics/AnalyticsEvents';
 import { sendAnalytics } from '../../../analytics/functions';
-import { IStore } from '../../../app/types';
-import { login, logout } from '../../../authentication/actions.web';
 import Avatar from '../../../base/avatar/components/Avatar';
 import AbstractDialogTab, {
     IProps as AbstractDialogTabProps } from '../../../base/dialog/components/web/AbstractDialogTab';
 import { translate } from '../../../base/i18n/functions';
 import { withPixelLineHeight } from '../../../base/styles/functions.web';
 import Button from '../../../base/ui/components/web/Button';
+import Checkbox from '../../../base/ui/components/web/Checkbox';
 import Input from '../../../base/ui/components/web/Input';
+import Select from '../../../base/ui/components/web/Select';
+import { openLogoutDialog } from '../../actions';
 
 /**
  * The type of the React {@code Component} props of {@link ProfileTab}.
@@ -22,7 +24,7 @@ import Input from '../../../base/ui/components/web/Input';
 export interface IProps extends AbstractDialogTabProps, WithTranslation {
 
     /**
-     * Whether server-side authentication is available.
+     * Whether or not server-side authentication is available.
      */
     authEnabled: boolean;
 
@@ -34,12 +36,18 @@ export interface IProps extends AbstractDialogTabProps, WithTranslation {
     /**
      * CSS classes object.
      */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
+    classes: any;
 
     /**
-     * Invoked to change the configured calendar integration.
+     * The currently selected language to display in the language select
+     * dropdown.
      */
-    dispatch: IStore['dispatch'];
+    currentLanguage: string;
+
+    /**
+     * Whether to show hide self view setting.
+     */
+    disableHideSelfView: boolean;
 
     /**
      * The display name to display for the local participant.
@@ -57,14 +65,29 @@ export interface IProps extends AbstractDialogTabProps, WithTranslation {
     hideEmailInSettings?: boolean;
 
     /**
+     * Whether or not to hide self-view screen.
+     */
+    hideSelfView: boolean;
+
+    /**
      * The id of the local participant.
      */
     id: string;
 
     /**
+     * All available languages to display in the language select dropdown.
+     */
+    languages: Array<string>;
+
+    /**
      * If the display name is read only.
      */
     readOnlyName: boolean;
+
+    /**
+     * Whether or not to display the language select dropdown.
+     */
+    showLanguageSettings: boolean;
 }
 
 const styles = (theme: Theme) => {
@@ -123,6 +146,8 @@ class ProfileTab extends AbstractDialogTab<IProps, any> {
         this._onAuthToggle = this._onAuthToggle.bind(this);
         this._onDisplayNameChange = this._onDisplayNameChange.bind(this);
         this._onEmailChange = this._onEmailChange.bind(this);
+        this._onHideSelfViewChanged = this._onHideSelfViewChanged.bind(this);
+        this._onLanguageItemSelect = this._onLanguageItemSelect.bind(this);
     }
 
     /**
@@ -148,6 +173,62 @@ class ProfileTab extends AbstractDialogTab<IProps, any> {
     }
 
     /**
+     * Callback invoked to select if hide self view should be enabled.
+     *
+     * @param {Object} e - The key event to handle.
+     *
+     * @returns {void}
+     */
+    _onHideSelfViewChanged({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) {
+        super._onChange({ hideSelfView: checked });
+    }
+
+    /**
+     * Callback invoked to select a language from select dropdown.
+     *
+     * @param {Object} e - The key event to handle.
+     *
+     * @returns {void}
+     */
+    _onLanguageItemSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+        const language = e.target.value;
+
+        super._onChange({ currentLanguage: language });
+    }
+
+    /**
+     * Returns the menu item for changing displayed language.
+     *
+     * @private
+     * @returns {ReactElement}
+     */
+    _renderLanguageSelect() {
+        const {
+            classes,
+            currentLanguage,
+            languages,
+            t
+        } = this.props;
+
+        const languageItems
+            = languages.map((language: string) => {
+                return {
+                    value: language,
+                    label: t(`languages:${language}`)
+                };
+            });
+
+        return (
+            <Select
+                className = { classes.bottomMargin }
+                label = { t('settings.language') }
+                onChange = { this._onLanguageItemSelect }
+                options = { languageItems }
+                value = { currentLanguage } />
+        );
+    }
+
+    /**
      * Implements React's {@link Component#render()}.
      *
      * @inheritdoc
@@ -156,14 +237,17 @@ class ProfileTab extends AbstractDialogTab<IProps, any> {
     render() {
         const {
             authEnabled,
+            classes,
+            disableHideSelfView,
             displayName,
             email,
             hideEmailInSettings,
+            hideSelfView,
             id,
             readOnlyName,
+            showLanguageSettings,
             t
         } = this.props;
-        const classes = withStyles.getClasses(this.props);
 
         return (
             <div className = { classes.container } >
@@ -193,6 +277,15 @@ class ProfileTab extends AbstractDialogTab<IProps, any> {
                         type = 'text'
                         value = { email } />
                 </div>}
+                {!disableHideSelfView && (
+                    <Checkbox
+                        checked = { hideSelfView }
+                        className = { classes.bottomMargin }
+                        label = { t('videothumbnail.hideSelfView') }
+                        name = 'hide-self-view'
+                        onChange = { this._onHideSelfViewChanged } />
+                )}
+                {showLanguageSettings && this._renderLanguageSelect()}
                 { authEnabled && this._renderAuth() }
             </div>
         );
@@ -209,11 +302,13 @@ class ProfileTab extends AbstractDialogTab<IProps, any> {
         if (this.props.authLogin) {
             sendAnalytics(createProfilePanelButtonEvent('logout.button'));
 
-            this.props.dispatch(logout());
+            APP.store.dispatch(openLogoutDialog(
+                () => APP.UI.emitEvent(UIEvents.LOGOUT)
+            ));
         } else {
             sendAnalytics(createProfilePanelButtonEvent('login.button'));
 
-            this.props.dispatch(login());
+            APP.UI.emitEvent(UIEvents.AUTH_CLICKED);
         }
     }
 
@@ -226,9 +321,9 @@ class ProfileTab extends AbstractDialogTab<IProps, any> {
     _renderAuth() {
         const {
             authLogin,
+            classes,
             t
         } = this.props;
-        const classes = withStyles.getClasses(this.props);
 
         return (
             <div>
@@ -249,4 +344,4 @@ class ProfileTab extends AbstractDialogTab<IProps, any> {
     }
 }
 
-export default withStyles(translate(connect()(ProfileTab)), styles);
+export default withStyles(styles)(translate(ProfileTab));

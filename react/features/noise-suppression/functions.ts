@@ -1,4 +1,4 @@
-import { IReduxState, IStore } from '../app/types';
+import { IReduxState } from '../app/types';
 import { showWarningNotification } from '../notifications/actions';
 import { NOTIFICATION_TIMEOUT_TYPE } from '../notifications/constants';
 import { isScreenAudioShared } from '../screen-share/functions';
@@ -21,7 +21,16 @@ export function isNoiseSuppressionEnabled(state: IReduxState): boolean {
  * @param {*} localAudio - Current local audio track.
  * @returns {boolean}
  */
-export function canEnableNoiseSuppression(state: IReduxState, dispatch: IStore['dispatch'], localAudio: any): boolean {
+export function canEnableNoiseSuppression(state: IReduxState, dispatch: Function, localAudio: any): boolean {
+    if (!localAudio) {
+        dispatch(showWarningNotification({
+            titleKey: 'notify.noiseSuppressionFailedTitle',
+            descriptionKey: 'notify.noiseSuppressionNoTrackDescription'
+        }, NOTIFICATION_TIMEOUT_TYPE.MEDIUM));
+
+        return false;
+    }
+
     const { channelCount } = localAudio.track.getSettings();
 
     // Sharing screen audio implies an effect being applied to the local track, because currently we don't support

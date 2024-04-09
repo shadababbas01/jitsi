@@ -1,7 +1,8 @@
 import { IReduxState } from '../app/types';
 import { IStateful } from '../base/app/types';
+import { JitsiRecordingConstants } from '../base/lib-jitsi-meet';
 import { toState } from '../base/redux/functions';
-import { isCloudRecordingRunning } from '../recording/functions';
+import { getActiveSession } from '../recording/functions';
 import { isScreenVideoShared } from '../screen-share/functions';
 
 import ScreenshotCaptureSummary from './ScreenshotCaptureSummary';
@@ -47,7 +48,7 @@ export function isScreenshotCaptureEnabled(state: IReduxState, checkSharing?: bo
         }
 
         // Feature enabled only when recording is also on.
-        return isCloudRecordingRunning(state);
+        return Boolean(getActiveSession(state, JitsiRecordingConstants.mode.FILE));
     }
 
     return true;

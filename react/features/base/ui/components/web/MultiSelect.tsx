@@ -14,7 +14,6 @@ interface IProps {
     error?: boolean;
     errorDialog?: JSX.Element | null;
     filterValue?: string;
-    id: string;
     isOpen?: boolean;
     items: MultiSelectItem[];
     noMatchesText?: string;
@@ -102,7 +101,6 @@ const MultiSelect = ({
     error,
     errorDialog,
     placeholder,
-    id,
     items,
     filterValue,
     onFilterChange,
@@ -147,7 +145,6 @@ const MultiSelect = ({
             <Input
                 autoFocus = { autoFocus }
                 disabled = { disabled }
-                id = { id }
                 onChange = { onFilterChange }
                 placeholder = { placeholder }
                 ref = { inputRef }

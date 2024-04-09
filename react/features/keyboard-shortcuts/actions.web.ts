@@ -6,7 +6,6 @@ import { IStore } from '../app/types';
 import { clickOnVideo } from '../filmstrip/actions.web';
 import { openSettingsDialog } from '../settings/actions.web';
 import { SETTINGS_TABS } from '../settings/constants';
-import { iAmVisitor } from '../visitors/functions';
 
 import { registerShortcut } from './actions.any';
 import { areKeyboardShortcutsEnabled, getKeyboardShortcuts } from './functions';
@@ -102,7 +101,7 @@ export const initKeyboardShortcuts = () =>
             const state = getState();
             const enabled = areKeyboardShortcutsEnabled(state);
 
-            if (!enabled || iAmVisitor(state)) {
+            if (!enabled) {
                 return;
             }
 

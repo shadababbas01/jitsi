@@ -1,8 +1,6 @@
-local util = module:require "util";
-local get_room_from_jid = util.get_room_from_jid;
-local room_jid_match_rewrite = util.room_jid_match_rewrite;
-local is_healthcheck_room = util.is_healthcheck_room;
-local process_host_module = util.process_host_module;
+local get_room_from_jid = module:require "util".get_room_from_jid;
+local room_jid_match_rewrite = module:require "util".room_jid_match_rewrite;
+local is_healthcheck_room = module:require "util".is_healthcheck_room;
 local jid_resource = require "util.jid".resource;
 local ext_events = module:require "ext_events"
 local st = require "util.stanza";
@@ -37,16 +35,15 @@ end
 
 -- Searches all rooms in the main muc component that holds a breakout room
 -- caches it if found so we don't search it again
--- we should not cache objects in _data as this is being serialized when calling room:save()
 local function get_main_room(breakout_room)
-    if breakout_room.main_room then
-        return breakout_room.main_room;
+    if breakout_room._data and breakout_room._data.main_room then
+        return breakout_room._data.main_room;
     end
 
     -- let's search all rooms to find the main room
     for room in main_muc_service.each_room() do
         if room._data and room._data.breakout_rooms_active and room._data.breakout_rooms[breakout_room.jid] then
-            breakout_room.main_room = room;
+            breakout_room._data.main_room = room;
             return room;
         end
     end
@@ -120,7 +117,7 @@ function on_message(event)
         local from = event.stanza.attr.from;
 
         local occupant = room:get_occupant_by_real_jid(from);
-        if not occupant or not room.speakerStats[occupant.jid] then
+        if not occupant then
             module:log("warn", "No occupant %s found for %s", from, roomAddress);
             return false;
         end
@@ -337,6 +334,24 @@ function process_breakout_muc_loaded(breakout_muc, host_module)
     host_module:hook("muc-occupant-joined", occupant_joined, -1);
     host_module:hook("muc-occupant-pre-leave", occupant_leaving, -1);
     host_module:hook("muc-room-destroyed", room_destroyed, -1);
+end
+
+-- process a host module directly if loaded or hooks to wait for its load
+function process_host_module(name, callback)
+    local function process_host(host)
+        if host == name then
+            callback(module:context(host), host);
+        end
+    end
+
+    if prosody.hosts[name] == nil then
+        module:log('debug', 'No host/component found, will wait for it: %s', name)
+
+        -- when a host or component is added
+        prosody.events.add_handler('host-activated', process_host);
+    else
+        process_host(name);
+    end
 end
 
 -- process or waits to process the conference muc component

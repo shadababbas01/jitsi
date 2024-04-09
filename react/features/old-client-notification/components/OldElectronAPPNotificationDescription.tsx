@@ -28,8 +28,7 @@ export class OldElectronAPPNotificationDescription extends Component<WithTransla
                     { t('notify.oldElectronClientDescription2') }
                 </a>
                 { t('notify.oldElectronClientDescription3') }
-            </div>
-        );
+            </div>);
     }
 
 }

@@ -7,10 +7,8 @@ import {
     SET_HANGUP_MENU_VISIBLE,
     SET_OVERFLOW_DRAWER,
     SET_OVERFLOW_MENU_VISIBLE,
-    SET_TOOLBAR_BUTTONS,
     SET_TOOLBAR_HOVERED,
     SET_TOOLBOX_ENABLED,
-    SET_TOOLBOX_SHIFT_UP,
     SET_TOOLBOX_TIMEOUT,
     SET_TOOLBOX_VISIBLE,
     TOGGLE_TOOLBOX_VISIBLE
@@ -58,24 +56,12 @@ const INITIAL_STATE = {
     overflowMenuVisible: false,
 
     /**
-     * Whether to shift the toolbar up (in case it overlaps the tiles names).
-     */
-    shiftUp: false,
-
-    /**
      * A number, non-zero value which identifies the timer created by a call
      * to setTimeout().
      *
      * @type {number|null}
      */
     timeoutID: null,
-
-    /**
-     * The list of enabled toolbar buttons.
-     *
-     * @type {Array<string>}
-     */
-    toolbarButtons: [],
 
 
     /**
@@ -93,9 +79,7 @@ export interface IToolboxState {
     hovered: boolean;
     overflowDrawer: boolean;
     overflowMenuVisible: boolean;
-    shiftUp: boolean;
     timeoutID?: number | null;
-    toolbarButtons: Array<string>;
     visible: boolean;
 }
 
@@ -133,12 +117,6 @@ ReducerRegistry.register<IToolboxState>(
                 overflowMenuVisible: action.visible
             };
 
-        case SET_TOOLBAR_BUTTONS:
-            return {
-                ...state,
-                toolbarButtons: action.toolbarButtons
-            };
-
         case SET_TOOLBAR_HOVERED:
             return {
                 ...state,
@@ -155,12 +133,6 @@ ReducerRegistry.register<IToolboxState>(
             return {
                 ...state,
                 timeoutID: action.timeoutID
-            };
-
-        case SET_TOOLBOX_SHIFT_UP:
-            return {
-                ...state,
-                shiftUp: action.shiftUp
             };
 
         case SET_TOOLBOX_VISIBLE:

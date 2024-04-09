@@ -1,20 +1,14 @@
 import { AnyAction } from 'redux';
 
-import { IReduxState } from '../app/types';
-import { OVERWRITE_CONFIG, SET_CONFIG, UPDATE_CONFIG } from '../base/config/actionTypes';
 import MiddlewareRegistry from '../base/redux/MiddlewareRegistry';
-import { I_AM_VISITOR_MODE } from '../visitors/actionTypes';
-import { iAmVisitor } from '../visitors/functions';
 
 import {
     CLEAR_TOOLBOX_TIMEOUT,
     SET_FULL_SCREEN,
-    SET_TOOLBAR_BUTTONS,
     SET_TOOLBOX_TIMEOUT
 } from './actionTypes';
-import { TOOLBAR_BUTTONS, VISITORS_MODE_BUTTONS } from './constants';
 
-import './subscriber.web';
+import './subscriber';
 
 /**
  * Middleware which intercepts Toolbox actions to handle changes to the
@@ -24,26 +18,13 @@ import './subscriber.web';
  * @returns {Function}
  */
 MiddlewareRegistry.register(store => next => action => {
+
     switch (action.type) {
     case CLEAR_TOOLBOX_TIMEOUT: {
         const { timeoutID } = store.getState()['features/toolbox'];
 
         clearTimeout(timeoutID ?? undefined);
         break;
-    }
-    case UPDATE_CONFIG:
-    case OVERWRITE_CONFIG:
-    case I_AM_VISITOR_MODE:
-    case SET_CONFIG: {
-        const result = next(action);
-        const toolbarButtons = _getToolbarButtons(store.getState());
-
-        store.dispatch({
-            type: SET_TOOLBAR_BUTTONS,
-            toolbarButtons
-        });
-
-        return result;
     }
 
     case SET_FULL_SCREEN:
@@ -64,6 +45,7 @@ MiddlewareRegistry.register(store => next => action => {
 });
 
 type DocumentElement = {
+    mozRequestFullScreen?: Function;
     requestFullscreen?: Function;
     webkitRequestFullscreen?: Function;
 };
@@ -81,49 +63,35 @@ type DocumentElement = {
 function _setFullScreen(next: Function, action: AnyAction) {
     const result = next(action);
 
-    const { fullScreen } = action;
+    if (typeof APP === 'object') {
+        const { fullScreen } = action;
 
-    if (fullScreen) {
-        const documentElement: DocumentElement
-            = document.documentElement || {};
+        if (fullScreen) {
+            const documentElement: DocumentElement
+                = document.documentElement || {};
 
-        if (typeof documentElement.requestFullscreen === 'function') {
-            documentElement.requestFullscreen();
-        } else if (
-            typeof documentElement.webkitRequestFullscreen === 'function') {
-            documentElement.webkitRequestFullscreen();
+            if (typeof documentElement.requestFullscreen === 'function') {
+                documentElement.requestFullscreen();
+            } else if (
+                typeof documentElement.mozRequestFullScreen === 'function') {
+                documentElement.mozRequestFullScreen();
+            } else if (
+                typeof documentElement.webkitRequestFullscreen === 'function') {
+                documentElement.webkitRequestFullscreen();
+            }
+
+            return result;
         }
 
-        return result;
-    }
+        if (typeof document.exitFullscreen === 'function') {
+            document.exitFullscreen();
 
-    if (typeof document.exitFullscreen === 'function') {
-        document.exitFullscreen();
-    } else if (typeof document.webkitExitFullscreen === 'function') {
-        document.webkitExitFullscreen();
+        } else if (typeof document.mozCancelFullScreen === 'function') {
+            document.mozCancelFullScreen();
+        } else if (typeof document.webkitExitFullscreen === 'function') {
+            document.webkitExitFullscreen();
+        }
     }
 
     return result;
-}
-
-/**
- * Returns the list of enabled toolbar buttons.
- *
- * @param {Object} state - The redux state.
- * @returns {Array<string>} - The list of enabled toolbar buttons.
- */
-function _getToolbarButtons(state: IReduxState): Array<string> {
-    const { toolbarButtons, customToolbarButtons } = state['features/base/config'];
-    const customButtons = customToolbarButtons?.map(({ id }) => id);
-    let buttons = Array.isArray(toolbarButtons) ? toolbarButtons : TOOLBAR_BUTTONS;
-
-    if (iAmVisitor(state)) {
-        buttons = VISITORS_MODE_BUTTONS.filter(button => buttons.indexOf(button) > -1);
-    }
-
-    if (customButtons) {
-        return [ ...buttons, ...customButtons ];
-    }
-
-    return buttons;
 }

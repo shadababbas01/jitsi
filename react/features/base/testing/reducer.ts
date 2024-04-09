@@ -1,5 +1,3 @@
-import { AnyAction } from 'redux';
-
 import ReducerRegistry from '../redux/ReducerRegistry';
 import { assign } from '../redux/functions';
 
@@ -42,6 +40,6 @@ ReducerRegistry.register<ITestingState>(
  * @returns {Object} The new state of the feature testing after the
  * reduction of the specified action.
  */
-function _setConnectionState(state: ITestingState, action: AnyAction) {
+function _setConnectionState(state: ITestingState, action: any) {
     return assign(state, { connectionState: action.connectionState });
 }

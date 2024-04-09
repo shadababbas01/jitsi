@@ -31,8 +31,8 @@ body {
     font-size: 12px;
     font-weight: 400;
     overflow: hidden;
-    color: #F1F1F1;
-    background: #040404; // should match DEFAULT_BACKGROUND from interface_config
+    color: $defaultColor;
+    background: $defaultBackground;
 }
 
 /**
@@ -66,6 +66,10 @@ body, input, textarea, keygen, select, button {
     font-family: $baseFontFamily !important;
 }
 
+#nowebrtc {
+    display:none;
+}
+
 button, input, select, textarea {
     margin: 0;
     vertical-align: baseline;
@@ -90,7 +94,7 @@ input[type='text'], input[type='password'], textarea {
 
 button {
     color: #FFF;
-    background-color: #44A5FF;
+    background-color: $buttonBackground;
     border-radius: $borderRadius;
 
     &.no-icon {
@@ -115,18 +119,17 @@ form {
 }
 
 .leftwatermark {
-    max-width: 140px;
-    max-height:70px;
     left: 32px;
     top: 32px;
     background-position: center left;
     background-repeat: no-repeat;
     background-size: contain;
+}
 
-    &.no-margin {
-        left:0;
-        top:0;
-    }
+.leftwatermarknomargin {
+    background-position: center left;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .rightwatermark {
@@ -142,7 +145,22 @@ form {
     font-size: 11pt;
     color: rgba(255,255,255,.50);
     text-decoration: none;
-    z-index: 100;
+    z-index: $poweredByZ;
+}
+
+.connected {
+    color: #21B9FC;
+    font-size: 12px;
+}
+
+.lastN, .disconnected {
+    color: #a3a3a3;
+    font-size: 12px;
+}
+
+#inviteLinkRef {
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 /**
@@ -167,24 +185,11 @@ form {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #3D3D3D;
+    background: rgba(0, 0, 0, .5);
     border-radius: 4px;
 }
 
 /* Necessary for the new icons to work properly. */
 .jitsi-icon svg path {
     fill: inherit !important;
-}
-
-.sr-only {
-    border: 0 !important;
-    clip: rect(1px, 1px, 1px, 1px) !important;
-    clip-path: inset(50%) !important;
-    height: 1px !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: absolute !important;
-    width: 1px !important;
-    white-space: nowrap !important;
 }

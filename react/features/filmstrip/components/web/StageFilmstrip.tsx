@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { IReduxState } from '../../../app/types';
+import { getToolbarButtons } from '../../../base/config/functions.web';
 import { isMobileBrowser } from '../../../base/environment/utils';
 import { LAYOUTS, LAYOUT_CLASSNAMES } from '../../../video-layout/constants';
 import { getCurrentLayout } from '../../../video-layout/functions.web';
@@ -107,9 +108,9 @@ const StageFilmstrip = (props: IProps) =>
  * @returns {IProps}
  */
 function _mapStateToProps(state: IReduxState, _ownProps: any) {
-    const { toolbarButtons } = state['features/toolbox'];
+    const toolbarButtons = getToolbarButtons(state);
     const activeParticipants = getActiveParticipantsIds(state);
-    const reduceHeight = state['features/toolbox'].visible && toolbarButtons?.length;
+    const reduceHeight = state['features/toolbox'].visible && toolbarButtons.length;
     const {
         gridDimensions: dimensions = { columns: undefined,
             rows: undefined },

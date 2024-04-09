@@ -7,7 +7,7 @@ import { connect as reactReduxConnect } from 'react-redux';
 import VideoLayout from '../../../../../modules/UI/videolayout/VideoLayout';
 import { IReduxState, IStore } from '../../../app/types';
 import { getConferenceNameForTitle } from '../../../base/conference/functions';
-import { hangup } from '../../../base/connection/actions.web';
+import { connect, disconnect } from '../../../base/connection/actions.web';
 import { isMobileBrowser } from '../../../base/environment/utils';
 import { translate } from '../../../base/i18n/functions';
 import { setColorAlpha } from '../../../base/util/helpers';
@@ -23,14 +23,12 @@ import { getOverlayToRender } from '../../../overlay/functions.web';
 import ParticipantsPane from '../../../participants-pane/components/web/ParticipantsPane';
 import Prejoin from '../../../prejoin/components/web/Prejoin';
 import { isPrejoinPageVisible } from '../../../prejoin/functions';
-import ReactionAnimations from '../../../reactions/components/web/ReactionsAnimations';
 import { toggleToolboxVisible } from '../../../toolbox/actions.any';
 import { fullScreenChanged, showToolbox } from '../../../toolbox/actions.web';
 import JitsiPortal from '../../../toolbox/components/web/JitsiPortal';
 import Toolbox from '../../../toolbox/components/web/Toolbox';
 import { LAYOUT_CLASSNAMES } from '../../../video-layout/constants';
 import { getCurrentLayout } from '../../../video-layout/functions.any';
-import { init } from '../../actions.web';
 import { maybeShowSuboptimalExperienceNotification } from '../../functions.web';
 import {
     AbstractConference,
@@ -189,7 +187,7 @@ class Conference extends AbstractConference<IProps, any> {
         FULL_SCREEN_EVENTS.forEach(name =>
             document.removeEventListener(name, this._onFullScreenChange));
 
-        APP.conference.isJoined() && this.props.dispatch(hangup());
+        APP.conference.isJoined() && this.props.dispatch(disconnect());
     }
 
     /**
@@ -261,7 +259,6 @@ class Conference extends AbstractConference<IProps, any> {
                     { _showLobby && <LobbyScreen />}
                 </div>
                 <ParticipantsPane />
-                <ReactionAnimations />
             </div>
         );
     }
@@ -377,7 +374,7 @@ class Conference extends AbstractConference<IProps, any> {
 
         const { dispatch, t } = this.props;
 
-        dispatch(init());
+        dispatch(connect());
 
         maybeShowSuboptimalExperienceNotification(dispatch, t);
     }

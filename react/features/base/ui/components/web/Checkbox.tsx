@@ -70,7 +70,7 @@ const useStyles = makeStyles()(theme => {
             '& input[type="checkbox"]': {
                 appearance: 'none',
                 backgroundColor: 'transparent',
-                margin: '3px',
+                margin: 0,
                 font: 'inherit',
                 color: theme.palette.icon03,
                 width: '18px',
@@ -156,8 +156,8 @@ const Checkbox = ({
     const isMobile = isMobileBrowser();
 
     return (
-        <label className = { cx(styles.formControl, isMobile && 'is-mobile', className) }>
-            <div className = { cx(styles.activeArea, isMobile && 'is-mobile', disabled && styles.disabled) }>
+        <div className = { cx(styles.formControl, isMobile && 'is-mobile', className) }>
+            <label className = { cx(styles.activeArea, isMobile && 'is-mobile', disabled && styles.disabled) }>
                 <input
                     checked = { checked }
                     disabled = { disabled }
@@ -165,14 +165,13 @@ const Checkbox = ({
                     onChange = { onChange }
                     type = 'checkbox' />
                 <Icon
-                    aria-hidden = { true }
                     className = 'checkmark'
                     color = { disabled ? theme.palette.icon03 : theme.palette.icon01 }
                     size = { 18 }
                     src = { IconCheck } />
-            </div>
-            <div>{label}</div>
-        </label>
+            </label>
+            <label>{label}</label>
+        </div>
     );
 };
 

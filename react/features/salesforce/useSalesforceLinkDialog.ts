@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GestureResponderEvent } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IReduxState } from '../app/types';
@@ -22,7 +21,7 @@ import {
 interface ISelectedRecord {
     id: string;
     name: string;
-    onClick: (e?: React.MouseEvent | GestureResponderEvent) => void;
+    onClick: (e?: React.MouseEvent) => void;
     type: string;
 }
 

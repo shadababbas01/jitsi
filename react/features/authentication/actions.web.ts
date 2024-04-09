@@ -1,10 +1,12 @@
 import { maybeRedirectToWelcomePage } from '../app/actions.web';
 import { IStore } from '../app/types';
-import { openDialog } from '../base/dialog/actions';
-import { browser } from '../base/lib-jitsi-meet';
+import { hideDialog, openDialog } from '../base/dialog/actions';
 
-import { CANCEL_LOGIN } from './actionTypes';
-import LoginQuestionDialog from './components/web/LoginQuestionDialog';
+import {
+    CANCEL_LOGIN
+} from './actionTypes';
+import LoginDialog from './components/web/LoginDialog';
+import WaitForOwnerDialog from './components/web/WaitForOwnerDialog';
 
 export * from './actions.any';
 
@@ -23,56 +25,41 @@ export function cancelLogin() {
 
 /**
  * Cancels authentication, closes {@link WaitForOwnerDialog}
- * and navigates back to the welcome page only in the case of authentication required error.
- * We can be showing the dialog while lobby is enabled and participant is still waiting there and hiding this dialog
- * should do nothing.
+ * and navigates back to the welcome page.
  *
  * @returns {Function}
  */
 export function cancelWaitForOwner() {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
-        const { authRequired } = getState()['features/base/conference'];
-
-        authRequired && dispatch(maybeRedirectToWelcomePage());
+    return (dispatch: IStore['dispatch']) => {
+        dispatch(maybeRedirectToWelcomePage());
     };
 }
 
 /**
- * Redirect to the default location (e.g. Welcome page).
+ * Hides a authentication dialog where the local participant
+ * should authenticate.
  *
- * @returns {Function}
+ * @returns {Function}.
  */
-export function redirectToDefaultLocation() {
-    return (dispatch: IStore['dispatch']) => dispatch(maybeRedirectToWelcomePage());
+export function hideLoginDialog() {
+    return hideDialog(LoginDialog);
 }
 
 /**
- * Opens token auth URL page.
+ * Shows a notification dialog that authentication is required to create the.
+ * Conference.
+ * This is used for external auth.
  *
- * @param {string} tokenAuthServiceUrl - Authentication service URL.
+ * @param {string} room - The room name.
+ * @param {Function} onAuthNow - The function to be invoked when external authentication.
  *
- * @returns {Function}
+ * @returns {Function}.
  */
-export function openTokenAuthUrl(tokenAuthServiceUrl: string): any {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
-        const redirect = () => {
-            if (browser.isElectron()) {
-                window.open(tokenAuthServiceUrl, '_blank');
-            } else {
-                window.location.href = tokenAuthServiceUrl;
-            }
-        };
-
-        // Show warning for leaving conference only when in a conference.
-        if (!browser.isElectron() && getState()['features/base/conference'].conference) {
-            dispatch(openDialog(LoginQuestionDialog, {
-                handler: () => {
-                    // Give time for the dialog to close.
-                    setTimeout(() => redirect(), 500);
-                }
-            }));
-        } else {
-            redirect();
-        }
-    };
+export function openAuthDialog(room: String, onAuthNow?: Function) {
+    return openDialog(WaitForOwnerDialog, {
+        room,
+        onAuthNow
+    });
 }
+
+

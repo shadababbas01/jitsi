@@ -5,14 +5,8 @@ import { IReduxState } from '../../../app/types';
 import { translate } from '../../../base/i18n/functions';
 import { IconUsers } from '../../../base/icons/svg';
 import AbstractButton, { IProps as AbstractButtonProps } from '../../../base/toolbox/components/AbstractButton';
-import {
-    close as closeParticipantsPane,
-    open as openParticipantsPane
-} from '../../../participants-pane/actions.web';
-import { isParticipantsPaneEnabled } from '../../functions';
 
 import ParticipantsCounter from './ParticipantsCounter';
-
 
 /**
  * The type of the React {@code Component} props of {@link ParticipantsPaneButton}.
@@ -23,11 +17,6 @@ interface IProps extends AbstractButtonProps {
      * Whether or not the participants pane is open.
      */
     _isOpen: boolean;
-
-    /**
-     * Whether participants feature is enabled or not.
-     */
-    _isParticipantsPaneEnabled: boolean;
 }
 
 /**
@@ -53,22 +42,6 @@ class ParticipantsPaneButton extends AbstractButton<IProps> {
     }
 
     /**
-    * Handles clicking the button, and toggles the participants pane.
-    *
-    * @private
-    * @returns {void}
-    */
-    _handleClick() {
-        const { dispatch, _isOpen } = this.props;
-
-        if (_isOpen) {
-            dispatch(closeParticipantsPane());
-        } else {
-            dispatch(openParticipantsPane());
-        }
-    }
-
-    /**
      * Overrides AbstractButton's {@link Component#render()}.
      *
      * @override
@@ -76,16 +49,10 @@ class ParticipantsPaneButton extends AbstractButton<IProps> {
      * @returns {React$Node}
      */
     render() {
-        const { _isParticipantsPaneEnabled } = this.props;
-
-        if (!_isParticipantsPaneEnabled) {
-            return null;
-        }
-
         return (
             <div
                 className = 'toolbar-button-with-badge'>
-                { super.render() }
+                {super.render()}
                 <ParticipantsCounter />
             </div>
         );
@@ -102,8 +69,7 @@ function mapStateToProps(state: IReduxState) {
     const { isOpen } = state['features/participants-pane'];
 
     return {
-        _isOpen: isOpen,
-        _isParticipantsPaneEnabled: isParticipantsPaneEnabled(state)
+        _isOpen: isOpen
     };
 }
 

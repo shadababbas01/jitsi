@@ -1,9 +1,9 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import clsx from 'clsx';
 import React, { Component } from 'react';
 import { WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { withStyles } from 'tss-react/mui';
 
 import { createToolbarEvent } from '../../analytics/AnalyticsEvents';
 import { sendAnalytics } from '../../analytics/functions';
@@ -71,7 +71,7 @@ interface IProps extends WithTranslation {
     /**
      * An object containing the CSS classes.
      */
-    classes?: Partial<Record<keyof ReturnType<typeof styles>, string>>;
+    classes: any;
 
     /**
      * Invoked to request toggling of audio only mode.
@@ -182,21 +182,14 @@ class VideoQualitySlider extends Component<IProps> {
      * @returns {ReactElement}
      */
     render() {
-        const { t } = this.props;
-        const classes = withStyles.getClasses(this.props);
+        const { classes, t } = this.props;
         const activeSliderOption = this._mapCurrentQualityToSliderValue();
 
         return (
             <div className = { clsx('video-quality-dialog', classes.dialog) }>
-                <div
-                    aria-hidden = { true }
-                    className = { classes.dialogDetails }>
-                    {t('videoStatus.adjustFor')}
-                </div>
+                <div className = { classes.dialogDetails }>{t('videoStatus.adjustFor')}</div>
                 <div className = { classes.dialogContents }>
-                    <div
-                        aria-hidden = { true }
-                        className = { classes.sliderDescription }>
+                    <div className = { classes.sliderDescription }>
                         <span>{t('videoStatus.bestPerformance')}</span>
                         <span>{t('videoStatus.highestQuality')}</span>
                     </div>
@@ -383,4 +376,4 @@ function _mapStateToProps(state: IReduxState) {
     };
 }
 
-export default translate(connect(_mapStateToProps)(withStyles(VideoQualitySlider, styles)));
+export default translate(connect(_mapStateToProps)(withStyles(styles)(VideoQualitySlider)));

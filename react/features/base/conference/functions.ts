@@ -184,11 +184,12 @@ export function forEachConference(
  */
 export function getConferenceName(stateful: IStateful): string {
     const state = toState(stateful);
-    const { callee } = state['features/base/jwt'];
+    const { callee , roomName} = state['features/base/jwt']; // added by jaswant 
     const { callDisplayName } = state['features/base/config'];
     const { localSubject, pendingSubjectChange, room, subject } = getConferenceState(state);
 
-    return (pendingSubjectChange
+    return (roomName 
+        || pendingSubjectChange
         || localSubject
         || subject
         || callDisplayName
@@ -246,6 +247,8 @@ export function getConferenceOptions(stateful: IStateful) {
         delete config.analytics?.scriptURLs;
         delete config.analytics?.amplitudeAPPKey;
         delete config.analytics?.googleAnalyticsTrackingId;
+        delete options.callStatsID;
+        delete options.callStatsSecret;
     }
 
     return options;
@@ -282,15 +285,15 @@ export function restoreConferenceOptions(stateful: IStateful) {
  * Override the global config (that is, window.config) with XMPP configuration required to join as a visitor.
  *
  * @param {IStateful} stateful - The redux store state.
- * @param {string|undefined} vnode - The received parameters.
- * @param {string} focusJid - The received parameters.
- * @param {string|undefined} username - The received parameters.
+ * @param {Array<string>} params - The received parameters.
  * @returns {Object}
  */
-export function getVisitorOptions(stateful: IStateful, vnode: string, focusJid: string, username: string) {
+export function getVisitorOptions(stateful: IStateful, params: Array<string>) {
+    const [ vnode, focusJid, username ] = params;
+
     const config = toState(stateful)['features/base/config'];
 
-    if (!config?.hosts) {
+    if (!config || !config.hosts) {
         logger.warn('Wrong configuration, missing hosts.');
 
         return;
@@ -298,15 +301,16 @@ export function getVisitorOptions(stateful: IStateful, vnode: string, focusJid: 
 
     if (!vnode) {
         // this is redirecting back to main, lets restore config
-        // not updating disableFocus, as if the room capacity is full the promotion to the main room will fail
-        // and the visitor will be redirected back to a vnode from jicofo
+        // no point of updating disableFocus, we can skip the initial iq to jicofo
         if (config.oldConfig && username) {
             return {
-                hosts: config.oldConfig.hosts,
+                hosts: {
+                    domain: config.oldConfig.hosts.domain,
+                    muc: config.oldConfig.hosts.muc
+                },
                 focusUserJid: focusJid,
                 disableLocalStats: false,
                 bosh: config.oldConfig.bosh && appendURLParam(config.oldConfig.bosh, 'customusername', username),
-                p2p: config.oldConfig.p2p,
                 websocket: config.oldConfig.websocket
                     && appendURLParam(config.oldConfig.websocket, 'customusername', username),
                 oldConfig: undefined // clears it up
@@ -318,16 +322,13 @@ export function getVisitorOptions(stateful: IStateful, vnode: string, focusJid: 
 
     const oldConfig = {
         hosts: {
-            domain: ''
+            domain: config.hosts.domain,
+            muc: config.hosts.muc
         },
         focusUserJid: config.focusUserJid,
         bosh: config.bosh,
-        p2p: config.p2p,
         websocket: config.websocket
     };
-
-    // copy original hosts, to make sure we do not use a modified one later
-    Object.assign(oldConfig.hosts, config.hosts);
 
     const domain = `${vnode}.meet.jitsi`;
 
@@ -341,10 +342,6 @@ export function getVisitorOptions(stateful: IStateful, vnode: string, focusJid: 
         disableFocus: true, // This flag disables sending the initial conference request
         disableLocalStats: true,
         bosh: config.bosh && appendURLParam(config.bosh, 'vnode', vnode),
-        p2p: {
-            ...config.p2p,
-            enabled: false
-        },
         websocket: config.websocket && appendURLParam(config.websocket, 'vnode', vnode)
     };
 }
@@ -383,24 +380,6 @@ export function getCurrentConference(stateful: IStateful): IJitsiConference | un
     }
 
     return joining || passwordRequired || membersOnly;
-}
-
-/**
- * Returns whether the current conference is a P2P connection.
- * Will return `false` if it's a JVB one, and `null` if there is no conference.
- *
- * @param {IStateful} stateful - The redux store, state, or
- * {@code getState} function.
- * @returns {boolean|null}
- */
-export function isP2pActive(stateful: IStateful): boolean | null {
-    const conference = getCurrentConference(toState(stateful));
-
-    if (!conference) {
-        return null;
-    }
-
-    return conference.isP2PActive();
 }
 
 /**

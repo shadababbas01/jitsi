@@ -1,4 +1,4 @@
-import { IReduxState, IStore } from '../app/types';
+import { IReduxState } from '../app/types';
 import { MEDIA_TYPE } from '../base/media/constants';
 import { muteLocal } from '../video-menu/actions.any';
 
@@ -77,7 +77,7 @@ export function getDeviceInfo(state: IReduxState): IDeviceInfo {
  * @returns {void}
  */
 export function handleUpdateHidDevice(
-        dispatch: IStore['dispatch'],
+        dispatch: Function,
         customEventData: CustomEvent<{ actionResult?: { eventName: string; }; deviceInfo: IDeviceInfo; }>
 ) {
     dispatch(updateDeviceInfo(customEventData.detail.deviceInfo));
@@ -117,5 +117,5 @@ export function removeHidEventListeners(
  * @returns {boolean}
  */
 export function shouldRequestHIDDevice(deviceInfo: IDeviceInfo): boolean {
-    return !deviceInfo?.device || Object.keys(deviceInfo).length === 0;
+    return !deviceInfo || !deviceInfo.device || Object.keys(deviceInfo).length === 0;
 }

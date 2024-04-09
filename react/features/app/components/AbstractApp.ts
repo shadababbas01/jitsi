@@ -12,7 +12,7 @@ export interface IProps {
      * XXX Refer to the implementation of loadURLObject: in
      * ios/sdk/src/JitsiMeetView.m for further information.
      */
-    timestamp: number;
+    timestamp: any;
 
     /**
      * The URL, if any, with which the app was launched.

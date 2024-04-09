@@ -24,6 +24,7 @@ import android.content.RestrictionEntry;
 import android.content.RestrictionsManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,6 +34,8 @@ import androidx.annotation.Nullable;
 import org.jitsi.meet.sdk.JitsiMeet;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
+import org.jitsi.meet.sdk.JitsiMeetUserInfo;
+import org.jitsi.meet.sdk.incoming_call.IncomingCallInfo;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -147,15 +150,38 @@ public class MainActivity extends JitsiMeetActivity {
     }
 
     private void setJitsiMeetConferenceDefaultOptions() {
+        JitsiMeetUserInfo jitsiMeetUserInfo = new JitsiMeetUserInfo();
+        
+        jitsiMeetUserInfo.setDisplayName("MobileUser");
+        jitsiMeetUserInfo.setAvatar(buildURL("https://picsum.photos/id/237/200/300"));
         // Set default options
         JitsiMeetConferenceOptions defaultOptions
             = new JitsiMeetConferenceOptions.Builder()
+           // .setServerURL(buildURL("https://devmeet.melp.us/"))
             .setServerURL(buildURL(defaultURL))
-            .setFeatureFlag("welcomepage.enabled", true)
+            .setFeatureFlag("welcomepage.enabled", false)
+            .setFeatureFlag("call-integration.enabled", false)
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
+            //.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJtZWxwX2NvbmYiLCJzdWIiOiJtZWV0ZGV2Lm1lbHAudXMiLCJtb2RlcmF0b3IiOnRydWUsImlzcyI6Im1lbHBfY29uZl84IiwiY29udGV4dCI6eyJjYWxsZWUiOnsibmFtZSI6IiIsImlkIjoiMTU4NDM2Mzg1NSIsImF2YXRhciI6IiIsImVtYWlsIjoiIn0sInVzZXIiOnsibmFtZSI6Ikphc3dhbnQgU2FpbmkiLCJpZCI6IjE1ODQzNjM4NTUiLCJhdmF0YXIiOiJodHRwczovL2Nkbm1lZGlhLWZtLm1lbHBhcHAuY29tLy0yMzc0NzU5NTMvOTc2NkAxNjY4NjY4NjA3ODQwLmpwZz9zZXNzaW9uaWQ9OHF4ODB3d2ZpajI4JmlzdGh1bWI9MSIsImVtYWlsIjoiMTU4NDM2Mzg1NUBtZWxwLmNvbSJ9LCJncm91cCI6Im9uZXRvb25lIn0sImlhdCI6MTY5NDc4MzI0MSwicm9vbSI6IjJjMzc3NWVjMzc4YzJhNTk5NWFiNTU3NmZhZmRkMzVkIiwicm9vbU5hbWUiOiJKYXN3YW50IFNhaW5pIiwiZXhwIjoxNjk0ODI2NDQxfQ.WGxhOk-csIhljFImVbXQOLJ1NSmTuH27bDFRg2itg3g")
+            .setTeamName("Melp Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion Discussion")
+            .setUserPicUrl("https://i.pinimg.com/originals/62/ae/fb/62aefb044922a5a847546e30b9036913.jpg")
+            .setIncomingCallInfo(new IncomingCallInfo("One on One","", "title",false))
+            .setGroupCall(false)
+            .setPrivateRoom(true)
+            .setAudioOnly(false)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                JitsiMeetConferenceOptions defaultOptions1
+                        = new JitsiMeetConferenceOptions.Builder()
+                        .setRoom("2c3775ec378c2a5995ab5576fafdd35d")
+                        .build();
+                join(defaultOptions1);
+            }
+        }, 0000);
     }
 
     private void resolveRestrictions() {

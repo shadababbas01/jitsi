@@ -7,7 +7,6 @@ import { translate } from '../../../base/i18n/functions';
 import { updateSettings } from '../../../base/settings/actions';
 import { getHideSelfView } from '../../../base/settings/functions';
 import ContextMenuItem from '../../../base/ui/components/web/ContextMenuItem';
-import { NOTIFY_CLICK_MODE } from '../../../toolbox/constants';
 
 /**
  * The type of the React {@code Component} props of {@link HideSelfViewVideoButton}.
@@ -28,17 +27,6 @@ interface IProps extends WithTranslation {
      * The redux dispatch function.
      */
     dispatch: IStore['dispatch'];
-
-    /**
-     * Callback to execute when the button is clicked.
-     */
-    notifyClick?: Function;
-
-    /**
-     * Notify mode for `participantMenuButtonClicked` event -
-     * whether to only notify or to also prevent button click routine.
-     */
-    notifyMode?: string;
 
     /**
      * Click handler executed aside from the main action.
@@ -95,12 +83,8 @@ class HideSelfViewVideoButton extends PureComponent<IProps> {
      * @returns {void}
      */
     _onClick() {
-        const { disableSelfView, dispatch, notifyClick, notifyMode, onClick } = this.props;
+        const { disableSelfView, dispatch, onClick } = this.props;
 
-        notifyClick?.();
-        if (notifyMode === NOTIFY_CLICK_MODE.PREVENT_AND_NOTIFY) {
-            return;
-        }
         onClick?.();
         dispatch(updateSettings({
             disableSelfView: !disableSelfView
@@ -109,7 +93,7 @@ class HideSelfViewVideoButton extends PureComponent<IProps> {
 }
 
 /**
- * Maps (parts of) the Redux state to the associated {@code HideSelfViewVideoButton}'s props.
+ * Maps (parts of) the Redux state to the associated {@code FlipLocalVideoButton}'s props.
  *
  * @param {Object} state - The Redux state.
  * @private

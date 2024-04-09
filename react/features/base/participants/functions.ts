@@ -1,4 +1,4 @@
-// @ts-expect-error
+// @ts-ignore
 import { getGravatarURL } from '@jitsi/js-utils/avatar';
 
 import { IReduxState, IStore } from '../../app/types';
@@ -200,7 +200,7 @@ export function getVirtualScreenshareParticipantByOwnerId(stateful: IStateful, i
  * @returns {string}
  */
 export function getNormalizedDisplayName(name: string) {
-    if (!name?.trim()) {
+    if (!name || !name.trim()) {
         return undefined;
     }
 
@@ -259,6 +259,20 @@ export function getParticipantCount(stateful: IStateful) {
     } = state['features/base/participants'];
 
     return remote.size - fakeParticipants.size - sortedRemoteVirtualScreenshareParticipants.size + (local ? 1 : 0);
+}
+
+// added by jaswant
+
+export function getParticipantCountRemoteOnly(stateful: IStateful) {
+    const state = toState(stateful);
+    const {
+        local,
+        remote,
+        fakeParticipants,
+        sortedRemoteVirtualScreenshareParticipants
+    } = state['features/base/participants'];
+
+    return remote.size - fakeParticipants.size - sortedRemoteVirtualScreenshareParticipants.size;
 }
 
 /**
@@ -376,6 +390,27 @@ export function getParticipantCountWithFake(stateful: IStateful) {
     const { local, localScreenShare, remote } = state['features/base/participants'];
 
     return remote.size + (local ? 1 : 0) + (localScreenShare ? 1 : 0);
+}
+// added by jaswant
+export function getParticipants(stateful: Object | Function) {
+    return _getAllParticipants(stateful).remote;
+}
+
+/**
+ * Returns array of participants from Redux state.
+ *
+ * @param {(Function|Object|Participant[])} stateful - The redux state
+ * features/base/participants, the (whole) redux state, or redux's
+ * {@code getState} function to be used to retrieve the state
+ * features/base/participants.
+ * @private
+ * @returns {Participant[]}
+ */
+ function _getAllParticipants(stateful) {
+    return (
+        Array.isArray(stateful)
+            ? stateful
+            : toState(stateful)['features/base/participants'] || []);
 }
 
 /**
@@ -733,7 +768,7 @@ export const addPeopleFeatureControl = (stateful: IStateful) => {
  * @param {Function} dispatch - The Redux dispatch function.
  * @returns {Function}
  */
-export const setShareDialogVisiblity = (addPeopleFeatureEnabled: boolean, dispatch: IStore['dispatch']) => {
+export const setShareDialogVisiblity = (addPeopleFeatureEnabled: boolean, dispatch: Function) => {
     if (addPeopleFeatureEnabled) {
         dispatch(toggleShareDialog(false));
     } else {

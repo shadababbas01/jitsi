@@ -16,21 +16,24 @@
 
 package org.jitsi.meet.sdk;
 
-import org.jitsi.meet.sdk.log.JitsiMeetLogger;
+import static org.jitsi.meet.sdk.NotificationChannels.ONGOING_CONFERENCE_CHANNEL_ID;
 
-import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import androidx.annotation.StringRes;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 
-import android.os.Build;
+import org.jitsi.meet.sdk.log.JitsiMeetLogger;
 
+import java.util.Random;
 
 /**
  * Helper class for creating the ongoing notification which is used with
@@ -40,15 +43,15 @@ import android.os.Build;
 class OngoingNotification {
     private static final String TAG = OngoingNotification.class.getSimpleName();
 
+    static final int NOTIFICATION_ID = new Random().nextInt(99999) + 10000;
     private static long startingTime = 0;
 
-    static final String ONGOING_CONFERENCE_CHANNEL_ID = "JitsiOngoingConferenceChannel";
-
-    static void createNotificationChannel(Activity context) {
+    static void createOngoingConferenceNotificationChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return;
         }
 
+        Context context = ReactInstanceManagerHolder.getCurrentActivity();
         if (context == null) {
             JitsiMeetLogger.w(TAG + " Cannot create notification channel: no current context");
             return;
@@ -59,13 +62,12 @@ class OngoingNotification {
 
         NotificationChannel channel
             = notificationManager.getNotificationChannel(ONGOING_CONFERENCE_CHANNEL_ID);
-
         if (channel != null) {
             // The channel was already created, no need to do it again.
             return;
         }
 
-        channel = new NotificationChannel(ONGOING_CONFERENCE_CHANNEL_ID, context.getString(R.string.ongoing_notification_channel_name), NotificationManager.IMPORTANCE_DEFAULT);
+        channel = new NotificationChannel(ONGOING_CONFERENCE_CHANNEL_ID, context.getString(R.string.ongoing_notification_action_unmute), NotificationManager.IMPORTANCE_DEFAULT);
         channel.enableLights(false);
         channel.enableVibration(false);
         channel.setShowBadge(false);
@@ -73,8 +75,8 @@ class OngoingNotification {
         notificationManager.createNotificationChannel(channel);
     }
 
-    static Notification buildOngoingConferenceNotification(Boolean isMuted, Context context) {
-
+    static Notification buildOngoingConferenceNotification(boolean isMuted) {
+        Context context = ReactInstanceManagerHolder.getCurrentActivity();
         if (context == null) {
             JitsiMeetLogger.w(TAG + " Cannot create notification: no current context");
             return null;
@@ -97,11 +99,14 @@ class OngoingNotification {
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setWhen(startingTime)
-            .setUsesChronometer(true)
+         //   .setUsesChronometer(true)
             .setAutoCancel(false)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOnlyAlertOnce(true)
-            .setSmallIcon(context.getResources().getIdentifier("ic_notification", "drawable", context.getPackageName()));
+            .setColor(context.getColor(R.color.red))
+            .setSmallIcon(R.mipmap.melp_logo)
+            .setOngoing(true);
+
 
         NotificationCompat.Action hangupAction = createAction(context, JitsiMeetOngoingConferenceService.Action.HANGUP, R.string.ongoing_notification_action_hang_up);
 
@@ -112,8 +117,13 @@ class OngoingNotification {
 
         builder.addAction(hangupAction);
         builder.addAction(audioAction);
+        Notification notification = builder.build();
 
-        return builder.build();
+// Set the flags to prevent the notification from being cleared by swipe
+        notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+
+
+        return notification;
     }
 
     static void resetStartingtime() {
@@ -125,7 +135,6 @@ class OngoingNotification {
         intent.setAction(action.getName());
         PendingIntent pendingIntent
             = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        String title = context.getString(titleId);
-        return new NotificationCompat.Action(0, title, pendingIntent);
+        return new NotificationCompat.Action(0, HtmlCompat.fromHtml("<font color=" + ContextCompat.getColor(context, R.color.red) + ">" + context.getString(titleId) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), pendingIntent);
     }
 }

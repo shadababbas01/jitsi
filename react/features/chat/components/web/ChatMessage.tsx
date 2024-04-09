@@ -1,24 +1,26 @@
 import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
+import clsx from 'clsx';
 import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from 'tss-react/mui';
 
 import { IReduxState } from '../../../app/types';
 import { translate } from '../../../base/i18n/functions';
 import Message from '../../../base/react/components/web/Message';
 import { withPixelLineHeight } from '../../../base/styles/functions.web';
 import { MESSAGE_TYPE_LOCAL } from '../../constants';
-import { getFormattedTimestamp, getMessageText, getPrivateNoticeMessage } from '../../functions';
-import { IChatMessageProps } from '../../types';
+import AbstractChatMessage, { IProps as AbstractProps } from '../AbstractChatMessage';
 
 import PrivateMessageButton from './PrivateMessageButton';
 
-interface IProps extends IChatMessageProps {
+interface IProps extends AbstractProps {
+
+    classes: any;
 
     type: string;
 }
 
-const useStyles = makeStyles()((theme: Theme) => {
+const styles = (theme: Theme) => {
     return {
         chatMessageWrapper: {
             maxWidth: '100%'
@@ -27,11 +29,11 @@ const useStyles = makeStyles()((theme: Theme) => {
         chatMessage: {
             display: 'inline-flex',
             padding: '12px',
+            marginRight: '12px',
             backgroundColor: theme.palette.ui02,
             borderRadius: '4px 12px 12px 12px',
             maxWidth: '100%',
             marginTop: '4px',
-            boxSizing: 'border-box' as const,
 
             '&.privatemessage': {
                 backgroundColor: theme.palette.support05
@@ -60,8 +62,7 @@ const useStyles = makeStyles()((theme: Theme) => {
         replyWrapper: {
             display: 'flex',
             flexDirection: 'row' as const,
-            alignItems: 'center',
-            maxWidth: '100%'
+            alignItems: 'center'
         },
 
         messageContent: {
@@ -108,35 +109,73 @@ const useStyles = makeStyles()((theme: Theme) => {
             marginTop: theme.spacing(1)
         }
     };
-});
+};
 
 /**
  * Renders a single chat message.
- *
- * @param {IProps} props - Component's props.
- * @returns {JSX}
  */
-const ChatMessage = ({
-    knocking,
-    message,
-    showDisplayName,
-    showTimestamp,
-    type,
-    t
-}: IProps) => {
-    const { classes, cx } = useStyles();
+class ChatMessage extends AbstractChatMessage<IProps> {
+    /**
+     * Implements React's {@link Component#render()}.
+     *
+     * @inheritdoc
+     * @returns {ReactElement}
+     */
+    render() {
+        const { message, t, knocking, classes, type } = this.props;
+
+        return (
+            <div
+                className = { classes.chatMessageWrapper }
+                id = { this.props.message.messageId }
+                tabIndex = { -1 }>
+                <div
+                    className = { clsx('chatmessage', classes.chatMessage, type,
+                        message.privateMessage && 'privatemessage',
+                        message.lobbyChat && !knocking && 'lobbymessage') }>
+                    <div className = { classes.replyWrapper }>
+                        <div className = { clsx('messagecontent', classes.messageContent) }>
+                            { this.props.showDisplayName && this._renderDisplayName() }
+                            <div className = { clsx('usermessage', classes.userMessage) }>
+                                <span className = 'sr-only'>
+                                    { this.props.message.displayName === this.props.message.recipient
+                                        ? t('chat.messageAccessibleTitleMe')
+                                        : t('chat.messageAccessibleTitle',
+                                        { user: this.props.message.displayName }) }
+                                </span>
+                                <Message text = { this._getMessageText() } />
+                            </div>
+                            { (message.privateMessage || (message.lobbyChat && !knocking))
+                                && this._renderPrivateNotice() }
+                        </div>
+                        { (message.privateMessage || (message.lobbyChat && !knocking))
+                            && message.messageType !== MESSAGE_TYPE_LOCAL
+                            && (
+                                <div
+                                    className = { classes.replyButtonContainer }>
+                                    <PrivateMessageButton
+                                        isLobbyMessage = { message.lobbyChat }
+                                        participantID = { message.id } />
+                                </div>
+                            ) }
+                    </div>
+                </div>
+                { this.props.showTimestamp && this._renderTimestamp() }
+            </div>
+        );
+    }
 
     /**
      * Renders the display name of the sender.
      *
      * @returns {React$Element<*>}
      */
-    function _renderDisplayName() {
+    _renderDisplayName() {
         return (
             <div
                 aria-hidden = { true }
-                className = { cx('display-name', classes.displayName) }>
-                {message.displayName}
+                className = { clsx('display-name', this.props.classes.displayName) }>
+                { this.props.message.displayName }
             </div>
         );
     }
@@ -146,10 +185,10 @@ const ChatMessage = ({
      *
      * @returns {React$Element<*>}
      */
-    function _renderPrivateNotice() {
+    _renderPrivateNotice() {
         return (
-            <div className = { classes.privateMessageNotice }>
-                {getPrivateNoticeMessage(message)}
+            <div className = { this.props.classes.privateMessageNotice }>
+                { this._getPrivateNoticeMessage() }
             </div>
         );
     }
@@ -159,54 +198,14 @@ const ChatMessage = ({
      *
      * @returns {React$Element<*>}
      */
-    function _renderTimestamp() {
+    _renderTimestamp() {
         return (
-            <div className = { cx('timestamp', classes.timestamp) }>
-                {getFormattedTimestamp(message)}
+            <div className = { clsx('timestamp', this.props.classes.timestamp) }>
+                { this._getFormattedTimestamp() }
             </div>
         );
     }
-
-    return (
-        <div
-            className = { cx(classes.chatMessageWrapper, type) }
-            id = { message.messageId }
-            tabIndex = { -1 }>
-            <div
-                className = { cx('chatmessage', classes.chatMessage, type,
-                    message.privateMessage && 'privatemessage',
-                    message.lobbyChat && !knocking && 'lobbymessage') }>
-                <div className = { classes.replyWrapper }>
-                    <div className = { cx('messagecontent', classes.messageContent) }>
-                        {showDisplayName && _renderDisplayName()}
-                        <div className = { cx('usermessage', classes.userMessage) }>
-                            <span className = 'sr-only'>
-                                {message.displayName === message.recipient
-                                    ? t('chat.messageAccessibleTitleMe')
-                                    : t('chat.messageAccessibleTitle',
-                                        { user: message.displayName })}
-                            </span>
-                            <Message text = { getMessageText(message) } />
-                        </div>
-                        {(message.privateMessage || (message.lobbyChat && !knocking))
-                            && _renderPrivateNotice()}
-                    </div>
-                    {(message.privateMessage || (message.lobbyChat && !knocking))
-                        && message.messageType !== MESSAGE_TYPE_LOCAL
-                        && (
-                            <div
-                                className = { classes.replyButtonContainer }>
-                                <PrivateMessageButton
-                                    isLobbyMessage = { message.lobbyChat }
-                                    participantID = { message.id } />
-                            </div>
-                        )}
-                </div>
-            </div>
-            {showTimestamp && _renderTimestamp()}
-        </div>
-    );
-};
+}
 
 /**
  * Maps part of the Redux store to the props of this component.
@@ -222,4 +221,4 @@ function _mapStateToProps(state: IReduxState) {
     };
 }
 
-export default translate(connect(_mapStateToProps)(ChatMessage));
+export default translate(connect(_mapStateToProps)(withStyles(styles)(ChatMessage)));

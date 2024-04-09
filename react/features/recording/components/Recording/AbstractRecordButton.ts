@@ -6,7 +6,9 @@ import { MEET_FEATURES } from '../../../base/jwt/constants';
 import { JitsiRecordingConstants } from '../../../base/lib-jitsi-meet';
 import AbstractButton, { IProps as AbstractButtonProps } from '../../../base/toolbox/components/AbstractButton';
 import { maybeShowPremiumFeatureDialog } from '../../../jaas/actions';
-import { canStopRecording, getRecordButtonProps } from '../../functions';
+import { getActiveSession, getRecordButtonProps } from '../../functions';
+
+import LocalRecordingManager from './LocalRecordingManager';
 
 /**
  * The type of the React {@code Component} props of
@@ -34,8 +36,7 @@ export interface IProps extends AbstractButtonProps {
  * An abstract implementation of a button for starting and stopping recording.
  */
 export default class AbstractRecordButton<P extends IProps> extends AbstractButton<P> {
-    accessibilityLabel = 'dialog.startRecording';
-    toggledAccessibilityLabel = 'dialog.stopRecording';
+    accessibilityLabel = 'toolbar.accessibilityLabel.recording';
     icon = IconRecord;
     label = 'dialog.startRecording';
     toggledLabel = 'dialog.stopRecording';
@@ -131,7 +132,8 @@ export function _mapStateToProps(state: IReduxState) {
 
     return {
         _disabled,
-        _isRecordingRunning: canStopRecording(state),
+        _isRecordingRunning: Boolean(getActiveSession(state, JitsiRecordingConstants.mode.FILE))
+            || LocalRecordingManager.isRecordingLocally(),
         _tooltip,
         visible
     };

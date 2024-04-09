@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from 'tss-react/mui';
 
 import { isMobileBrowser } from '../../base/environment/utils';
-import Icon from '../../base/icons/components/Icon';
-import { IconGear } from '../../base/icons/svg';
 import ContextMenu from '../../base/ui/components/web/ContextMenu';
 
 type DownloadUpload = {
@@ -74,11 +72,6 @@ interface IProps {
     e2eeVerified: boolean;
 
     /**
-     * Whether to enable assumed bandwidth.
-     */
-    enableAssumedBandwidth?: boolean;
-
-    /**
      * Whether or not should display the "Save Logs" link.
      */
     enableSaveLogs: boolean;
@@ -113,11 +106,6 @@ interface IProps {
      * suspended on the send-side).
      */
     maxEnabledResolution: number;
-
-    /**
-     * Callback to invoke when the user clicks on the open bandwidth settings dialog icon.
-     */
-    onOpenBandwidthDialog: () => void;
 
     /**
      * Callback to invoke when the user clicks on the download logs link.
@@ -212,14 +200,6 @@ const useStyles = makeStyles()(theme => {
             margin: '10px auto',
             textAlign: 'center'
         },
-        assumedBandwidth: {
-            cursor: 'pointer',
-            margin: '0 5px'
-        },
-        bandwidth: {
-            alignItems: 'center',
-            display: 'flex'
-        },
         connectionStatsTable: {
             '&, & > table': {
                 fontSize: '12px',
@@ -259,11 +239,6 @@ const useStyles = makeStyles()(theme => {
             cursor: 'pointer',
             color: theme.palette.link01,
             transition: 'color .2s ease',
-            border: 0,
-            background: 0,
-            padding: 0,
-            display: 'inline',
-            fontWeight: 'bold',
 
             '&:hover': {
                 color: theme.palette.link01Hover,
@@ -286,14 +261,12 @@ const ConnectionStatsTable = ({
     connectionSummary,
     disableShowMoreStats,
     e2eeVerified,
-    enableAssumedBandwidth,
     enableSaveLogs,
     framerate,
     isVirtualScreenshareParticipant,
     isLocalVideo,
     isNarrowLayout,
     maxEnabledResolution,
-    onOpenBandwidthDialog,
     onSaveLogs,
     onShowMore,
     packetLoss,
@@ -378,7 +351,7 @@ const ConnectionStatsTable = ({
                 <td>
                     {t('connectionindicator.bandwidth')}
                 </td>
-                <td className = { classes.bandwidth }>
+                <td>
                     <span className = { classes.download }>
                         &darr;
                     </span>
@@ -387,15 +360,6 @@ const ConnectionStatsTable = ({
                         &uarr;
                     </span>
                     {upload ? `${upload} Kbps` : 'N/A'}
-                    {enableAssumedBandwidth && (
-                        <div
-                            className = { classes.assumedBandwidth }
-                            onClick = { onOpenBandwidthDialog }>
-                            <Icon
-                                size = { 10 }
-                                src = { IconGear } />
-                        </div>
-                    )}
                 </td>
             </tr>
         );
@@ -719,12 +683,13 @@ const ConnectionStatsTable = ({
 
     const _renderSaveLogs = () => (
         <span>
-            <button
+            <a
                 className = { cx(classes.link, 'savelogs') }
                 onClick = { onSaveLogs }
-                type = 'button'>
+                role = 'button'
+                tabIndex = { 0 }>
                 {t('connectionindicator.savelogs')}
-            </button>
+            </a>
             <span> | </span>
         </span>
     );
@@ -736,12 +701,13 @@ const ConnectionStatsTable = ({
                 : 'connectionindicator.more';
 
         return (
-            <button
+            <a
                 className = { cx(classes.link, 'showmore') }
                 onClick = { onShowMore }
-                type = 'button'>
+                role = 'button'
+                tabIndex = { 0 }>
                 {t(translationKey)}
-            </button>
+            </a>
         );
     };
 

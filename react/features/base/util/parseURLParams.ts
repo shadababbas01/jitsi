@@ -1,5 +1,5 @@
 // @ts-ignore
-import { safeJsonParse } from '@jitsi/js-utils/json';
+import Bourne from '@hapi/bourne';
 
 import { reportError } from './helpers';
 
@@ -25,10 +25,6 @@ export function parseURLParams(
         url: URL | string,
         dontParse = false,
         source = 'hash') {
-    if (!url) {
-        return {};
-    }
-
     if (typeof url === 'string') {
         // eslint-disable-next-line no-param-reassign
         url = new URL(url);
@@ -62,7 +58,7 @@ export function parseURLParams(
             if (!dontParse) {
                 const decoded = decodeURIComponent(value).replace(/\\&/, '&');
 
-                value = decoded === 'undefined' ? undefined : safeJsonParse(decoded);
+                value = decoded === 'undefined' ? undefined : Bourne.parse(decoded);
             }
         } catch (e: any) {
             reportError(

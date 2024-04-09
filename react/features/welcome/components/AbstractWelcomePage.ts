@@ -10,7 +10,6 @@ import { IReduxState, IStore } from '../../app/types';
 import { IDeeplinkingConfig } from '../../base/config/configType';
 import isInsecureRoomName from '../../base/util/isInsecureRoomName';
 import { isCalendarEnabled } from '../../calendar-sync/functions';
-import { isUnsafeRoomWarningEnabled } from '../../prejoin/functions';
 import { isRecentListEnabled } from '../../recent-list/functions';
 
 /**
@@ -289,7 +288,7 @@ export function _mapStateToProps(state: IReduxState) {
     return {
         _calendarEnabled: isCalendarEnabled(state),
         _deeplinkingCfg: state['features/base/config'].deeplinking || {},
-        _enableInsecureRoomNameWarning: isUnsafeRoomWarningEnabled(state),
+        _enableInsecureRoomNameWarning: state['features/base/config'].enableInsecureRoomNameWarning || false,
         _moderatedRoomServiceUrl: state['features/base/config'].moderatedRoomServiceUrl,
         _recentListEnabled: isRecentListEnabled(),
         _room: state['features/base/conference'].room ?? '',
