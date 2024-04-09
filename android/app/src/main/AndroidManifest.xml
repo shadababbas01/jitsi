@@ -33,6 +33,7 @@
 
     </activity>
     <activity android:name=".DemoClass"
+    
         android:exported="true"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:supportsPictureInPicture="true">

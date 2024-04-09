@@ -58,6 +58,7 @@ class LocaleDetector extends ReactContextBaseJavaModule {
         String region =   context.getResources().getConfiguration().locale.getCountry();
         String language =   sh_Pref.getString("locale","en");
 
+
        // constants.put("locale", context.getResources().getConfiguration().locale.toLanguageTag());
         constants.put("locale", language+"-"+region);
         Log.e("locale",language+"-"+region);

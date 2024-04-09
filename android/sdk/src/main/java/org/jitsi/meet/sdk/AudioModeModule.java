@@ -281,6 +281,7 @@ class AudioModeModule extends ReactContextBaseJavaModule {
             }
         });
     }
+    
     @ReactMethod
     public void setAudioDeviceForVideoCall(final String device, int mode) {
         runInAudioThread(new Runnable() {

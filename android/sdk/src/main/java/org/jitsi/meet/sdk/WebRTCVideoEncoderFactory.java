@@ -20,6 +20,7 @@ import java.util.List;
  * - In hardware: H.264 (baseline)
  * - In software: VP8, VP9, AV1
  */
+
 public class WebRTCVideoEncoderFactory implements VideoEncoderFactory {
     private final VideoEncoderFactory hardwareVideoEncoderFactory;
     private final VideoEncoderFactory softwareVideoEncoderFactory = new SoftwareVideoEncoderFactory();

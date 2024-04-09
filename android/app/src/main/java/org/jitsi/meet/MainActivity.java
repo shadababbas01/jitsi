@@ -151,6 +151,7 @@ public class MainActivity extends JitsiMeetActivity {
 
     private void setJitsiMeetConferenceDefaultOptions() {
         JitsiMeetUserInfo jitsiMeetUserInfo = new JitsiMeetUserInfo();
+        
         jitsiMeetUserInfo.setDisplayName("MobileUser");
         jitsiMeetUserInfo.setAvatar(buildURL("https://picsum.photos/id/237/200/300"));
         // Set default options

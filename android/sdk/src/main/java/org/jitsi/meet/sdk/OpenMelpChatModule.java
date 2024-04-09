@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
+
 @ReactModule(name = OpenMelpChatModule.NAME)
 public class OpenMelpChatModule extends ReactContextBaseJavaModule {
     public static final String NAME = "OpenMelpChat";

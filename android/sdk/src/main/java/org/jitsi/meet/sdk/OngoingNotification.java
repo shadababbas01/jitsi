@@ -107,6 +107,7 @@ class OngoingNotification {
             .setSmallIcon(R.mipmap.melp_logo)
             .setOngoing(true);
 
+
         NotificationCompat.Action hangupAction = createAction(context, JitsiMeetOngoingConferenceService.Action.HANGUP, R.string.ongoing_notification_action_hang_up);
 
         JitsiMeetOngoingConferenceService.Action toggleAudioAction = isMuted

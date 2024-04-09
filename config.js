@@ -619,6 +619,7 @@ var config = {
 
     // Default remote name to be displayed
     // defaultRemoteDisplayName: '',
+    
 
     // Hides the display name from the participant thumbnail
     // hideDisplayName: false,

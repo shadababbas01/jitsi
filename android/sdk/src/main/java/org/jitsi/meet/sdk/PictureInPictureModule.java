@@ -88,6 +88,7 @@ class PictureInPictureModule extends ReactContextBaseJavaModule {
             return;
         }*/
 
+
         if (!isSupported) {
             throw new IllegalStateException("Picture-in-Picture not supported");
         }

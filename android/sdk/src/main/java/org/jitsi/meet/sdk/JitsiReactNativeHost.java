@@ -15,6 +15,7 @@ import java.util.List;
  * Generally speaking, apps using the SDK (other than the Jitsi Meet app itself) should not
  * need to use this because the
  */
+
 public class JitsiReactNativeHost extends ReactNativeHost {
     public JitsiReactNativeHost(Application application) {
         super(application);

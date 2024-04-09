@@ -101,6 +101,7 @@ class RNConnectionService extends ReactContextBaseJavaModule {
         Uri address = Uri.fromParts(PhoneAccount.SCHEME_SIP, handle, null);
         PhoneAccountHandle accountHandle = null;
 
+
         try {
            // accountHandle = ConnectionService.registerPhoneAccount(getReactApplicationContext(), address, callUUID);
         } catch (Throwable tr) {

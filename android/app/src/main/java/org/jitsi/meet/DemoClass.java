@@ -17,6 +17,7 @@ public class DemoClass extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo_class);
          first = findViewById(R.id.firstTxt);

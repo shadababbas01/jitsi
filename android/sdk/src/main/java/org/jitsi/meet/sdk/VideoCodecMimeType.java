@@ -13,6 +13,7 @@ public enum VideoCodecMimeType {
         this.mimeType = mimeType;
     }
 
+
     String mimeType() {
         return mimeType;
     }

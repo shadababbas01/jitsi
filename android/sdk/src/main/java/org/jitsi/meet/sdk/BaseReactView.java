@@ -204,6 +204,7 @@ public abstract class BaseReactView<ListenerT>
      * @param hasFocus If the window of this view now has focus, {@code true};
      * otherwise, {@code false}.
      */
+    
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

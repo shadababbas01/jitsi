@@ -21,6 +21,7 @@ import java.util.Map;
 /**
  * Interface for listening to events coming from Jitsi Meet, related to
  * {@link IncomingCallView}.
+ * 
  */
 public interface IncomingCallViewListener {
     /**

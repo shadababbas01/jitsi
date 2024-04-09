@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
+
 public class OpenMelpModule extends ReactContextBaseJavaModule {
     ReactApplicationContext context;
     ArrayList<String> emailList;

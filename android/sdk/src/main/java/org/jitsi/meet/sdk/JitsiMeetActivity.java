@@ -176,6 +176,7 @@ public class JitsiMeetActivity extends AppCompatActivity
         }
     }
 
+
     protected void leave() {
         Intent hangupBroadcastIntent = BroadcastIntentHelper.buildHangUpIntent();
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(hangupBroadcastIntent);

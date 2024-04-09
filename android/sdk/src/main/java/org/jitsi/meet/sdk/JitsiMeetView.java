@@ -157,6 +157,7 @@ public class JitsiMeetView extends FrameLayout {
         setProps(options != null ? options.asProps() : new Bundle());
     }
 
+
     /**
      * Creates the {@code ReactRootView} for the given app name with the given
      * props. Once created it's set as the view of this {@code FrameLayout}.
