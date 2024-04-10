@@ -111,7 +111,7 @@ export class App extends AbstractApp<IProps> {
      */
     async _extraInit() {
         const { dispatch, getState } = this.state.store ?? {};
-        const { flags = {}, url, userInfo } = this.props;
+        const { flags = {}, url, userInfo, incomingCallInfo } = this.props;
         let callIntegrationEnabled = flags[CALL_INTEGRATION_ENABLED as keyof typeof flags];
 
         // CallKit does not work on the simulator, make sure we disable it.
@@ -166,10 +166,18 @@ export class App extends AbstractApp<IProps> {
 
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
+        //    dispatch?.(updateSettings(this.props.userInfo || {})); // added by jaswant
+            dispatch?.(updateSettings(incomingCallInfo || {}));
 
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== 'undefined') {
             dispatch?.(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
+        }
+        if (url && url.config) {
+            dispatch(updateSettings({ isPrivateRoom: url.config.isPrivateRoom,
+                isGroupCall: url.config.isGroupCall,
+                userPicUrl: url.config.userPicUrl,
+                teamName: url.config.teamName }));
         }
     }
 

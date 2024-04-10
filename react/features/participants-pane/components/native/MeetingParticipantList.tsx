@@ -26,6 +26,7 @@ import { participantMatchesSearch, shouldRenderInviteButton } from '../../functi
 
 import MeetingParticipantItem from './MeetingParticipantItem';
 import styles from './styles';
+import {NativeModules} from 'react-native';
 
 
 const MeetingParticipantList = () => {

@@ -1,6 +1,7 @@
 import { IReduxState } from '../../app/types';
 import { AUDIO_MUTE_BUTTON_ENABLED } from '../../base/flags/constants';
 import { getFeatureFlag } from '../../base/flags/functions';
+import { IconMic, IconMicSlash, IconCameraRefresh } from '../../icons/svg';
 import { MEDIA_TYPE } from '../../base/media/constants';
 import { IProps as AbstractButtonProps } from '../../base/toolbox/components/AbstractButton';
 import BaseAudioMuteButton from '../../base/toolbox/components/BaseAudioMuteButton';

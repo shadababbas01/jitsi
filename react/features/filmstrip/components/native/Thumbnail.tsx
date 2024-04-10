@@ -13,6 +13,7 @@ import {
     getParticipantByIdOrUndefined,
     getParticipantCount,
     hasRaisedHand,
+    getParticipantCountWithFake,
     isEveryoneModerator,
     isScreenShareParticipant
 } from '../../../base/participants/functions';
@@ -43,6 +44,7 @@ import PinnedIndicator from './PinnedIndicator';
 import RaisedHandIndicator from './RaisedHandIndicator';
 import ScreenShareIndicator from './ScreenShareIndicator';
 import styles, { AVATAR_SIZE } from './styles';
+import { isToolboxVisible } from '../../../toolbox/functions.native';
 
 
 /**
@@ -84,6 +86,10 @@ interface IProps {
      * Shared video local participant owner.
      */
     _localVideoOwner: boolean;
+    /**
+     * The indicator which determines whether the Toolbox is visible.
+     */
+    _toolboxVisible: boolean,
 
     /**
      * The ID of the participant obtain from the participant object in Redux.
@@ -144,6 +150,11 @@ interface IProps {
      * If true, it tells the thumbnail that it needs to behave differently. E.g. React differently to a single tap.
      */
     tileView?: boolean;
+
+      /**
+     * The width of the thumnail.
+     */
+      width?: number,
 }
 
 /**
@@ -171,7 +182,7 @@ class Thumbnail extends PureComponent<IProps> {
      * @returns {void}
      */
     _onClick() {
-        const { _participantId, _pinned, dispatch, tileView } = this.props;
+        const { _participantId, _pinned, dispatch, tileView, _toolboxVisible } = this.props;
 
         if (tileView) {
             dispatch(toggleToolboxVisible());
@@ -188,15 +199,22 @@ class Thumbnail extends PureComponent<IProps> {
     _onThumbnailLongPress() {
         const { _fakeParticipant, _participantId, _local, _localVideoOwner, dispatch } = this.props;
 
-        if (_fakeParticipant && _localVideoOwner) {
-            dispatch(showSharedVideoMenu(_participantId));
-        } else if (!_fakeParticipant) {
-            if (_local) {
-                dispatch(showConnectionStatus(_participantId));
-            } else {
+        if (!_fakeParticipant) {
+            if (!_local) {
                 dispatch(showContextMenuDetails(_participantId));
+             }
             }
-        } // else no-op
+        // if (_fakeParticipant && _localVideoOwner) {
+        //     dispatch(showSharedVideoMenu(_participantId));
+        // } 
+        // else if (!_fakeParticipant) {
+        //     if (_local) {
+        //         dispatch(showConnectionStatus(_participantId));
+        //     } else {
+        //         dispatch(showContextMenuDetails(_participantId));
+        //     }
+        // }  added by jaswant
+        // else no-op
     }
 
     /**
@@ -247,7 +265,7 @@ class Thumbnail extends PureComponent<IProps> {
                 <Container
                     style = { bottomIndicatorsContainerStyle as StyleType }>
                     { audioMuted && !_isVirtualScreenshare && <AudioMutedIndicator /> }
-                    { !tileView && _pinned && <PinnedIndicator />}
+                    {/* { !tileView && _pinned && <PinnedIndicator />} */}
                     { renderModeratorIndicator && !_isVirtualScreenshare && <ModeratorIndicator />}
                     { !tileView && (isScreenShare || _isVirtualScreenshare) && <ScreenShareIndicator /> }
                 </Container>
@@ -357,15 +375,16 @@ class Thumbnail extends PureComponent<IProps> {
             _raisedHand,
             _renderDominantSpeakerIndicator,
             height,
-            tileView
+            tileView,
+            width
         } = this.props;
         const styleOverrides = tileView ? {
-            aspectRatio: SQUARE_TILE_ASPECT_RATIO,
+            aspectRatio: width/height,
             flex: 0,
             height,
             maxHeight: null,
             maxWidth: null,
-            width: null
+            width: width
         } : null;
 
         return (
@@ -415,13 +434,35 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
     const audioTrack = getTrackByMediaTypeAndParticipant(tracks, MEDIA_TYPE.AUDIO, id);
     const videoTrack = getVideoTrackByParticipant(state, participant);
     const isScreenShare = videoTrack?.videoType === VIDEO_TYPE.DESKTOP;
-    const participantCount = getParticipantCount(state);
+    const participantCount = getParticipantCountWithFake(state);
     const renderDominantSpeakerIndicator = participant?.dominantSpeaker && participantCount > 2;
-    const _isEveryoneModerator = isEveryoneModerator(state);
-    const renderModeratorIndicator = tileView && !_isEveryoneModerator
-        && participant?.role === PARTICIPANT_ROLE.MODERATOR;
+    const _isEveryoneModerator = isEveryoneModerator(state);    const renderModeratorIndicator = participant?.role === PARTICIPANT_ROLE.MODERATOR;
     const { gifUrl: gifSrc } = getGifForParticipant(state, id ?? '');
     const mode = getGifDisplayMode(state);
+    const { tileViewDimensions } = state['features/filmstrip'];
+    //added by jaswant
+    var width1,height1
+    if(localParticipantId == id ){
+        if(participantCount == 3){
+        const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
+        const widthToUse = width - (10 * 2);
+        if(width>height){
+            width1 = tileViewDimensions.thumbnailSize.width;
+            height1 = tileViewDimensions.thumbnailSize.height;
+        }else{
+        width1 = widthToUse;
+        height1 = tileViewDimensions.thumbnailSize.height;
+        }
+    }
+    else{
+        width1 = tileViewDimensions.thumbnailSize.width;
+        height1 = tileViewDimensions.thumbnailSize.height;
+    }
+     }else{
+         width1 = tileViewDimensions.thumbnailSize.width;
+         height1 = tileViewDimensions.thumbnailSize.height;
+     }
+
 
     return {
         _audioMuted: audioTrack?.muted ?? true,
@@ -437,7 +478,10 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
         _renderDominantSpeakerIndicator: renderDominantSpeakerIndicator,
         _renderModeratorIndicator: renderModeratorIndicator,
         _shouldDisplayTileView: shouldDisplayTileView(state),
-        _videoTrack: videoTrack
+        _videoTrack: videoTrack,
+        width: width1,
+        height: height1,
+        _toolboxVisible: isToolboxVisible(state),
     };
 }
 

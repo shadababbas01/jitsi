@@ -11,6 +11,8 @@ import {
     navigate
 } from '../../../mobile/navigation/components/conference/ConferenceNavigationContainerRef';
 import { screen } from '../../../mobile/navigation/routes';
+import {NativeModules} from 'react-native';
+const { AudioMode } = NativeModules;
 
 /**
  * The type of the React {@code Component} props of {@link AudioOnlyButton}.
@@ -49,9 +51,12 @@ class AudioOnlyButton extends AbstractButton<IProps> {
         const { _audioOnly, _startCarMode, dispatch } = this.props;
 
         if (!_audioOnly && _startCarMode) {
+
+            AudioMode.setAudioDevice(null); // added by jaswant 
             dispatch(setAudioOnly(true));
             navigate(screen.conference.carmode);
         } else {
+            AudioMode.setAudioDevice(null); // added by jaswant 
             dispatch(toggleAudioOnly());
         }
     }

@@ -45,7 +45,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-class ReactInstanceManagerHolder {
+public class ReactInstanceManagerHolder {
     private static final String TAG = ReactInstanceManagerHolder.class.getSimpleName();
 
     /**
@@ -73,6 +73,8 @@ class ReactInstanceManagerHolder {
                 new SplashScreenModule(reactContext),
                 new PictureInPictureModule(reactContext),
                 new ProximityModule(reactContext),
+                new OpenMelpModule(reactContext),
+                new OpenMelpChatModule(reactContext),
                 new org.jitsi.meet.sdk.net.NAT64AddrInfoModule(reactContext)));
 
         if (AudioModeModule.useConnectionService()) {
@@ -89,39 +91,39 @@ class ReactInstanceManagerHolder {
     static List<ReactPackage> getReactNativePackages() {
         List<ReactPackage> packages
             = new ArrayList<>(Arrays.asList(
-            new com.reactnativecommunity.asyncstorage.AsyncStoragePackage(),
-            new com.ocetnik.timer.BackgroundTimerPackage(),
-            new com.calendarevents.RNCalendarEventsPackage(),
-            new com.corbt.keepawake.KCKeepAwakePackage(),
-            new com.facebook.react.shell.MainReactPackage(),
-            new com.reactnativecommunity.clipboard.ClipboardPackage(),
-            new com.reactnativecommunity.netinfo.NetInfoPackage(),
-            new com.reactnativepagerview.PagerViewPackage(),
-            new com.oblador.performance.PerformancePackage(),
-            new com.reactnativecommunity.slider.ReactSliderPackage(),
-            new com.brentvatne.react.ReactVideoPackage(),
-            new com.reactnativecommunity.webview.RNCWebViewPackage(),
-            new com.kevinresol.react_native_default_preference.RNDefaultPreferencePackage(),
-            new com.learnium.RNDeviceInfo.RNDeviceInfo(),
-            new com.oney.WebRTCModule.WebRTCModulePackage(),
-            new com.swmansion.gesturehandler.RNGestureHandlerPackage(),
-            new org.linusu.RNGetRandomValuesPackage(),
-            new com.rnimmersivemode.RNImmersiveModePackage(),
-            new com.swmansion.rnscreens.RNScreensPackage(),
-            new com.zmxv.RNSound.RNSoundPackage(),
-            new com.th3rdwave.safeareacontext.SafeAreaContextPackage(),
-            new com.horcrux.svg.SvgPackage(),
-            new org.wonday.orientation.OrientationPackage(),
-            new ReactPackageAdapter() {
-                @Override
-                public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-                    return ReactInstanceManagerHolder.createNativeModules(reactContext);
-                }
-                @Override
-                public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-                    return ReactInstanceManagerHolder.createViewManagers(reactContext);
-                }
-            }));
+                new com.reactnativecommunity.asyncstorage.AsyncStoragePackage(),
+                new com.ocetnik.timer.BackgroundTimerPackage(),
+                new com.calendarevents.RNCalendarEventsPackage(),
+                new com.corbt.keepawake.KCKeepAwakePackage(),
+                new com.facebook.react.shell.MainReactPackage(),
+                new com.reactnativecommunity.clipboard.ClipboardPackage(),
+                new com.reactnativecommunity.netinfo.NetInfoPackage(),
+                new com.reactnativepagerview.PagerViewPackage(),
+                new com.oblador.performance.PerformancePackage(),
+                new com.reactnativecommunity.slider.ReactSliderPackage(),
+                new com.brentvatne.react.ReactVideoPackage(),
+                new com.reactnativecommunity.webview.RNCWebViewPackage(),
+                new com.kevinresol.react_native_default_preference.RNDefaultPreferencePackage(),
+                new com.learnium.RNDeviceInfo.RNDeviceInfo(),
+                new com.oney.WebRTCModule.WebRTCModulePackage(),
+                new com.swmansion.gesturehandler.RNGestureHandlerPackage(),
+                new org.linusu.RNGetRandomValuesPackage(),
+                new com.rnimmersive.RNImmersivePackage(),
+                new com.swmansion.rnscreens.RNScreensPackage(),
+                new com.zmxv.RNSound.RNSoundPackage(),
+                new com.th3rdwave.safeareacontext.SafeAreaContextPackage(),
+                new com.horcrux.svg.SvgPackage(),
+                new org.wonday.orientation.OrientationPackage(),
+                new ReactPackageAdapter() {
+                    @Override
+                    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+                        return ReactInstanceManagerHolder.createNativeModules(reactContext);
+                    }
+                    @Override
+                    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+                        return ReactInstanceManagerHolder.createViewManagers(reactContext);
+                    }
+                }));
 
         // AmplitudeReactNativePackage
         try {
@@ -167,7 +169,7 @@ class ReactInstanceManagerHolder {
      * @param eventName {@code String} containing the event name.
      * @param data {@code Object} optional ancillary data for the event.
      */
-    static void emitEvent(
+    public static void emitEvent(
             String eventName,
             @Nullable Object data) {
         ReactInstanceManager reactInstanceManager
@@ -229,7 +231,7 @@ class ReactInstanceManagerHolder {
      *
      * @param activity {@code Activity} current running Activity.
      */
-    static void initReactInstanceManager(Activity activity) {
+    public static void initReactInstanceManager(Activity activity) {
         if (reactInstanceManager != null) {
             return;
         }

@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import JitsiScreen from '../../../base/modal/components/JitsiScreen';
-import { isLocalParticipantModerator } from '../../../base/participants/functions';
+import { isLocalParticipantModerator ,getParticipantCountRemoteOnly} from '../../../base/participants/functions';
 
 import LobbyParticipantList from './LobbyParticipantList';
 import MeetingParticipantList from './MeetingParticipantList';

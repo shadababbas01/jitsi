@@ -7,6 +7,7 @@ export interface IJwtState {
     callee?: {
         name: string;
     };
+    roomName: string;
     group?: string;
     jwt?: string;
     server?: string;

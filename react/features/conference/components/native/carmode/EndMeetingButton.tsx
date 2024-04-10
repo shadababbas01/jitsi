@@ -9,20 +9,43 @@ import { BUTTON_TYPES } from '../../../../base/ui/constants.native';
 
 import EndMeetingIcon from './EndMeetingIcon';
 import styles from './styles';
+import { connect } from 'react-redux';
+import {
+    getParticipants,getParticipantCountRemoteOnly
+} from '../../../../base/participants/functions';
+import { translate } from '../../../../base/i18n/functions';
+import {  NativeModules} from 'react-native';
+import { endConference } from '../../../../base/conference/actions';
+
 
 /**
  * Button for ending meeting from carmode.
  *
  * @returns {JSX.Element} - The end meeting button.
  */
-const EndMeetingButton = (): JSX.Element => {
+const EndMeetingButton = (props) => {
     const dispatch = useDispatch();
 
     const onSelect = useCallback(() => {
+        if(props._settings.isPrivateRoom){
+            sendAnalytics(createToolbarEvent('endmeeting'));
+            dispatch(endConference());
+            dispatch(appNavigate(undefined));
+            NativeModules.NativeCallsNew.hangup();
+        
+        }else if(props._settings.isGroupCall && props._participantsCount == 1){
+            sendAnalytics(createToolbarEvent('endmeeting'));
+            props.dispatch(endConference());
+            props.dispatch(appNavigate(undefined));
+            NativeModules.NativeCallsNew.hangup();
+        }else{
         sendAnalytics(createToolbarEvent('hangup'));
 
         dispatch(appNavigate(undefined));
-    }, [ dispatch ]);
+    
+        NativeModules.NativeCallsNew.hangup();
+    }
+}, [dispatch]);
 
     return (
         <Button
@@ -35,4 +58,11 @@ const EndMeetingButton = (): JSX.Element => {
     );
 };
 
-export default EndMeetingButton;
+
+function _mapStateToProps(state) {
+    return {
+        _settings: state['features/base/settings'],
+        _participantsCount: getParticipantCountRemoteOnly(state)
+    };
+}
+export default translate(connect(_mapStateToProps)(EndMeetingButton));

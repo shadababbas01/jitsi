@@ -2,7 +2,7 @@ import ColorSchemeRegistry from '../../../base/color-scheme/ColorSchemeRegistry'
 import { schemeColor } from '../../../base/color-scheme/functions';
 import BaseTheme from '../../../base/ui/components/BaseTheme.native';
 
-const BUTTON_SIZE = 48;
+const BUTTON_SIZE = 50;
 
 // Toolbox, toolbar:
 
@@ -14,7 +14,7 @@ const toolbarButton = {
     borderWidth: 0,
     flex: 0,
     flexDirection: 'row',
-    height: BUTTON_SIZE,
+    height: 60,
     justifyContent: 'center',
     marginHorizontal: 6,
     marginVertical: 6,

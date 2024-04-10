@@ -92,6 +92,7 @@ export default class BaseApp<P> extends Component<P, IState> {
             });
 
             await setStatePromise;
+            this.state.store?.dispatch(appWillMount(this));
 
             await this._extraInit();
         } catch (err) {
@@ -99,7 +100,7 @@ export default class BaseApp<P> extends Component<P, IState> {
             logger.error(err);
         }
 
-        this.state.store?.dispatch(appWillMount(this));
+       // this.state.store?.dispatch(appWillMount(this));
 
         // @ts-ignore
         this._init.resolve();

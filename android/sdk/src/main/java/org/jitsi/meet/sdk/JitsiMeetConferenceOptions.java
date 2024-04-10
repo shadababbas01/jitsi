@@ -21,6 +21,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.net.URL;
+import org.jitsi.meet.sdk.incoming_call.IncomingCallInfo;
 
 
 /**
@@ -59,6 +60,7 @@ public class JitsiMeetConferenceOptions implements Parcelable {
      * USer information, to be used when no token is specified.
      */
     private JitsiMeetUserInfo userInfo;
+    private IncomingCallInfo incomingCallInfo;
 
     public URL getServerURL() {
         return serverURL;
@@ -92,6 +94,9 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         private Bundle featureFlags;
 
         private JitsiMeetUserInfo userInfo;
+        private Boolean isGroupCall = false;
+        private String teamName;
+        private IncomingCallInfo incomingCallInfo;
 
         public Builder() {
             config = new Bundle();
@@ -106,6 +111,27 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         public Builder setServerURL(URL url) {
             this.serverURL = url;
 
+            return this;
+        }
+
+        public Builder setIncomingCallInfo(IncomingCallInfo incomingCallInfo) {
+            this.incomingCallInfo = incomingCallInfo;
+            return this;
+        }
+        public Builder setGroupCall(boolean isGroupCall) {
+            setConfigOverride("isGroupCall", isGroupCall);
+            return this;
+        }
+        public Builder setPrivateRoom(boolean isPrivateRoom) {
+            setConfigOverride("isPrivateRoom", isPrivateRoom);
+            return this;
+        }
+        public Builder setTeamName(String teamName) {
+            setConfigOverride("teamName", teamName);
+            return this;
+        }
+        public Builder setUserPicUrl(String url) {
+            setConfigOverride("userPicUrl", url);
             return this;
         }
 
@@ -243,6 +269,7 @@ public class JitsiMeetConferenceOptions implements Parcelable {
             options.config = this.config;
             options.featureFlags = this.featureFlags;
             options.userInfo = this.userInfo;
+            options.incomingCallInfo = this.incomingCallInfo;
 
             return options;
         }
@@ -258,6 +285,7 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         config = in.readBundle();
         featureFlags = in.readBundle();
         userInfo = new JitsiMeetUserInfo(in.readBundle());
+        incomingCallInfo = new IncomingCallInfo(in.readBundle());
     }
 
     Bundle asProps() {
@@ -291,6 +319,13 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         if (userInfo != null) {
             props.putBundle("userInfo", userInfo.asBundle());
         }
+                if (incomingCallInfo != null) {
+            Bundle incomingCallInfoBundle = new Bundle();
+            incomingCallInfoBundle.putString("callerAvatarURL", incomingCallInfo.getCallerAvatarURL());
+            incomingCallInfoBundle.putString("callerName", incomingCallInfo.getCallerName());
+            incomingCallInfoBundle.putString("callerDetails", incomingCallInfo.getCallerDetail());
+            props.putBundle("incomingCallInfo",incomingCallInfoBundle);
+        }
 
         urlProps.putBundle("config", config);
         props.putBundle("url", urlProps);
@@ -321,6 +356,8 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         dest.writeBundle(config);
         dest.writeBundle(featureFlags);
         dest.writeBundle(userInfo != null ? userInfo.asBundle() : new Bundle());
+        dest.writeBundle(incomingCallInfo != null ? incomingCallInfo.asBundle() : new Bundle());
+
     }
 
     @Override
