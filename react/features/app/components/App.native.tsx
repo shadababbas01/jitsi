@@ -167,7 +167,7 @@ export class App extends AbstractApp<IProps> {
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
         //    dispatch?.(updateSettings(this.props.userInfo || {})); // added by jaswant
-            dispatch?.(updateSettings(incomingCallInfo || {}));
+        dispatch?.(updateSettings(incomingCallInfo || {}));
 
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== 'undefined') {

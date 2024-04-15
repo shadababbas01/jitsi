@@ -39,8 +39,11 @@ const MeetingParticipantList = () => {
         = useCallback((e: undefined, i: number) => i.toString(), []);
     const localParticipant = useSelector(getLocalParticipant);
     const onInvite = useCallback(() => {
-        setShareDialogVisiblity(isAddPeopleFeatureEnabled, dispatch);
-        dispatch(doInvitePeople());
+        // added by jaswant
+        NativeModules.NativeCallsNew.addToCall();
+        // const { _isAddPeopleFeatureEnabled, dispatch } = this.props;
+        // setShareDialogVisiblity(_isAddPeopleFeatureEnabled, dispatch);
+        // dispatch(doInvitePeople());
     }, [ dispatch ]);
     const [ searchString, setSearchString ] = useState('');
     const onSearchStringChange = useCallback((text: string) =>
@@ -84,12 +87,13 @@ const MeetingParticipantList = () => {
                     disabled = { shareDialogVisible }
 
                     // eslint-disable-next-line react/jsx-no-bind, no-confusing-arrow
-                    icon = { () => (
-                        <Icon
-                            color = { color }
-                            size = { 20 }
-                            src = { IconAddUser } />
-                    ) }
+                    // added by jaswant
+                    // icon = { () => (
+                    //     <Icon
+                    //         color = { color }
+                    //         size = { 0 }
+                    //         src = { IconAddUser } />
+                    // ) }
                     labelKey = 'participantsPane.actions.invite'
                     onClick = { onInvite }
                     style = { styles.inviteButton }
