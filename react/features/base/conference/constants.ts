@@ -40,3 +40,5 @@ export const CONFERENCE_LEAVE_REASONS = {
     SWITCH_ROOM: 'switch_room',
     UNRECOVERABLE_ERROR: 'unrecoverable_error'
 };
+
+export const CONFERENCE_DESTROYED_LEAVE_TIMEOUT = 15000; // added by jaswant
