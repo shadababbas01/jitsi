@@ -99,7 +99,7 @@ function Toolbox(props: IProps) {
                 edges = { [ bottomEdge && 'bottom' ].filter(Boolean) }
                 pointerEvents = 'box-none'
                 style = { style as ViewStyle }>
-                     {additionalButtons.has('chat')
+                {additionalButtons.has('chat')
                       && <ChatButton
                           styles = { buttonStylesBorderless }
                          />
@@ -109,44 +109,43 @@ function Toolbox(props: IProps) {
                     toggledStyles = { toggledButtonStyles } />
                 }
                 {/* added by jaswant { false &&_endConferenceSupported
-                   ? <HangupMenuButton
-                       styles = { hangupMenuButtonStyles }
-                       toggledStyles = { toggledButtonStyles } />
-                   : <HangupButton
-                       styles = { hangupButtonStyles } />
-               } */
-               
-               <HangupButton
-                       styles = { hangupButtonStyles } />
+                    ? <HangupMenuButton
+                        styles = { hangupMenuButtonStyles }
+                        toggledStyles = { toggledButtonStyles } />
+                    : <HangupButton
+                        styles = { hangupButtonStyles } />
+                } */
+                
+                <HangupButton
+                        styles = { hangupButtonStyles } />
                 }
                 {!_iAmVisitor && <VideoMuteButton
                     styles = { buttonStylesBorderless }
                      />
                 }
-                {additionalButtons.has('chat')
-                    && <ChatButton
-                        styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />
-                }
-                {!_iAmVisitor && additionalButtons.has('screensharing')
-                    && <ScreenSharingButton styles = { buttonStylesBorderless } />}
-                {additionalButtons.has('raisehand') && (_shouldDisplayReactionsButtons
+                { !additionalButtons.has('raisehand') && <RaiseHandButton styles = { buttonStylesBorderless }/>}
+
+
+                {!_iAmVisitor && additionalButtons.has('screensharing') && <ScreenSharingButton styles = { buttonStylesBorderless } />}
+                
+                
+                { additionalButtons.has('raisehand') && !_iAmVisitor && 
+                     <ReactionsMenuButton styles = { buttonStylesBorderless }/>
+                    }
+
+                {/* {additionalButtons.has('raisehand') && (_reactionsEnabled && !_iAmVisitor
                     ? <ReactionsMenuButton
                         styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />
+                        />
                     : <RaiseHandButton
                         styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />)}
+                        />)} */}
                 {additionalButtons.has('tileview') && <TileViewButton styles = { buttonStylesBorderless } />}
                 {!_iAmVisitor && <OverflowMenuButton
                     styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
+                    />
                 }
-                { _endConferenceSupported
-                    ? <HangupMenuButton />
-                    : <HangupButton
-                        styles = { hangupButtonStyles } />
-                }
+
             </SafeAreaView>
         </View>
     );
