@@ -169,10 +169,10 @@ function _conferenceFailed({ dispatch, getState }: IStore, next: Function, actio
     switch (error.name) {
     case JitsiConferenceErrors.CONFERENCE_RESTARTED: {
         if (enableForcedReload) {
-            dispatch(showErrorNotification({
-                description: 'Restart initiated because of a bridge failure',
-                titleKey: 'dialog.sessionRestarted'
-            }, NOTIFICATION_TIMEOUT_TYPE.LONG));
+            // dispatch(showErrorNotification({
+            //     description: 'Restart initiated because of a bridge failure',
+            //     titleKey: 'dialog.sessionRestarted'
+            // }, NOTIFICATION_TIMEOUT_TYPE.LONG));
         }
 
         break;
