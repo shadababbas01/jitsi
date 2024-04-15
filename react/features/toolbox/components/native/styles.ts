@@ -18,7 +18,7 @@ const toolbarButton = {
     justifyContent: 'center',
     marginHorizontal: 6,
     marginVertical: 6,
-    width: BUTTON_SIZE
+    width: 50
 };
 
 /**
@@ -27,7 +27,7 @@ const toolbarButton = {
 const toolbarButtonIcon = {
     alignSelf: 'center',
     color: BaseTheme.palette.icon04,
-    fontSize: 24
+    fontSize: 40
 };
 
 
@@ -86,7 +86,7 @@ const styles = {
      */
     toolbox: {
         alignItems: 'center',
-        backgroundColor: BaseTheme.palette.uiBackground,
+        // backgroundColor: BaseTheme.palette.uiBackground,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
         flexDirection: 'row',
@@ -97,7 +97,7 @@ const styles = {
      * The style of the root/top-level container of {@link Toolbox}.
      */
     toolboxContainer: {
-        backgroundColor: BaseTheme.palette.uiBackground,
+        // backgroundColor: BaseTheme.palette.uiBackground,
         flexDirection: 'column',
         maxWidth: 580,
         marginLeft: 'auto',
@@ -148,7 +148,7 @@ ColorSchemeRegistry.register('Toolbox', {
         iconStyle: whiteToolbarButtonIcon,
         style: {
             ...toolbarButton,
-            backgroundColor: schemeColor('hangup')
+            // backgroundColor: schemeColor('hangup')
         },
         underlayColor: BaseTheme.palette.ui04
     },

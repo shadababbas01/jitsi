@@ -66,7 +66,7 @@ export default {
 
         unmuted: {
             borderWidth: 4,
-            borderColor: BaseTheme.palette.success01
+            borderColor: '#ee4136' // added by jaswant
         }
     },
 
