@@ -8,6 +8,12 @@ import { SQUARE_TILE_ASPECT_RATIO, TILE_MARGIN } from './constants';
 import { getTileViewParticipantCount } from './functions.native';
 
 export * from './actions.any';
+var TILE_ASPECT_RATIO = 1;
+var MAX_COLUMN_LANDSCAPE = 3;
+var MAX_COLUMN_PORTRAIT = 3;
+var max_fit_rows = 3;
+var expected_row = 1;
+var expected_col;
 
 /**
  * Sets the dimensions of the tile view grid. The action is only partially implemented on native as not all
@@ -17,50 +23,130 @@ export * from './actions.any';
  * @returns {Function}
  */
 export function setTileViewDimensions() {
+    //     return (dispatch: Function, getState: Function) => {
+    //         const state = getState();
+    //         const participantCount = getTileViewParticipantCount(state);
+    //         const { clientHeight: height, clientWidth: width, safeAreaInsets = {} } = state['features/base/responsive-ui'];
+    //         const { left = 0, right = 0, top = 0, bottom = 0 } = safeAreaInsets;
+    //         const columns = getColumnCount(state);
+    //         const rows = Math.ceil(participantCount / columns);
+    //         const conferenceBorder = conferenceStyles.conference.borderWidth || 0;
+    //         const heightToUse = height - top - bottom - (2 * conferenceBorder);
+    //         const widthToUse = width - (TILE_MARGIN * 2) - left - right - (2 * conferenceBorder);
+    //         let tileWidth;
+    //         // If there is going to be at least two rows, ensure that at least two
+    //         // rows display fully on screen.
+    //         if (participantCount / columns > 1) {
+    //             tileWidth = Math.min(widthToUse / columns, heightToUse / 2);
+    //         } else {
+    //             tileWidth = Math.min(widthToUse / columns, heightToUse);
+    //         }
+    //         const tileHeight = Math.floor(tileWidth / SQUARE_TILE_ASPECT_RATIO);
+    //         tileWidth = Math.floor(tileWidth);
+    //         // Adding safeAreaInsets.bottom to the total height of all thumbnails because we add it as a padding to the
+    //         // thumbnails container.
+    //         const hasScroll = heightToUse < ((tileHeight + (2 * styles.thumbnail.margin)) * rows) + bottom;
+    //         dispatch({
+    //             type: SET_TILE_VIEW_DIMENSIONS,
+    //             dimensions: {
+    //                 columns,
+    //                 thumbnailSize: {
+    //                     height: tileHeight,
+    //                     width: tileWidth
+    //                 },
+    //                 hasScroll
+    //             }
+    //         });
+    //     };
+     // return (dispatch: Function, getState: Function) => {
+        //     const state = getState();
+        //     const participantCount = getParticipantCountWithFake(state);
+        //     const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
+        //     const columns = getColumnCount(state);
+        //     const heightToUse = height - (TILE_MARGIN * 2);
+        //     const widthToUse = width - (TILE_MARGIN * 2);
+        //     var rows = Math.ceil(participantCount / columns);
+        //     console.log("MelpApp--->","rows-->"+rows+"--columns-->"+columns+"---participantCount-->"+participantCount);
+        //     let tileWidth;
+        //     // If there is going to be at least two rows, ensure that at least two
+        //     // rows display fully on screen.
+        //     if (participantCount / columns > 1) {
+        //         tileWidth = Math.min(widthToUse / columns, heightToUse / 2);
+        //     } else {
+        //         tileWidth = Math.min(widthToUse / columns, heightToUse);
+        //     }
+        //     const tileHeight = Math.floor(tileWidth / SQUARE_TILE_ASPECT_RATIO);
+        //     tileWidth = Math.floor(tileWidth);
+        //     var tileheight = Math.max(Math.min(heightToUse / rows, tileWidth / SQUARE_TILE_ASPECT_RATIO), tileWidth);
+        //     console.log("MelpApp--->","width-->"+tileWidth+"--height-->"+tileheight);
+        //     dispatch({
+        //         type: SET_TILE_VIEW_DIMENSIONS,
+        //         dimensions: {
+        //             columns,
+        //             thumbnailSize: {
+        //                 height: 500,
+        //                 width: tileWidth
+        //             }
+        //         }
+        //     });
+        // };
     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
         const state = getState();
-        const participantCount = getTileViewParticipantCount(state);
-        const { clientHeight: height, clientWidth: width, safeAreaInsets = {
-            left: undefined,
-            right: undefined,
-            top: undefined,
-            bottom: undefined
-        } } = state['features/base/responsive-ui'];
-        const { left = 0, right = 0, top = 0, bottom = 0 } = safeAreaInsets;
+        const participantCount = getParticipantCount(state);
+        const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
         const columns = getColumnCount(state);
-        const rows = Math.ceil(participantCount / columns); // @ts-ignore
-        const conferenceBorder = conferenceStyles.conference.borderWidth || 0;
-        const heightToUse = height - top - bottom - (2 * conferenceBorder);
-        const widthToUse = width - (TILE_MARGIN * 2) - left - right - (2 * conferenceBorder);
+        const heightToUse = height - (TILE_MARGIN * 2);
+        const widthToUse = width - (TILE_MARGIN * 2);
+        var rows = Math.ceil(participantCount / columns);
         let tileWidth;
+        TILE_ASPECT_RATIO = widthToUse / heightToUse
 
         // If there is going to be at least two rows, ensure that at least two
         // rows display fully on screen.
-        if (participantCount / columns > 1) {
-            tileWidth = Math.min(widthToUse / columns, heightToUse / 2);
-        } else {
-            tileWidth = Math.min(widthToUse / columns, heightToUse);
+
+        if(width>height){
+            if(participantCount>3){
+            if (participantCount / columns > 1) {
+                tileWidth = Math.max(widthToUse / columns, heightToUse / 2);
+            } else {
+                tileWidth = Math.max(widthToUse / columns, heightToUse);
+            }
+        }else{
+            if (participantCount / columns > 1) {
+                tileWidth = Math.min(widthToUse / columns, heightToUse / 2);
+            } else {
+                tileWidth = Math.min(widthToUse / columns, heightToUse);
+            }
         }
+            tileWidth = Math.floor(tileWidth);
+          //  console.log("melpApp--->","height--->"+(Math.min(heightToUse / Math.min(expected_row,max_fit_rows), tileWidth / TILE_ASPECT_RATIO))+"--width--"+tileWidth+"--expectedRow-->"+expected_row+"---expectedColum-->"+expected_col+"---participant--->"+participantCount+"--htous--"+heightToUse+"---Wtouse--->"+widthToUse+"_--Ratio--"+TILE_ASPECT_RATIO);
+                dispatch({
+                    type: SET_TILE_VIEW_DIMENSIONS,
+                    dimensions: {
+                        columns,
+                        thumbnailSize: {
+                         //   height: heightToUse/expected_row,
+                          //  width: widthToUse/columns,
+                          height:(Math.min(heightToUse / Math.min(expected_row,max_fit_rows))),//(Math.min(heightToUse / Math.min(expected_row,max_fit_rows), tileWidth / TILE_ASPECT_RATIO)),// tileWidth, //(Math.min(heightToUse / Math.max(expected_row,max_fit_rows), tileWidth / TILE_ASPECT_RATIO)),
+                          width: tileWidth,
+                          aspectRatio: TILE_ASPECT_RATIO
+                        },  
+                        gridDimensions: {
+                            columns: columns,
+                          //  height: heightToUse/expected_row,
+                           // width: widthToUse/columns,
+                           height:(Math.min(heightToUse / Math.min(expected_row,max_fit_rows))),//(Math.min(height / Math.min(expected_row,max_fit_rows), tileWidth / TILE_ASPECT_RATIO)),// tileWidth, //(Math.min(heightToUse / Math.max(expected_row,max_fit_rows), tileWidth / TILE_ASPECT_RATIO)),
+                            width: tileWidth,
+                        }
+                    }
+                });
 
-        const tileHeight = Math.floor(tileWidth / SQUARE_TILE_ASPECT_RATIO);
-
-        tileWidth = Math.floor(tileWidth);
 
         // Adding safeAreaInsets.bottom to the total height of all thumbnails because we add it as a padding to the
         // thumbnails container.
-        const hasScroll = heightToUse < ((tileHeight + (2 * styles.thumbnail.margin)) * rows) + bottom;
 
-        dispatch({
-            type: SET_TILE_VIEW_DIMENSIONS,
-            dimensions: {
-                columns,
-                thumbnailSize: {
-                    height: tileHeight,
-                    width: tileWidth
-                },
-                hasScroll
+
             }
-        });
     };
 }
 

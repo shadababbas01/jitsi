@@ -27,7 +27,7 @@ class AudioDeviceToggleButton extends AbstractButton<AbstractButtonProps> {
 
     _getView(props) {
         if (props.children) {
-            return this.props.children(this._onClick);
+            return props.children(this._onClick);
         } else {
             return super._getView(props);
         }

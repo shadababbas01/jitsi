@@ -48,30 +48,20 @@ class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
      */
     _doHangup() {
         this._hangup();
-        if (this.props._settings.isPrivateRoom){
-            sendAnalytics(createToolbarEvent('endmeeting'));
-            this.props.dispatch(endConference());
-            this.props.dispatch(appNavigate(undefined));
-            NativeModules.NativeCallsNew.hangup();
-            this._hangup();
-        }else if(this.props._settings.isGroupCall && this.props._participantsCount == 1){
-            sendAnalytics(createToolbarEvent('endmeeting'));
-            this.props.dispatch(endConference());
-            this.props.dispatch(appNavigate(undefined));
-            NativeModules.NativeCallsNew.hangup();
-            this._hangup();
-        }else{
-            NativeModules.NativeCallsNew.hangup();
-            this._hangup();
-        }
     }
     _getView(props) {
         if (props.children) {
-            return this.props.children(this._onClick);
+            return props.children(this._onClick);
         } else {
             return super._getView(props);
         }
     }
 }
-
-export default translate(connect()(HangupButton));
+function _mapStateToProps(state) {
+    
+    return {
+        _settings: state['features/base/settings'],
+        _participantsCount: getParticipantCountRemoteOnly(state)
+    };
+}
+export default translate(connect(_mapStateToProps)(HangupButton));

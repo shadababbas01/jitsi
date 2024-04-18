@@ -7,7 +7,7 @@ import { NOTIFY_CLICK_MODE } from '../../../toolbox/constants';
 import { combineStyles } from '../../styles/functions.any';
 
 import { Styles } from './AbstractToolboxItem';
-import ToolboxItem from './ToolboxItem';
+import ToolboxItem from './ToolboxItem.native';
 
 export interface IProps extends WithTranslation {
 
@@ -282,6 +282,7 @@ export default class AbstractButton<P extends IProps, S = any> extends Component
             : this.accessibilityLabel
         ) || this.accessibilityLabel;
     }
+    
     _getView(props) {
         return (
             <ToolboxItem
@@ -406,12 +407,6 @@ export default class AbstractButton<P extends IProps, S = any> extends Component
             tooltip: this._getTooltip()
         };
 
-        return (
-            <ToolboxItem
-                disabled={this._isDisabled()}
-                onClick={this._onClick}
-                onKeyDown={this._onKeyDown}
-                {...props} />
-        );
+        return this._getView(props);
     }
 }

@@ -4,9 +4,9 @@ import { getFeatureFlag } from '../../base/flags/functions';
 import { MEDIA_TYPE } from '../../base/media/constants';
 import { IProps as AbstractButtonProps } from '../../base/toolbox/components/AbstractButton';
 import BaseAudioMuteButton from '../../base/toolbox/components/BaseAudioMuteButton';
-import { isLocalTrackMuted } from '../../base/tracks/functions';
-import { muteLocal } from '../../video-menu/actions';
-import { isAudioMuteButtonDisabled } from '../functions';
+import { isLocalTrackMuted } from '../../base/tracks/functions.native';
+import { muteLocal } from '../../video-menu/actions.native';
+import { isAudioMuteButtonDisabled } from '../functions.native';
 
 
 /**
@@ -68,6 +68,14 @@ export default class AbstractAudioMuteButton<P extends IProps> extends BaseAudio
      */
     _isDisabled() {
         return this.props._disabled;
+    }
+    _getView(props) {
+        if (props.children) {
+            var isMuted = this._isAudioMuted();
+            return props.children(isMuted, this._onClick);
+        } else {
+            return super._getView(props);
+        }
     }
 }
 

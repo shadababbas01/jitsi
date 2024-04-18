@@ -391,9 +391,10 @@ export function getParticipantCountWithFake(stateful: IStateful) {
     return remote.size + (local ? 1 : 0) + (localScreenShare ? 1 : 0);
 }
 
+
 // eslint-disable-next-line require-jsdoc
 export function getParticipants(stateful: Object | Function) {
-    return _getAllParticipants(stateful).remote;
+    return _getAllParticipants(stateful);
 }
 
 /**

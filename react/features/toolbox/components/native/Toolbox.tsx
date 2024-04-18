@@ -107,29 +107,6 @@ function Toolbox(props: IProps) {
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
                 }
-                {!_iAmVisitor && <VideoMuteButton
-                    styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
-                }
-                {additionalButtons.has('chat')
-                    && <ChatButton
-                        styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />
-                }
-                {!_iAmVisitor && additionalButtons.has('screensharing')
-                    && <ScreenSharingButton styles = { buttonStylesBorderless } />}
-                {additionalButtons.has('raisehand') && (_shouldDisplayReactionsButtons
-                    ? <ReactionsMenuButton
-                        styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />
-                    : <RaiseHandButton
-                        styles = { buttonStylesBorderless }
-                        toggledStyles = { backgroundToggledStyle } />)}
-                {additionalButtons.has('tileview') && <TileViewButton styles = { buttonStylesBorderless } />}
-                {!_iAmVisitor && <OverflowMenuButton
-                    styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
-                }
                 {/* added by jaswant { false &&_endConferenceSupported
                    ? <HangupMenuButton
                        styles = { hangupMenuButtonStyles }
@@ -137,15 +114,30 @@ function Toolbox(props: IProps) {
                    : <HangupButton
                        styles = { hangupButtonStyles } />
                } */
-
-                    <HangupButton
+               
+               <HangupButton
                        styles = { hangupButtonStyles } />
                 }
-                { _endConferenceSupported
-                    ? <HangupMenuButton />
-                    : <HangupButton
-                        styles = { hangupButtonStyles } />
+                {!_iAmVisitor && <VideoMuteButton
+                    styles = { buttonStylesBorderless } />
                 }
+                              { !additionalButtons.has('raisehand') && <RaiseHandButton styles = { buttonStylesBorderless }/>}
+              
+                {!_iAmVisitor && additionalButtons.has('screensharing') && <ScreenSharingButton styles = { buttonStylesBorderless } />}
+  { additionalButtons.has('raisehand') && !_iAmVisitor && 
+                     <ReactionsMenuButton styles = { buttonStylesBorderless }/>
+                    }
+                {/* {additionalButtons.has('raisehand') && (_reactionsEnabled && !_iAmVisitor
+                    ? <ReactionsMenuButton
+                        styles = { buttonStylesBorderless }
+                        toggledStyles = { backgroundToggledStyle } />
+                    : <RaiseHandButton
+                        styles = { buttonStylesBorderless }/>)} */}
+                {additionalButtons.has('tileview') && <TileViewButton styles = { buttonStylesBorderless } />}
+                {!_iAmVisitor && <OverflowMenuButton
+                    styles = { buttonStylesBorderless } />
+                }
+            
             </SafeAreaView>
         </View>
     );

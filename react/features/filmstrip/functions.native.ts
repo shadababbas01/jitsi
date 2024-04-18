@@ -123,24 +123,44 @@ export function getTileViewParticipantCount(stateful: IStateful) {
  * @returns {number} - The number of columns to be rendered in tile view.
  * @private
  */
+// export function getColumnCount(stateful: IStateful) {
+//     const state = toState(stateful);
+//     const participantCount = getTileViewParticipantCount(state);
+//     const { aspectRatio } = state['features/base/responsive-ui'];
+//     // For narrow view, tiles should stack on top of each other for a lonely
+//     // call and a 1:1 call. Otherwise tiles should be grouped into rows of
+//     // two.
+//     if (aspectRatio === ASPECT_RATIO_NARROW) {
+//         return participantCount >= 3 ? 2 : 1;
+//     }
+//     if (participantCount === 4) {
+//         // In wide view, a four person call should display as a 2x2 grid.
+//         return 2;
+//     }
+//     return Math.min(participantCount <= 6 ? 3 : 4, participantCount);
+// }
 export function getColumnCount(stateful: IStateful) {
     const state = toState(stateful);
-    const participantCount = getTileViewParticipantCount(state);
-    const { aspectRatio } = state['features/base/responsive-ui'];
-
-    // For narrow view, tiles should stack on top of each other for a lonely
-    // call and a 1:1 call. Otherwise tiles should be grouped into rows of
-    // two.
-    if (aspectRatio === ASPECT_RATIO_NARROW) {
-        return participantCount >= 3 ? 2 : 1;
+    const participantCount = getParticipantCountWithFake(state);
+    const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
+    if(width > height){
+           if(participantCount <MAX_COLUMN_LANDSCAPE * max_fit_rows)
+           {
+            expected_row = Math.floor(Math.sqrt(participantCount))
+            expected_col = Math.ceil(participantCount / expected_row)
+           }
+            else{
+         expected_col = participantCount/max_fit_rows
+         expected_col = Math.min(expected_col, MAX_COLUMN_LANDSCAPE)
+           }
+           return   expected_col;
+    }else{
+          expected_row = Math.ceil(Math.sqrt(participantCount));
+          expected_col = Math.min(MAX_COLUMN_PORTRAIT,Math.ceil(participantCount/Math.min(max_fit_rows,expected_row)));
+           expected_row = Math.ceil(participantCount/expected_col)
+       
+      return  expected_col;
     }
-
-    if (participantCount === 4) {
-        // In wide view, a four person call should display as a 2x2 grid.
-        return 2;
-    }
-
-    return Math.min(participantCount <= 6 ? 3 : 4, participantCount);
 }
 
 /**
