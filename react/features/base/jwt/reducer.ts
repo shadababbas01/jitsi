@@ -9,6 +9,7 @@ export interface IJwtState {
     };
     group?: string;
     jwt?: string;
+    roomName?: string;
     server?: string;
     tenant?: string;
     user?: {

@@ -1,10 +1,11 @@
 import { IStore } from '../app/types';
+import { getParticipantCount, getParticipantCountWithFake } from '../base/participants/functions';
 import conferenceStyles from '../conference/components/native/styles';
 
 import { SET_TILE_VIEW_DIMENSIONS } from './actionTypes';
 import styles from './components/native/styles';
 import { SQUARE_TILE_ASPECT_RATIO, TILE_MARGIN } from './constants';
-import { getColumnCount, getTileViewParticipantCount } from './functions.native';
+import { getTileViewParticipantCount } from './functions.native';
 
 export * from './actions.any';
 
@@ -82,4 +83,25 @@ export function addStageParticipant(_participantId: string, _pinned = false): an
  */
 export function removeStageParticipant(_participantId: string): any {
     return {};
+}
+function getColumnCount(state: Object | Function) {
+    const participantCount = getParticipantCountWithFake(state);
+    const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
+    if(width > height){
+           if(participantCount <MAX_COLUMN_LANDSCAPE * max_fit_rows)
+           {
+            expected_row = Math.floor(Math.sqrt(participantCount))
+            expected_col = Math.ceil(participantCount / expected_row)
+           }
+            else{
+         expected_col = participantCount/max_fit_rows
+         expected_col = Math.min(expected_col, MAX_COLUMN_LANDSCAPE)
+        }
+           return   expected_col;
+    }else{
+          expected_row = Math.ceil(Math.sqrt(participantCount));
+          expected_col = Math.min(MAX_COLUMN_PORTRAIT,Math.ceil(participantCount/Math.min(max_fit_rows,expected_row)));
+           expected_row = Math.ceil(participantCount/expected_col)            
+      return  expected_col;
+    }
 }

@@ -18,6 +18,13 @@ import styles from './components/native/styles';
 
 export * from './functions.any';
 
+var TILE_ASPECT_RATIO = 1;
+var MAX_COLUMN_LANDSCAPE = 3;
+var MAX_COLUMN_PORTRAIT = 3;
+var max_fit_rows = 3;
+var expected_row = 1;
+var expected_col;
+
 /**
  * Returns true if the filmstrip on mobile is visible, false otherwise.
  *

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { IReduxState, IStore } from '../../../app/types';
 import { getLocalParticipant } from '../../../base/participants/functions';
 import { ASPECT_RATIO_WIDE } from '../../../base/responsive-ui/constants';
-import { setToolboxVisible } from '../../../toolbox/actions';
+import { setToolboxVisible } from '../../../toolbox/actions.native';
 
 import VideoManager from './VideoManager';
 import YoutubeVideoManager from './YoutubeVideoManager';
@@ -108,6 +108,7 @@ class SharedVideo extends Component<IProps> {
         if (!videoUrl) {
             return null;
         }
+        console.log('Video---->', videoUrl);
 
         return (
             <View

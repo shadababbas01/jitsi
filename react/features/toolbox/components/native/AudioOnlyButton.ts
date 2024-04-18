@@ -1,3 +1,4 @@
+import {NativeModules} from 'react-native';
 import { connect } from 'react-redux';
 
 import { IReduxState } from '../../../app/types';
@@ -11,6 +12,8 @@ import {
     navigate
 } from '../../../mobile/navigation/components/conference/ConferenceNavigationContainerRef';
 import { screen } from '../../../mobile/navigation/routes';
+
+const { AudioMode } = NativeModules;
 
 /**
  * The type of the React {@code Component} props of {@link AudioOnlyButton}.
@@ -49,9 +52,11 @@ class AudioOnlyButton extends AbstractButton<IProps> {
         const { _audioOnly, _startCarMode, dispatch } = this.props;
 
         if (!_audioOnly && _startCarMode) {
+            AudioMode.setAudioDevice(null);
             dispatch(setAudioOnly(true));
             navigate(screen.conference.carmode);
         } else {
+            AudioMode.setAudioDevice(null); 
             dispatch(toggleAudioOnly());
         }
     }

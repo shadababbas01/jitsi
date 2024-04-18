@@ -152,24 +152,24 @@ class OverflowMenu extends PureComponent<IProps, IState> {
                         && <RaiseHandButton { ...buttonProps } />
                 }
                 {/* @ts-ignore */}
-                <Divider style = { styles.divider as ViewStyle } />
-                <SecurityDialogButton { ...buttonProps } />
-                <RecordButton { ...buttonProps } />
+                {/* <Divider style = { styles.divider as ViewStyle } /> */}
+                {/* <SecurityDialogButton { ...buttonProps } />
+                <RecordButton { ...buttonProps } /> */}
                 <LiveStreamButton { ...buttonProps } />
-                <LinkToSalesforceButton { ...buttonProps } />
-                <WhiteboardButton { ...buttonProps } />
+                {/* <LinkToSalesforceButton { ...buttonProps } />
+                <WhiteboardButton { ...buttonProps } /> */}
                 {/* @ts-ignore */}
                 <Divider style = { styles.divider as ViewStyle } />
                 <SharedVideoButton { ...buttonProps } />
                 {!toolbarButtons.has('screensharing') && <ScreenSharingButton { ...buttonProps } />}
-                {!_isSpeakerStatsDisabled && <SpeakerStatsButton { ...buttonProps } />}
+                {/* {!_isSpeakerStatsDisabled && <SpeakerStatsButton { ...buttonProps } />} */}
                 {!toolbarButtons.has('tileview') && <TileViewButton { ...buttonProps } />}
                 {_isBreakoutRoomsSupported && <BreakoutRoomsButton { ...buttonProps } />}
                 {/* @ts-ignore */}
-                <Divider style = { styles.divider as ViewStyle } />
-                <ClosedCaptionButton { ...buttonProps } />
+                {/* <Divider style = { styles.divider as ViewStyle } />
+                <ClosedCaptionButton { ...buttonProps } /> */}
                 <SharedDocumentButton { ...buttonProps } />
-                <SettingsButton { ...buttonProps } />
+                {/* <SettingsButton { ...buttonProps } /> */}
             </BottomSheet>
         );
     }

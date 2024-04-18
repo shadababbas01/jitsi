@@ -99,6 +99,10 @@ function Toolbox(props: IProps) {
                 edges = { [ bottomEdge && 'bottom' ].filter(Boolean) }
                 pointerEvents = 'box-none'
                 style = { style as ViewStyle }>
+                {additionalButtons.has('chat')
+                      && <ChatButton
+                          styles = { buttonStylesBorderless } />
+                }
                 {!_iAmVisitor && <AudioMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
@@ -125,6 +129,17 @@ function Toolbox(props: IProps) {
                 {!_iAmVisitor && <OverflowMenuButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
+                }
+                {/* added by jaswant { false &&_endConferenceSupported
+                   ? <HangupMenuButton
+                       styles = { hangupMenuButtonStyles }
+                       toggledStyles = { toggledButtonStyles } />
+                   : <HangupButton
+                       styles = { hangupButtonStyles } />
+               } */
+
+                    <HangupButton
+                       styles = { hangupButtonStyles } />
                 }
                 { _endConferenceSupported
                     ? <HangupMenuButton />

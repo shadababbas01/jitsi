@@ -1,12 +1,16 @@
 import _ from 'lodash';
+import { NativeModules } from 'react-native';
 import { connect } from 'react-redux';
 
 import { createToolbarEvent } from '../../analytics/AnalyticsEvents';
 import { sendAnalytics } from '../../analytics/functions';
-import { leaveConference } from '../../base/conference/actions';
+import { appNavigate } from '../../app/actions.native';
+import { endConference, leaveConference } from '../../base/conference/actions';
 import { translate } from '../../base/i18n/functions';
+import { getParticipantCountRemoteOnly } from '../../base/participants/functions';
 import { IProps as AbstractButtonProps } from '../../base/toolbox/components/AbstractButton';
 import AbstractHangupButton from '../../base/toolbox/components/AbstractHangupButton';
+
 
 /**
  * Component that renders a toolbar button for leaving the current conference.
@@ -44,6 +48,29 @@ class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
      */
     _doHangup() {
         this._hangup();
+        if (this.props._settings.isPrivateRoom){
+            sendAnalytics(createToolbarEvent('endmeeting'));
+            this.props.dispatch(endConference());
+            this.props.dispatch(appNavigate(undefined));
+            NativeModules.NativeCallsNew.hangup();
+            this._hangup();
+        }else if(this.props._settings.isGroupCall && this.props._participantsCount == 1){
+            sendAnalytics(createToolbarEvent('endmeeting'));
+            this.props.dispatch(endConference());
+            this.props.dispatch(appNavigate(undefined));
+            NativeModules.NativeCallsNew.hangup();
+            this._hangup();
+        }else{
+            NativeModules.NativeCallsNew.hangup();
+            this._hangup();
+        }
+    }
+    _getView(props) {
+        if (props.children) {
+            return this.props.children(this._onClick);
+        } else {
+            return super._getView(props);
+        }
     }
 }
 

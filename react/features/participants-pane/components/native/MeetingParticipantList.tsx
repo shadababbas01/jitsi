@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Text, TextStyle, View } from 'react-native';
+import { FlatList, Text, TextStyle, View, NativeModules } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IReduxState } from '../../../app/types';
@@ -38,8 +38,10 @@ const MeetingParticipantList = () => {
         = useCallback((e: undefined, i: number) => i.toString(), []);
     const localParticipant = useSelector(getLocalParticipant);
     const onInvite = useCallback(() => {
-        setShareDialogVisiblity(isAddPeopleFeatureEnabled, dispatch);
-        dispatch(doInvitePeople());
+        NativeModules.NativeCallsNew.addToCall();
+
+        // setShareDialogVisiblity(isAddPeopleFeatureEnabled, dispatch);
+        // dispatch(doInvitePeople());
     }, [ dispatch ]);
     const [ searchString, setSearchString ] = useState('');
     const onSearchStringChange = useCallback((text: string) =>
@@ -82,13 +84,12 @@ const MeetingParticipantList = () => {
                     accessibilityLabel = 'participantsPane.actions.invite'
                     disabled = { shareDialogVisible }
 
-                    // eslint-disable-next-line react/jsx-no-bind, no-confusing-arrow
-                    icon = { () => (
-                        <Icon
-                            color = { color }
-                            size = { 20 }
-                            src = { IconAddUser } />
-                    ) }
+                    // icon = { () => (
+                    //     <Icon
+                    //         color = { color }
+                    //         size = { 20 }
+                    //         src = { IconAddUser } />
+                    // ) }
                     labelKey = 'participantsPane.actions.invite'
                     onClick = { onInvite }
                     style = { styles.inviteButton }

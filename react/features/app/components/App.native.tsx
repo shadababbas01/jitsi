@@ -165,11 +165,19 @@ export class App extends AbstractApp<IProps> {
         }
 
         // @ts-ignore
-        dispatch?.(updateSettings(userInfo || {}));
+        // dispatch?.(updateSettings(userInfo || {}));
+        dispatch?.(updateSettings(incomingCallInfo || {}));
 
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== 'undefined') {
             dispatch?.(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
+        }
+
+        if (url && url.config) {
+            dispatch(updateSettings({ isPrivateRoom: url.config.isPrivateRoom,
+                isGroupCall: url.config.isGroupCall,
+                userPicUrl: url.config.userPicUrl,
+                teamName: url.config.teamName }));
         }
     }
 

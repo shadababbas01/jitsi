@@ -2,7 +2,7 @@ import ColorSchemeRegistry from '../../../base/color-scheme/ColorSchemeRegistry'
 import { schemeColor } from '../../../base/color-scheme/functions';
 import BaseTheme from '../../../base/ui/components/BaseTheme.native';
 
-const BUTTON_SIZE = 48;
+const BUTTON_SIZE = 50;
 
 // Toolbox, toolbar:
 
@@ -14,11 +14,11 @@ const toolbarButton = {
     borderWidth: 0,
     flex: 0,
     flexDirection: 'row',
-    height: BUTTON_SIZE,
+    height: 60,
     justifyContent: 'center',
     marginHorizontal: 6,
     marginVertical: 6,
-    width: BUTTON_SIZE
+    width: 50
 };
 
 /**
@@ -27,7 +27,7 @@ const toolbarButton = {
 const toolbarButtonIcon = {
     alignSelf: 'center',
     color: BaseTheme.palette.icon04,
-    fontSize: 24
+    fontSize: 40
 };
 
 
@@ -86,7 +86,8 @@ const styles = {
      */
     toolbox: {
         alignItems: 'center',
-        backgroundColor: BaseTheme.palette.uiBackground,
+
+        // backgroundColor: BaseTheme.palette.uiBackground,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
         flexDirection: 'row',
@@ -97,7 +98,8 @@ const styles = {
      * The style of the root/top-level container of {@link Toolbox}.
      */
     toolboxContainer: {
-        backgroundColor: BaseTheme.palette.uiBackground,
+        // backgroundColor: BaseTheme.palette.uiBackground,
+        alignItems: 'center',
         flexDirection: 'column',
         maxWidth: 580,
         marginLeft: 'auto',
@@ -147,8 +149,9 @@ ColorSchemeRegistry.register('Toolbox', {
     hangupButtonStyles: {
         iconStyle: whiteToolbarButtonIcon,
         style: {
-            ...toolbarButton,
-            backgroundColor: schemeColor('hangup')
+            ...toolbarButton
+
+            // backgroundColor: schemeColor('hangup')
         },
         underlayColor: BaseTheme.palette.ui04
     },

@@ -2,7 +2,7 @@
 import { getGravatarURL } from '@jitsi/js-utils/avatar';
 
 import { IReduxState, IStore } from '../../app/types';
-import { isStageFilmstripAvailable } from '../../filmstrip/functions';
+import { isStageFilmstripAvailable } from '../../filmstrip/functions.native';
 import { isAddPeopleEnabled, isDialOutEnabled } from '../../invite/functions';
 import { toggleShareDialog } from '../../share-room/actions';
 import { IStateful } from '../app/types';
@@ -23,7 +23,7 @@ import {
     PARTICIPANT_ROLE,
     WHITEBOARD_PARTICIPANT_ICON
 } from './constants';
-import { preloadImage } from './preloadImage';
+import { preloadImage } from './preloadImage.native';
 import { FakeParticipant, IJitsiParticipant, IParticipant, ISourceInfo } from './types';
 
 
@@ -261,6 +261,19 @@ export function getParticipantCount(stateful: IStateful) {
     return remote.size - fakeParticipants.size - sortedRemoteVirtualScreenshareParticipants.size + (local ? 1 : 0);
 }
 
+// eslint-disable-next-line require-jsdoc
+export function getParticipantCountRemoteOnly(stateful: IStateful) {
+    const state = toState(stateful);
+    const {
+        local,
+        remote,
+        fakeParticipants,
+        sortedRemoteVirtualScreenshareParticipants
+    } = state['features/base/participants'];
+
+    return remote.size - fakeParticipants.size - sortedRemoteVirtualScreenshareParticipants.size;
+}
+
 /**
  * Returns participant ID of the owner of a virtual screenshare participant.
  *
@@ -376,6 +389,28 @@ export function getParticipantCountWithFake(stateful: IStateful) {
     const { local, localScreenShare, remote } = state['features/base/participants'];
 
     return remote.size + (local ? 1 : 0) + (localScreenShare ? 1 : 0);
+}
+
+// eslint-disable-next-line require-jsdoc
+export function getParticipants(stateful: Object | Function) {
+    return _getAllParticipants(stateful).remote;
+}
+
+/**
+ * Returns array of participants from Redux state.
+ *
+ * @param {(Function|Object|Participant[])} stateful - The redux state
+ * features/base/participants, the (whole) redux state, or redux's
+ * {@code getState} function to be used to retrieve the state
+ * features/base/participants.
+ * @private
+ * @returns {Participant[]}
+ */
+function _getAllParticipants(stateful) {
+    return (
+        Array.isArray(stateful)
+            ? stateful
+            : toState(stateful)['features/base/participants'] || []);
 }
 
 /**

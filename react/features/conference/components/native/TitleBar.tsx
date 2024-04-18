@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, ViewStyle } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -93,7 +93,7 @@ const TitleBar = (props: IProps) => {
                     </View>
                 }
                 {/* eslint-disable-next-line react/jsx-no-bind */}
-                <Labels createOnPress = { props._createOnPress } />
+                {/* <Labels createOnPress = { props._createOnPress } /> */}
             </View>
             <View style = { styles.titleBarButtonContainer }>
                 <ToggleCameraButton styles = { styles.titleBarButton } />

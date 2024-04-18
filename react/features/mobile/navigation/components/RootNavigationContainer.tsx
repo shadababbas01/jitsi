@@ -55,8 +55,8 @@ interface IProps {
 
 
 const RootNavigationContainer = ({ dispatch, isUnsafeRoomWarningAvailable, isWelcomePageAvailable }: IProps) => {
-    const initialRouteName = isWelcomePageAvailable
-        ? screen.welcome.main : screen.connecting;
+    // const initialRouteName = isWelcomePageAvailable ? screen.welcome.main : screen.connecting; //added by jaswant
+    const initialRouteName = screen.welcome.main;
     const onReady = useCallback(() => {
         dispatch({
             type: _ROOT_NAVIGATION_READY,
@@ -92,18 +92,18 @@ const RootNavigationContainer = ({ dispatch, isUnsafeRoomWarningAvailable, isWel
                                 options = { dialInSummaryScreenOptions } />
                         </>
                 }
-                <RootStack.Screen
+                {/* <RootStack.Screen
                     component = { ConnectingPage }
                     name = { screen.connecting }
-                    options = { connectingScreenOptions } />
+                    options = { connectingScreenOptions } /> */}
                 <RootStack.Screen // @ts-ignore
                     component = { Whiteboard }
                     name = { screen.conference.whiteboard }
                     options = { whiteboardScreenOptions } />
-                <RootStack.Screen
+                {/* <RootStack.Screen
                     component = { Prejoin }
                     name = { screen.preJoin }
-                    options = { preJoinScreenOptions } />
+                    options = { preJoinScreenOptions } /> */}
                 {
                     isUnsafeRoomWarningAvailable
                     && <RootStack.Screen

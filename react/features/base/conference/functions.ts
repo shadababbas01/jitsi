@@ -1,7 +1,7 @@
 import { sha512_256 as sha512 } from 'js-sha512';
 import _ from 'lodash';
 
-import { getName } from '../../app/functions';
+import { getName } from '../../app/functions.native';
 import { IReduxState, IStore } from '../../app/types';
 import { determineTranscriptionLanguage } from '../../transcribing/functions';
 import { IStateful } from '../app/types';
@@ -184,11 +184,12 @@ export function forEachConference(
  */
 export function getConferenceName(stateful: IStateful): string {
     const state = toState(stateful);
-    const { callee } = state['features/base/jwt'];
+    const { callee, roomName} = state['features/base/jwt'];
     const { callDisplayName } = state['features/base/config'];
     const { localSubject, pendingSubjectChange, room, subject } = getConferenceState(state);
 
-    return (pendingSubjectChange
+    return (roomName
+        || pendingSubjectChange
         || localSubject
         || subject
         || callDisplayName

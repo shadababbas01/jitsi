@@ -11,7 +11,7 @@ import {
     createPinnedEvent
 } from '../../analytics/AnalyticsEvents';
 import { sendAnalytics } from '../../analytics/functions';
-import { reloadNow } from '../../app/actions';
+import { reloadNow } from '../../app/actions.native';
 import { IStore } from '../../app/types';
 import { removeLobbyChatParticipant } from '../../chat/actions.any';
 import { openDisplayNamePrompt } from '../../display-name/actions';
@@ -20,11 +20,11 @@ import { showErrorNotification } from '../../notifications/actions';
 import { NOTIFICATION_TIMEOUT_TYPE } from '../../notifications/constants';
 import { hasDisplayName } from '../../prejoin/utils';
 import { stopLocalVideoRecording } from '../../recording/actions.any';
-import LocalRecordingManager from '../../recording/components/Recording/LocalRecordingManager';
+import LocalRecordingManager from '../../recording/components/Recording/LocalRecordingManager.native';
 import { iAmVisitor } from '../../visitors/functions';
 import { overwriteConfig } from '../config/actions';
 import { CONNECTION_ESTABLISHED, CONNECTION_FAILED } from '../connection/actionTypes';
-import { connect, connectionDisconnected, disconnect } from '../connection/actions';
+import { connect, connectionDisconnected, disconnect } from '../connection/actions.native';
 import { validateJwt } from '../jwt/functions';
 import { JitsiConferenceErrors, JitsiConferenceEvents, JitsiConnectionErrors } from '../lib-jitsi-meet';
 import { PARTICIPANT_UPDATED, PIN_PARTICIPANT } from '../participants/actionTypes';

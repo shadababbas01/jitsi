@@ -11,7 +11,7 @@ import HeaderNavigationButton
     from '../../../../mobile/navigation/components/HeaderNavigationButton';
 import { goBack }
     from '../../../../mobile/navigation/components/conference/ConferenceNavigationContainerRef';
-import { setLiveStreamKey } from '../../../actions';
+import { setLiveStreamKey } from '../../../actions.native';
 import AbstractStartLiveStreamDialog, { IProps, _mapStateToProps } from '../AbstractStartLiveStreamDialog';
 
 import GoogleSigninForm from './GoogleSigninForm';
@@ -77,8 +77,8 @@ class StartLiveStreamDialog extends AbstractStartLiveStreamDialog<IProps> {
     render() {
         return (
             <JitsiScreen style = { styles.startLiveStreamContainer as StyleType }>
-                <GoogleSigninForm
-                    onUserChanged = { this._onUserChanged } />
+                {/* <GoogleSigninForm
+                    onUserChanged = { this._onUserChanged } /> */}
                 <StreamKeyPicker
                     broadcasts = { this.state.broadcasts }
                     onChange = { this._onStreamKeyPick } />

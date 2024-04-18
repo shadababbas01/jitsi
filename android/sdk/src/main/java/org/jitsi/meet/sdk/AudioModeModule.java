@@ -266,11 +266,29 @@ class AudioModeModule extends ReactContextBaseJavaModule {
         runInAudioThread(new Runnable() {
             @Override
             public void run() {
-                if (!availableDevices.contains(device)) {
+                /*if (!availableDevices.contains(device)) {
                     JitsiMeetLogger.w(TAG + " Audio device not available: " + device);
                     userSelectedDevice = null;
                     return;
+                }*/
+                if (mode != -1) {
+                    JitsiMeetLogger.i(TAG + " User selected device set to: " + device);
+                    userSelectedDevice = device;
+                    updateAudioRoute(mode, false);
                 }
+                }
+        });
+    }
+    @ReactMethod
+    public void setAudioDeviceForVideoCall(final String device, int mode) {
+        runInAudioThread(new Runnable() {
+            @Override
+            public void run() {
+               /* if (!availableDevices.contains(device)) {
+                    JitsiMeetLogger.w(TAG + " Audio device not available: " + device);
+                    userSelectedDevice = null;
+                    return;
+                }*/
 
                 if (mode != -1) {
                     JitsiMeetLogger.i(TAG + " User selected device set to: " + device);
@@ -357,8 +375,8 @@ class AudioModeModule extends ReactContextBaseJavaModule {
         }
 
         if (mode == DEFAULT) {
-            selectedDevice = null;
-            userSelectedDevice = null;
+            // selectedDevice = null;
+            // userSelectedDevice = null;
 
             notifyDevicesChanged();
             return true;
@@ -373,8 +391,11 @@ class AudioModeModule extends ReactContextBaseJavaModule {
             audioDevice = DEVICE_BLUETOOTH;
         } else if (headsetAvailable) {
             audioDevice = DEVICE_HEADPHONES;
-        } else {
+        } else if (mode == 2) {
             audioDevice = DEVICE_SPEAKER;
+        }
+        else {
+            audioDevice = DEVICE_EARPIECE;
         }
 
         // Consider the user's selection
@@ -396,6 +417,17 @@ class AudioModeModule extends ReactContextBaseJavaModule {
         notifyDevicesChanged();
         return true;
     }
+        @ReactMethod
+    public void setSpeakerOn(boolean on, final Promise promise) {
+        if (on) {
+            audioManager.setSpeakerphoneOn(true);
+            promise.resolve(true);
+        } else {
+            audioManager.setSpeakerphoneOn(false);
+            promise.resolve(false);
+        }
+    }
+
 
     /**
      * Gets the currently selected audio device.

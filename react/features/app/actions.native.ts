@@ -92,7 +92,7 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
                     return;
                 }
             } else {
-                navigateRoot(screen.connecting);
+                // navigateRoot(screen.connecting);
             }
         }
 
@@ -163,7 +163,7 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
         dispatch(createDesiredLocalTracks());
         dispatch(clearNotifications());
 
-        if (!options.hidePrejoin && isPrejoinPageEnabled(getState())) {
+        if (!options.hidePrejoin && isPrejoinPageEnabled(getState()) && false) {
             if (isUnsafeRoomWarningEnabled(getState()) && isInsecureRoomName(room)) {
                 navigateRoot(screen.unsafeRoomWarning);
             } else {

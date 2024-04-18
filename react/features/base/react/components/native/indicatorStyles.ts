@@ -9,8 +9,9 @@ export default {
         backgroundColor: ColorPalette.transparent,
         padding: 2,
         color: ColorPalette.white,
-        fontSize: 16,
-        textShadowColor: ColorPalette.black,
+        fontSize: 14,
+
+        // textShadowColor: ColorPalette.black,
         textShadowOffset: {
             height: -1,
             width: 0

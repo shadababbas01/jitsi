@@ -282,6 +282,15 @@ export default class AbstractButton<P extends IProps, S = any> extends Component
             : this.accessibilityLabel
         ) || this.accessibilityLabel;
     }
+    _getView(props) {
+        return (
+            <ToolboxItem
+                disabled={this._isDisabled()} // Correct syntax: disabled={...}
+                onClick={this._onClick} // Correct syntax: onClick={...}
+                {...props} /> // Spread operator {...props} should work fine
+        );
+    }
+
 
     /**
      * Gets the current styles, taking the toggled state into account. If no
@@ -399,10 +408,10 @@ export default class AbstractButton<P extends IProps, S = any> extends Component
 
         return (
             <ToolboxItem
-                disabled = { this._isDisabled() }
-                onClick = { this._onClick }
-                onKeyDown = { this._onKeyDown }
-                { ...props } />
+                disabled={this._isDisabled()}
+                onClick={this._onClick}
+                onKeyDown={this._onKeyDown}
+                {...props} />
         );
     }
 }

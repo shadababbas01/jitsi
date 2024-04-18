@@ -20,7 +20,7 @@ import {
     IDeeplinkingMobileConfig,
     IMobileDynamicLink
 } from './configType';
-import { _cleanupConfig, _setDeeplinkingDefaults } from './functions';
+import { _cleanupConfig, _setDeeplinkingDefaults } from './functions.native';
 
 /**
  * The initial state of the feature base/config when executing in a
@@ -441,7 +441,7 @@ function _translateLegacyConfig(oldValue: IConfig) {
     }
 
     newValue.defaultRemoteDisplayName
-        = newValue.defaultRemoteDisplayName || 'Fellow Jitster';
+        = newValue.defaultRemoteDisplayName || '';
 
     newValue.transcription = newValue.transcription || {};
     if (oldValue.transcribingEnabled !== undefined) {
