@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import type { Dispatch } from 'redux';
 
 import { openSheet } from '../../../base/dialog/actions';
 import { translate } from '../../../base/i18n/functions';
@@ -7,10 +8,18 @@ import AbstractButton, { IProps as AbstractButtonProps } from '../../../base/too
 
 import AudioRoutePickerDialog from './AudioRoutePickerDialog';
 
+type Props = AbstractButtonProps & {
+
+    /**
+     * The Redux dispatch function.
+     */
+    dispatch: Dispatch<any>
+};
+
 /**
  * Implements an {@link AbstractButton} to open the audio device list.
  */
-class AudioDeviceToggleButton extends AbstractButton<AbstractButtonProps> {
+class AudioDeviceToggleButton extends AbstractButton<Props> {
     accessibilityLabel = 'toolbar.accessibilityLabel.audioRoute';
     icon = IconVolumeUp;
     label = 'toolbar.accessibilityLabel.audioRoute';
@@ -22,11 +31,13 @@ class AudioDeviceToggleButton extends AbstractButton<AbstractButtonProps> {
      * @returns {void}
      */
     _handleClick() {
+        //console.log("AudioRoutePickerDialog",AudioRoutePickerDialog);
         this.props.dispatch(openSheet(AudioRoutePickerDialog));
     }
-
     _getView(props) {
         if (props.children) {
+            
+           // this.props.dispatch(openSheet(AudioRoutePickerDialog));
             return props.children(this._onClick);
         } else {
             return super._getView(props);

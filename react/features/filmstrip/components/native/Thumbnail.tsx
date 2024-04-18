@@ -448,26 +448,26 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
     // added by jaswant
     let height1, width1;
 
-    if (localParticipantId === id) {
-        if (participantCount === 3) {
-            const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
-            const widthToUse = width - (10 * 2);
+    // if (localParticipantId === id) {
+    //     if (participantCount === 3) {
+    //         const { clientHeight: height, clientWidth: width } = state['features/base/responsive-ui'];
+    //         const widthToUse = width - (10 * 2);
 
-            if (width > height) {
-                width1 = tileViewDimensions.thumbnailSize.width;
-                height1 = tileViewDimensions.thumbnailSize.height;
-            } else {
-                width1 = widthToUse;
-                height1 = tileViewDimensions.thumbnailSize.height;
-            }
-        } else {
-            width1 = tileViewDimensions.thumbnailSize.width;
-            height1 = tileViewDimensions.thumbnailSize.height;
-        }
-    } else {
-        width1 = tileViewDimensions.thumbnailSize.width;
-        height1 = tileViewDimensions.thumbnailSize.height;
-    }
+    //         if (width > height) {
+    //             width1 = tileViewDimensions.thumbnailSize.width;
+    //             height1 = tileViewDimensions.thumbnailSize.height;
+    //         } else {
+    //             width1 = widthToUse;
+    //             height1 = tileViewDimensions.thumbnailSize.height;
+    //         }
+    //     } else {
+    //         width1 = tileViewDimensions.thumbnailSize.width;
+    //         height1 = tileViewDimensions.thumbnailSize.height;
+    //     }
+    // } else {
+    //     width1 = tileViewDimensions.thumbnailSize.width;
+    //     height1 = tileViewDimensions.thumbnailSize.height;
+    // }
 
 
     return {

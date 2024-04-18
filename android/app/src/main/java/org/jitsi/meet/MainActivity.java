@@ -24,6 +24,7 @@ import android.content.RestrictionEntry;
 import android.content.RestrictionsManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,6 +34,8 @@ import androidx.annotation.Nullable;
 import org.jitsi.meet.sdk.JitsiMeet;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
+import org.jitsi.meet.sdk.JitsiMeetUserInfo;
+import org.jitsi.meet.sdk.incoming_call.IncomingCallInfo;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -163,8 +166,8 @@ public class MainActivity extends JitsiMeetActivity {
             .setUserPicUrl("https://i.pinimg.com/originals/62/ae/fb/62aefb044922a5a847546e30b9036913.jpg")
             .setIncomingCallInfo(new IncomingCallInfo("One on One","", "title",false))
             .setGroupCall(false)
-            .setPrivateRoom(true)
-            .setAudioOnly(false)
+            .setPrivateRoom(false)
+            .setAudioOnly(true)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
         new Handler().postDelayed(new Runnable() {

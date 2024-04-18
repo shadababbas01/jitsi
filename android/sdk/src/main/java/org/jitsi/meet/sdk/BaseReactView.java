@@ -27,7 +27,7 @@ import androidx.annotation.Nullable;
 
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.ReadableMap;
-import com.rnimmersive.RNImmersiveModule;
+//import com.rnimmersive.RNImmersiveModule;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -209,11 +209,11 @@ public abstract class BaseReactView<ListenerT>
         super.onWindowFocusChanged(hasFocus);
 
         // https://github.com/mockingbot/react-native-immersive#restore-immersive-state
-        RNImmersiveModule immersive = RNImmersiveModule.getInstance();
+//        RNImmersiveModule immersive = RNImmersiveModule.getInstance();
 
-        if (hasFocus && immersive != null) {
-            immersive.emitImmersiveStateChangeEvent();
-        }
+//        if (hasFocus && immersive != null) {
+//            immersive.emitImmersiveStateChangeEvent();
+//        }
     }
 
     /**

@@ -122,9 +122,9 @@ function _mapStateToProps(state: Object, ownProps: Props) {
     const participantsMap = getParticipants(state);
     var participants = [];
     
-    for(const [id, participant] of participantsMap){
-        participants.push(participant);
-    }
+    // for(const [id, participant] of participantsMap){
+    //     participants.push(participant);
+    // }
     const participantsCount = getParticipantCountRemoteOnly(state);
 
     

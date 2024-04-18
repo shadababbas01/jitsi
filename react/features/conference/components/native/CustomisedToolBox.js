@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableHighlight } from 'react-native';
-import AudioMuteButton from '../../../toolbox/components/AudioMuteButton';
-import VideoMuteButton from '../../../toolbox/components/VideoMuteButton';
+import AudioMuteButton from '../../../toolbox/components/AbstractAudioMuteButton';
+import VideoMuteButton from '../../../toolbox/components/AbstractVideoMuteButton';
 import HangupButton from '../../../toolbox/components/HangupButton';
 import ChatButton from '../../../../features/chat/components/native/ChatButton';
 import AudioDeviceToggleButton from '../../../mobile/audio-mode/components/AudioDeviceToggleButton';
@@ -70,7 +70,7 @@ class CustomisedToolBox extends Component<Props, *> {
             .then((val)=>{
                 this.props.setSpeakerState(!speakerOn)
                 if(speakerOn){
-                    AudioMode.setAudioDevice("EARPIECE");
+                    AudioMode.setAudioDevice("Built-In Microphone");
                 }else{
                     AudioMode.setAudioDevice("SPEAKER");
 
@@ -114,7 +114,7 @@ class CustomisedToolBox extends Component<Props, *> {
 
    }
    componentDidMount() {
-    //AudioMode.setAudioDevice("EARPIECE");
+    AudioMode.setAudioDevice("Built-In Microphone");
 }
 
 
@@ -157,10 +157,12 @@ class CustomisedToolBox extends Component<Props, *> {
     var icon = SPEAKER_DISABLED_ICON ;
     
     const devices = this.props._devices;
+    console.log('devices-->' + devices);
     for(let i = 0; i < devices.length; i++){
         let singleObject = devices[i];
         let selected = singleObject.selected;
         let type = singleObject.type;
+        console.log("Text123---->",type);
         if(type === 'BLUETOOTH' && selected){
             text = 'BLUETOOTH';
             icon = BLUETOOTH;
@@ -179,6 +181,8 @@ class CustomisedToolBox extends Component<Props, *> {
         }
     }
     OpenMelpChat.isAudioMode(true);
+
+    
     console.log("Text---->",text);
 
 
@@ -234,7 +238,7 @@ class CustomisedToolBox extends Component<Props, *> {
                         </VideoMuteButton>
                         <AudioDeviceToggleButton>
                              {(_onClick) =>
-                            (<TouchableHighlight disabled = {isHoldOn} onPress={this._handleSpeakerClick} underlayColor={ColorPalette.transparent}>
+                            (<TouchableHighlight disabled = {isHoldOn} onPress={_onClick} underlayColor={ColorPalette.transparent}>
                                 <View style = { styles.toolBoxFunctionContainerStyle }>
                                 <Image style={styles.speakerIconStyle} source={icon} />
                                             <Text style={toolBoxInactiveStyle}>{text}</Text>

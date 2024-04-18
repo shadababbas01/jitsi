@@ -161,7 +161,7 @@ export function getFirstLoadableAvatarUrl(participant: IParticipant, store: ISto
 export function getLocalParticipant(stateful: IStateful) {
     const state = toState(stateful)['features/base/participants'];
 
-    return state.local;
+    return state;
 }
 
 /**
