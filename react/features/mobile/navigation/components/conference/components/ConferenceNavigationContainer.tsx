@@ -1,3 +1,4 @@
+
 /* eslint-disable lines-around-comment */
 
 import { NavigationContainer, Theme } from '@react-navigation/native';
@@ -124,6 +125,7 @@ const ConferenceNavigationContainer = () => {
                     name = { screen.conference.participants }
                     options = {{
                         ...participantsScreenOptions,
+                        headerTitleAlign: 'center', // added by jaswant
                         title: t('participantsPane.title')
                     }} />
                 <ConferenceStack.Screen
@@ -131,6 +133,7 @@ const ConferenceNavigationContainer = () => {
                     name = { screen.conference.security }
                     options = {{
                         ...securityScreenOptions,
+                        headerTitleAlign: 'center', // added by jaswant
                         title: t('security.title')
                     }} />
                 <ConferenceStack.Screen
@@ -138,6 +141,7 @@ const ConferenceNavigationContainer = () => {
                     name = { screen.conference.recording }
                     options = {{
                         ...recordingScreenOptions,
+                        headerTitleAlign: 'center', // added by jaswant
                         title: t('recording.title')
                     }} />
                 <ConferenceStack.Screen
@@ -180,6 +184,7 @@ const ConferenceNavigationContainer = () => {
                     name = { screen.conference.invite }
                     options = {{
                         ...inviteScreenOptions,
+                        headerTitleAlign: 'center', // added by jaswant
                         title: t('addPeople.add')
                     }} />
                 <ConferenceStack.Screen

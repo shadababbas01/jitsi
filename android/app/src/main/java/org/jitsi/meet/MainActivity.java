@@ -24,6 +24,7 @@ import android.content.RestrictionEntry;
 import android.content.RestrictionsManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -149,12 +150,24 @@ public class MainActivity extends JitsiMeetActivity {
         // Set default options
         JitsiMeetConferenceOptions defaultOptions
             = new JitsiMeetConferenceOptions.Builder()
+            .setServerURL(buildURL("https://devmeet.melp.us/"))
+            .setFeatureFlag("welcomepage.enabled", false)
             .setServerURL(buildURL(defaultURL))
             .setFeatureFlag("welcomepage.enabled", true)
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                JitsiMeetConferenceOptions defaultOptions1
+                        = new JitsiMeetConferenceOptions.Builder()
+                        .setRoom("2c3775ec378c2a5995ab5576fafdd35d")
+                        .build();
+                join(defaultOptions1);
+            }
+        }, 0000);
     }
 
     private void resolveRestrictions() {

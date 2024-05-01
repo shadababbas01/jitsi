@@ -24,6 +24,7 @@ import {
     ASPECT_RATIO_NARROW,
     ASPECT_RATIO_WIDE
 } from '../../../base/responsive-ui/constants';
+import { getParticipantCount } from '../../../base/participants/functions';
 import { StyleType } from '../../../base/styles/functions.any';
 import TestConnectionInfo from '../../../base/testing/components/TestConnectionInfo';
 import { isCalendarEnabled } from '../../../calendar-sync/functions.native';
@@ -103,6 +104,7 @@ interface IProps extends AbstractProps {
     /**
      * The indicator which determines if the participants pane is open.
      */
+    _isOneToOneConference: boolean,
     _isParticipantsPaneOpen: boolean;
 
     /**
@@ -364,6 +366,7 @@ class Conference extends AbstractConference<IProps, State> {
             _aspectRatio,
             _connecting,
             _filmstripVisible,
+            _isOneToOneConference,
             _largeVideoParticipantId,
             _reducedUI,
             _shouldDisplayTileView,
@@ -419,14 +422,24 @@ class Conference extends AbstractConference<IProps, State> {
                     <Captions onPress = { this._onClick } />
 
                     {
-                        _shouldDisplayTileView
-                        || <Container style = { styles.displayNameContainer }>
-                            <DisplayNameLabel
-                                participantId = { _largeVideoParticipantId } />
-                        </Container>
+                        _shouldDisplayTileView || (
+
+                            !_isOneToOneConference
+
+                            && <Container style = { styles.displayNameContainer }>
+
+                                <DisplayNameLabel
+
+                                    participantId = { _largeVideoParticipantId } />
+
+                            </Container>
+
+                        )
                     }
 
-                    { !_shouldDisplayTileView && <LonelyMeetingExperience /> }
+                    { !_shouldDisplayTileView
+                    //  && <LonelyMeetingExperience />
+                      }
 
                     {
                         _shouldDisplayTileView
@@ -564,6 +577,7 @@ function _mapStateToProps(state: IReduxState, _ownProps: any) {
     const { backgroundColor } = state['features/dynamic-branding'];
     const { startCarMode } = state['features/base/settings'];
     const { enabled: audioOnlyEnabled } = state['features/base/audio-only'];
+    const participantCount = getParticipantCount(state);
     const brandingStyles = backgroundColor ? {
         backgroundColor
     } : undefined;
@@ -577,6 +591,7 @@ function _mapStateToProps(state: IReduxState, _ownProps: any) {
         _connecting: isConnecting(state),
         _filmstripVisible: isFilmstripVisible(state),
         _fullscreenEnabled: getFeatureFlag(state, FULLSCREEN_ENABLED, true),
+        _isOneToOneConference: Boolean(participantCount === 2),
         _isParticipantsPaneOpen: isOpen,
         _largeVideoParticipantId: state['features/large-video'].participantId,
         _pictureInPictureEnabled: getFeatureFlag(state, PIP_ENABLED),

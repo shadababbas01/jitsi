@@ -143,7 +143,7 @@ export default {
     },
 
     roomTimerView: {
-        backgroundColor: BaseTheme.palette.ui03,
+        // backgroundColor: BaseTheme.palette.ui03,     // added by shadab
         borderRadius: BaseTheme.shape.borderRadius,
         height: 32,
         justifyContent: 'center',
