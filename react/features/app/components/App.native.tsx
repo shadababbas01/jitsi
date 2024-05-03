@@ -7,13 +7,15 @@ import SplashScreen from 'react-native-splash-screen';
 import BottomSheetContainer from '../../base/dialog/components/native/BottomSheetContainer';
 import DialogContainer from '../../base/dialog/components/native/DialogContainer';
 import { updateFlags } from '../../base/flags/actions';
-import { CALL_INTEGRATION_ENABLED } from '../../base/flags/constants';
+import { CALL_INTEGRATION_ENABLED, SERVER_URL_CHANGE_ENABLED } from '../../base/flags/constants';
 import { clientResized, setSafeAreaInsets } from '../../base/responsive-ui/actions';
 import DimensionsDetector from '../../base/responsive-ui/components/DimensionsDetector.native';
 import { updateSettings } from '../../base/settings/actions';
 import JitsiThemePaperProvider from '../../base/ui/components/JitsiThemeProvider.native';
 import { _getRouteToRender } from '../getRouteToRender.native';
 import logger from '../logger';
+
+import { getFeatureFlag } from '../../base/flags/functions';
 
 import { AbstractApp, IProps as AbstractAppProps } from './AbstractApp';
 
@@ -167,9 +169,18 @@ export class App extends AbstractApp<IProps> {
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
 
+    //    dispatch?.(updateSettings(this.props.userInfo || {})); // added by jaswant
+    dispatch?.(updateSettings(this.props.incomingCallInfo || {}));
+
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== 'undefined') {
             dispatch?.(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
+        }
+        if (this.props.url && this.props.url.config) {
+            dispatch(updateSettings({ isPrivateRoom: this.props.url.config.isPrivateRoom,
+                isGroupCall: this.props.url.config.isGroupCall,
+                userPicUrl: this.props.url.config.userPicUrl,
+                teamName: this.props.url.config.teamName }));
         }
     }
 

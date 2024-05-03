@@ -70,6 +70,15 @@ export default class AbstractVideoMuteButton<P extends IProps> extends BaseVideo
     _setVideoMuted(videoMuted: boolean) {
         this.props.dispatch(handleToggleVideoMuted(videoMuted, true, true));
     }
+    _getView(props) {
+        if (props.children) {
+            var _isVideoMuted = this._isVideoMuted();
+            return this.props.children(_isVideoMuted, this._onClick);
+        } else {
+            return super._getView(props);
+        }
+    }
+
 }
 
 /**

@@ -45,7 +45,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-class ReactInstanceManagerHolder {
+public class ReactInstanceManagerHolder {
     private static final String TAG = ReactInstanceManagerHolder.class.getSimpleName();
 
     /**
@@ -73,6 +73,8 @@ class ReactInstanceManagerHolder {
                 new SplashScreenModule(reactContext),
                 new PictureInPictureModule(reactContext),
                 new ProximityModule(reactContext),
+                new OpenMelpModule(reactContext),
+                new OpenMelpChatModule(reactContext),
                 new org.jitsi.meet.sdk.net.NAT64AddrInfoModule(reactContext)));
 
         if (AudioModeModule.useConnectionService()) {
@@ -167,7 +169,7 @@ class ReactInstanceManagerHolder {
      * @param eventName {@code String} containing the event name.
      * @param data {@code Object} optional ancillary data for the event.
      */
-    static void emitEvent(
+    public static void emitEvent(
             String eventName,
             @Nullable Object data) {
         ReactInstanceManager reactInstanceManager
@@ -229,7 +231,7 @@ class ReactInstanceManagerHolder {
      *
      * @param activity {@code Activity} current running Activity.
      */
-    static void initReactInstanceManager(Activity activity) {
+    public static void initReactInstanceManager(Activity activity) {
         if (reactInstanceManager != null) {
             return;
         }

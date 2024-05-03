@@ -7,6 +7,7 @@ import { leaveConference } from '../../base/conference/actions';
 import { translate } from '../../base/i18n/functions';
 import { IProps as AbstractButtonProps } from '../../base/toolbox/components/AbstractButton';
 import AbstractHangupButton from '../../base/toolbox/components/AbstractHangupButton';
+import {  NativeModules} from 'react-native';
 
 /**
  * Component that renders a toolbar button for leaving the current conference.
@@ -43,7 +44,15 @@ class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
      * @returns {void}
      */
     _doHangup() {
+        NativeModules.NativeCallsNew.hangup();
         this._hangup();
+    }
+    _getView(props) {
+        if (props.children) {
+            return this.props.children(this._onClick);
+        } else {
+            return super._getView(props);
+        }
     }
 }
 
